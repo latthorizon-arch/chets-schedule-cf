@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Контролери КП ЧЕТС">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Транспорт — 29 жовтня 2026</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px;color:#111827}
+.container{max-width:1120px;margin:0 auto;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.12);padding:14px}
+.nav{display:flex;flex-wrap:wrap;overflow-x:auto;justify-content:flex-start;gap:14px;position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);padding:8px;border-bottom:1px solid #e8e8e8;scrollbar-width:thin}
+.nav a{background:#4472C4;color:#fff;text-decoration:none;padding:8px 9px;border-radius:8px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.nav a.active{background:#1f4e9e;box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),0 2px 6px rgba(0,0,0,.12)}
+h1{text-align:center;margin:8px 0 4px;font-size:24px}
+.day-line{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:4px 0 8px}
+.day-prev{justify-self:start}
+.day-next{justify-self:end}
+.day-line a{background:#eef3ff;color:#1f4e9e;text-decoration:none;padding:7px 11px;border-radius:999px;font-weight:800;border:1px solid #c8d6f4;white-space:nowrap;font-size:13px}
+.day-number-box{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:210px;border-radius:999px;background:#eef3ff;color:#1f4e9e;text-align:center;padding:7px 18px;border:1px solid #c8d6f4}
+.date-line{font-size:18px;line-height:1.15;font-weight:900}
+.weekday-line{margin-top:2px;font-size:11px;font-weight:700;opacity:.78}
+.empty-state{text-align:center;padding:40px 20px;color:#888;font-size:14px;background:#fafafa;border:1px dashed #d0d0d0;border-radius:10px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="nav"><a href="/" data-nav="month">Графік на місяць</a><a href="/daily.html" data-nav="daily">Щоденний графік</a><a href="/timesheet.html" data-nav="timesheet">Квиток контролера</a><a href="/transport.html" data-nav="transport" class="active">Транспорт</a><a href="/stt.html" data-nav="stt">Звіт СТТ</a><a href="/vacations.html" data-nav="vacations">Відпустки</a><a href="/districts.html" data-nav="districts">Дільниця</a><a href="/problems.html" data-nav="problems">Проблеми</a><a href="/needs.html" data-nav="needs">Валідатори</a><a href="/archive.html">Архів</a><a href="/editor.html" data-nav="editor">Редактор</a></div>
+<div class="site-logos"><img class="logo-left" src="/assets/header-left.jpg" alt=""><img class="logo-center" src="/assets/trolleybus-center.jpg" alt=""><img class="logo-right" src="/assets/header-right.jpg" alt=""></div>
+
+<h1>Транспорт</h1>
+<div class="day-line">
+<div class="day-prev"><a href="/transport/10/28.html">← 28.10</a></div>
+<div class="day-number-box"><div class="date-line">29 жовтня 2026</div><div class="weekday-line">четвер</div></div>
+<div class="day-next"><a href="/transport/10/30.html">30.10 →</a></div>
+</div>
+
+<div class="empty-state">Інформація про рейси водіїв за 29 жовтня буде додана пізніше.<br>Тут з'являться дані: заплановано, фактично, В/ОВ/ТН.</div>
+
+<script src="/assets/birthday-notify.js"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
+<script src="/assets/save-page.js" defer></script>
+</div>
+</body>
+</html>

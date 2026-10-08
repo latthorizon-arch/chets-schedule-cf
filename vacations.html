@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Відпустки 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f0f2f5;padding:12px;color:#222}.container{max-width:1240px;margin:0 auto;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.12);padding:18px}.nav{display:flex;gap:14px;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;margin-bottom:14px;position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);padding:8px;border-bottom:1px solid #e8e8e8;scrollbar-width:thin}.nav a{background:#4472C4;color:white;text-decoration:none;padding:8px 9px;border-radius:8px;font-size:12px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.12);white-space:nowrap}.nav a.active{background:#1f4e9e;box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),0 2px 6px rgba(0,0,0,.12)}.nav a:hover{background:#2f62b3}@media(min-width:900px){.nav{justify-content:center}.nav a{font-size:12px;padding:8px 10px}}
+.site-logos{display:grid;grid-template-columns:minmax(170px,1.3fr) auto minmax(170px,1.3fr);align-items:center;gap:6px;margin:0 0 8px 0;padding:2px 4px;min-height:58px;pointer-events:none}.site-logos img{display:block;object-fit:contain;opacity:.94;filter:grayscale(100%);width:auto}.site-logos .logo-left{justify-self:start;max-width:390px;max-height:54px}.site-logos .logo-center{justify-self:center;max-width:180px;max-height:72px}.site-logos .logo-right{justify-self:end;max-width:442px;max-height:54px}@media (max-width:700px){.site-logos{grid-template-columns:1fr auto 1fr;min-height:36px;margin-bottom:6px;gap:6px}.site-logos .logo-left{max-width:150px;max-height:34px}.site-logos .logo-center{max-width:98px;max-height:50px}.site-logos .logo-right{max-width:162px;max-height:34px}}
+h1{text-align:center;font-size:30px;margin:14px 0 6px;color:#111827}.subtitle{text-align:center;color:#5b6472;font-weight:700;margin:0 auto 16px;line-height:1.35}.source-pill{display:block;width:max-content;max-width:100%;margin:0 auto 16px;padding:7px 12px;border-radius:999px;background:#eef3ff;color:#1f4e9e;font-size:13px;font-weight:900;border:1px solid #cbdcff}.months-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}.month-card{border:1px solid #d5dbe7;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.05)}.month-card h2{background:#4472C4;color:white;text-align:center;font-size:19px;padding:9px 10px}table{width:100%;border-collapse:collapse}th{background:#f2f5fb;color:#333;text-align:left;font-size:12px;padding:7px;border-bottom:1px solid #d0d7e2}td{border-bottom:1px solid #eef1f5;padding:7px;font-size:14px;line-height:1.15}tr:last-child td{border-bottom:0}.person{font-weight:800;color:#111827}.days{width:52px;text-align:center;font-weight:900;color:#1f4e9e;background:#f8fbff}.kind{font-size:12px;color:#4b5563;font-weight:700}.kind.child{color:#9a3412;background:#fff7ed}.kind.unknown{color:#92400e;background:#fffbeb}.summary{margin-top:16px;border:1px solid #d5dbe7;border-radius:12px;overflow:hidden}.summary h2{background:#111827;color:#fff;padding:10px;text-align:center;font-size:18px}.summary table{background:#fff}.notes{margin-top:14px;background:#fff8e6;border:1px solid #f4d06f;border-radius:12px;padding:12px 16px;color:#594300;font-size:14px;line-height:1.35}.notes b{display:block;margin-bottom:6px}.notes ul{padding-left:18px}@media(max-width:1050px){.months-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:680px){body{padding:8px}.container{padding:10px}h1{font-size:24px}.months-grid{grid-template-columns:1fr;gap:10px}td{font-size:14px;padding:6px}.source-pill{font-size:12px}}
+
+.month-card.vac-wide{grid-column:1/-1;border:2px solid #d5dbe7;box-shadow:0 4px 14px rgba(31,78,158,.10)}
+.month-card.vac-wide h2{font-size:21px;padding:10px;background:#4472C4}
+.vac-status-table th{text-align:center;font-size:12px;background:#eef3ff;color:#1f2937;white-space:nowrap}
+.vac-status-table td{text-align:center;font-size:13px;padding:8px 7px;vertical-align:middle}
+.vac-status-table .person{text-align:left;font-size:14px;min-width:170px}
+.vac-status-table .annual{background:#f3f4f6;color:#111827;font-weight:950}
+.vac-status-table .child{background:#fff7ed;color:#9a3412;font-weight:950}
+.vac-status-table .other{background:#fffbeb;color:#92400e;font-weight:950}
+.vac-status-table .total-days{font-weight:950;color:#1f4e9e;background:#f8fbff}
+.vac-status-table .empty{color:#c0c7d1;font-weight:800}
+@media(max-width:760px){.vac-status-table{min-width:700px}.month-card.vac-wide{overflow-x:auto}.vac-status-table th,.vac-status-table td{font-size:12px;padding:7px 5px}.vac-status-table .person{font-size:13px}}
+
+.month-card.may-wide{grid-column:1/-1;border:2px solid #4472C4;box-shadow:0 5px 18px rgba(68,114,196,.16)}
+.month-card.may-wide h2{font-size:22px;padding:11px 10px}
+.may-status-table th{text-align:center;font-size:12px;background:#eef3ff;color:#1f2937;white-space:nowrap}
+.may-status-table td{text-align:center;font-size:13px;padding:8px 7px;vertical-align:middle}
+.may-status-table .person{text-align:left;font-size:14px;min-width:160px}
+.may-status-table .total-days{font-weight:950;color:#1f4e9e;background:#f8fbff}
+.may-status-table .empty{color:#c0c7d1;font-weight:800}
+.may-status-table .sick{background:#fffbea;color:#92400e;font-weight:900}
+.may-status-table .unpaid{background:#eef6ff;color:#1f4e79;font-weight:900}
+.may-status-table .donor{background:#fff7ed;color:#9a3412;font-weight:900}
+.may-status-table .vac{background:#f3f4f6;color:#111827;font-weight:900}
+@media(max-width:760px){.may-status-table{min-width:720px}.month-card.may-wide{overflow-x:auto}.may-status-table th,.may-status-table td{font-size:12px;padding:7px 5px}.may-status-table .person{font-size:13px}}
+
+/* fixed top menu */
+/* fixed top menu: same position on every page */
+body{padding-top:58px!important}
+.nav{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:5000!important;margin:0!important;display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;align-items:center!important;gap:6px!important;overflow-x:auto!important;background:rgba(255,255,255,.98)!important;border-bottom:1px solid #d7deea!important;box-shadow:0 2px 8px rgba(15,23,42,.10)!important;padding:8px 10px!important;scrollbar-width:thin!important;border-radius:0!important}
+.nav a{flex:0 0 auto!important;white-space:nowrap!important}
+@media print{body{padding-top:0!important}.nav{display:none!important}}
+
+/* centered fixed top menu */
+/* centered fixed top menu */
+.nav{justify-content:center!important;text-align:center!important}
+.nav a{text-align:center!important}
+.install-floating{position:fixed!important;top:6px!important;right:6px!important;z-index:5000!important;display:inline-flex!important;align-items:center!important;gap:5px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:6px 10px!important;border:2px solid #111827!important;box-shadow:0 8px 20px rgba(17,24,39,.22)!important;font-size:12px!important;line-height:1!important;cursor:pointer!important}.install-floating img{width:28px!important;height:18px!important;object-fit:contain!important}.install-floating span{line-height:1!important}.install-popup{top:46px!important;right:6px!important;z-index:5001!important}
+
+/* compact install button: between menu and header logos */
+.install-floating{position:fixed!important;top:44px!important;right:10px!important;z-index:9000!important;display:inline-flex!important;align-items:center!important;gap:3px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:3px 6px!important;border:1px solid #111827!important;box-shadow:0 4px 10px rgba(17,24,39,.16)!important;font-size:9px!important;line-height:1!important;cursor:pointer!important}
+.install-floating img{width:18px!important;height:12px!important;object-fit:contain!important}.install-floating span{line-height:1!important}
+.install-popup{position:fixed!important;top:68px!important;right:6px!important;z-index:9001!important}
+@media(max-width:700px){.install-floating{top:44px!important;right:10px!important;padding:3px 5px!important;font-size:9px!important}.install-floating img{width:17px!important;height:11px!important}.install-popup{top:68px!important;right:6px!important}}
+.nav{padding-right:0!important;box-sizing:border-box!important}
+
+.month-card{display:none}
+.month-card.active{display:block}
+
+/* === Month-pill buttons (unified style) === */
+.daily-month-switch,.month-switch,.month-menu,.month-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0 18px;padding:4px}
+.daily-month-switch a,.month-switch a,.month-menu a,.month-tabs>button{padding:9px 18px;border-radius:999px;background:#eef3ff;color:#1f4e9e;text-decoration:none;font-weight:800;font-size:13px;border:1px solid #cbdcff;display:inline-block;letter-spacing:.2px;transition:all .18s ease;cursor:pointer;font-family:inherit}
+.daily-month-switch a:hover,.month-switch a:hover,.month-menu a:hover,.month-tabs>button:hover{background:#1f4e9e;color:#fff;border-color:#1f4e9e;transform:translateY(-1px);box-shadow:0 4px 10px rgba(31,78,158,.25)}
+.daily-month-switch a.active,.month-switch a.active,.month-menu a.active,.month-tabs>button.active,.month-tabs>button.tab-btn.active{background:#1f4e9e!important;color:#fff!important;border-color:#1f4e9e!important;box-shadow:0 3px 10px rgba(31,78,158,.35);font-weight:900}
+.vac-status-section{margin:18px auto 30px;padding:0 12px;max-width:1400px}
+.vac-status-table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);font-size:13px}
+.vac-status-table th{background:#1f4e9e;color:#fff;padding:12px 10px;text-align:center;font-size:13px;font-weight:900;border-bottom:2px solid #0d47a1;position:sticky;top:0;z-index:1}
+.vac-status-table td{padding:10px 8px;border-bottom:1px solid #e5e7eb;text-align:center;vertical-align:middle}
+.vac-status-table tr:last-child td{border-bottom:0}
+.vac-status-table tr:hover{background:#f5f9ff}
+.vac-status-table .name-cell{text-align:left;font-weight:800;color:#0f172a;font-size:14px;padding-left:14px}
+.vac-status-table .num-cell{color:#64748b;font-weight:700;width:40px}
+.vac-status-table .count-cell{font-weight:900;font-size:14px;width:80px}
+.vac-status-table .count-cell.zero{color:#cbd5e1}
+.vac-status-table .count-ov{color:#1f1f1f;background:rgba(51,51,51,.06)}
+.vac-status-table .count-bz{color:#0d47a1;background:rgba(0,176,240,.10)}
+.vac-status-table .count-tn{color:#000;background:rgba(255,246,139,.25)}
+.vac-status-table .count-don{color:#000;background:rgba(255,165,0,.18)}
+.vac-month-label{display:inline-block;background:#1f4e9e;color:#fff;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:900;margin-bottom:12px}
+.vac-summary-bar{display:flex;justify-content:center;gap:18px;margin:16px 0 8px;flex-wrap:wrap;font-size:12px;color:#475569;font-weight:700}
+.vac-summary-bar span{display:flex;align-items:center;gap:6px}
+.vac-summary-bar .dot{display:inline-block;width:12px;height:12px;border-radius:3px}
+
+/* === Per-month mini tables === */
+.vac-months-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px auto;padding:0 12px;max-width:1500px}
+@media(max-width:900px){.vac-months-wrapper{grid-template-columns:1fr}}
+.vac-month-block{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb}
+.vac-month-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:linear-gradient(135deg,#1f4e9e 0%,#2563eb 100%);color:#fff}
+.vac-month-title{font-size:16px;font-weight:900;letter-spacing:.5px}
+.vac-month-count{font-size:11px;background:rgba(255,255,255,.22);padding:3px 9px;border-radius:999px;font-weight:700}
+.vac-mini-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.vac-mini-table th{background:#f5f9ff;color:#1f2937;padding:8px 6px;text-align:center;font-size:11px;font-weight:900;border-bottom:1px solid #e5e7eb}
+.vac-mini-table td{padding:8px 6px;border-bottom:1px solid #f1f5f9;text-align:center;vertical-align:middle}
+.vac-mini-table tr:last-child td{border-bottom:0}
+.vac-mini-table tr:hover{background:#f5f9ff}
+.vac-mini-table .name-cell{text-align:left;font-weight:800;color:#0f172a;padding-left:10px;font-size:13px}
+.vac-mini-table .num-cell{color:#94a3b8;font-weight:700;width:36px}
+.vac-mini-table .badges-cell{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:8px 6px}
+.badge{display:inline-block;padding:3px 8px;border-radius:6px;font-weight:800;font-size:11.5px;letter-spacing:.3px;line-height:1.2;color:#fff;min-width:42px;text-align:center}
+.badge-ov{background:#1f2937;color:#fff}
+.badge-bz{background:#00B0F0;color:#fff}
+.badge-tn{background:#fde047;color:#000}
+.badge-don{background:#FFA500;color:#000}
+.vac-empty{padding:18px;text-align:center;color:#94a3b8;font-style:italic;background:#f8fafc;border-radius:12px}
+
+.vac-months-container{max-width:1100px;margin:18px auto;padding:0 12px}
+.vac-month-panel{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb}
+.vac-month-panel[hidden]{display:none}
+.vac-month-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:linear-gradient(135deg,#1f4e9e 0%,#2563eb 100%);color:#fff}
+.vac-month-title{font-size:18px;font-weight:900;letter-spacing:.5px}
+.vac-month-count{font-size:11.5px;background:rgba(255,255,255,.22);padding:4px 11px;border-radius:999px;font-weight:700}
+.vac-mini-table{width:100%;border-collapse:collapse;font-size:13px}
+.vac-mini-table th{background:#f5f9ff;color:#1f2937;padding:9px 8px;text-align:center;font-size:11px;font-weight:900;border-bottom:1px solid #e5e7eb;letter-spacing:.3px}
+.vac-mini-table td{padding:9px 8px;border-bottom:1px solid #f1f5f9;text-align:center;vertical-align:middle}
+.vac-mini-table tr:last-child td{border-bottom:0}
+.vac-mini-table tr:hover{background:#f5f9ff}
+.vac-mini-table .name-cell{text-align:left;font-weight:800;color:#0f172a;padding-left:12px;font-size:13.5px}
+.vac-mini-table .num-cell{color:#94a3b8;font-weight:700;width:36px}
+.vac-mini-table .badges-cell{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;padding:9px 8px}
+.badge{display:inline-block;padding:4px 10px;border-radius:6px;font-weight:900;font-size:12px;letter-spacing:.4px;line-height:1.2;color:#fff;min-width:48px;text-align:center}
+.badge-ov{background:#1f2937;color:#fff}
+.badge-bz{background:#00B0F0;color:#fff}
+.badge-tn{background:#fde047;color:#000}
+.badge-don{background:#FFA500;color:#000}
+.vac-empty{padding:32px 18px;text-align:center;color:#94a3b8;font-style:italic;background:#f8fafc}
+
+.vac-months-container{max-width:1100px;margin:18px auto;padding:0 12px}
+.vac-month-panel{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e5e7eb}
+.vac-month-panel[hidden]{display:none}
+.vac-month-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:linear-gradient(135deg,#1f4e9e 0%,#2563eb 100%);color:#fff}
+.vac-month-title{font-size:18px;font-weight:900;letter-spacing:.5px}
+.vac-month-count{font-size:11.5px;background:rgba(255,255,255,.22);padding:4px 11px;border-radius:999px;font-weight:700}
+.vac-mini-table{width:100%;border-collapse:collapse;font-size:13px}
+.vac-mini-table th{background:#f5f9ff;color:#1f2937;padding:9px 8px;text-align:center;font-size:11px;font-weight:900;border-bottom:1px solid #e5e7eb;letter-spacing:.3px}
+.vac-mini-table td{padding:9px 8px;border-bottom:1px solid #f1f5f9;text-align:center;vertical-align:middle}
+.vac-mini-table tr:last-child td{border-bottom:0}
+.vac-mini-table tr:hover{background:#f5f9ff}
+.vac-mini-table .name-cell{text-align:left;font-weight:800;color:#0f172a;padding-left:12px;font-size:13.5px}
+.vac-mini-table .num-cell{color:#94a3b8;font-weight:700;width:36px}
+.vac-mini-table .badges-cell{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;padding:9px 8px}
+.badge{display:inline-block;padding:4px 10px;border-radius:6px;font-weight:900;font-size:12px;letter-spacing:.4px;line-height:1.2;color:#fff;min-width:48px;text-align:center}
+.badge-ov{background:#1f2937;color:#fff}
+.badge-bz{background:#00B0F0;color:#fff}
+.badge-tn{background:#fde047;color:#000}
+.badge-don{background:#FFA500;color:#000}
+.vac-empty{padding:32px 18px;text-align:center;color:#94a3b8;font-style:italic;background:#f8fafc}
+
+.vac-month-nav{display:flex;justify-content:space-between;align-items:center;padding:6px 14px;background:#f1f5f9;border-bottom:1px solid #e5e7eb;gap:8px}
+.vac-nav-btn{background:#fff;color:#1e40af;padding:5px 10px;border-radius:8px;text-decoration:none;font-weight:900;font-size:11.5px;border:1px solid #c8d6f4;white-space:nowrap;display:inline-block}
+.vac-nav-btn:hover{background:#dbeafe}
+.vac-nav-btn.disabled{color:#94a3b8;border-color:#e5e7eb;background:#f8fafc;cursor:default}
+.vac-nav-spacer{flex:1}
+.vac-mini-table .ov-cell, .vac-mini-table .tn-cell, .vac-mini-table .bz-cell, .vac-mini-table .don-cell{min-width:54px;text-align:center}
+.vac-mini-table .ov-cell:empty, .vac-mini-table .tn-cell:empty, .vac-mini-table .bz-cell:empty, .vac-mini-table .don-cell:empty{background:#fafafa}
+.vac-mini-table .name-cell{min-width:170px}
+</style>
+<link rel="manifest" href="/manifest.json"><link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/trolleybus-center.jpg"><meta name="theme-color" content="#111827"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Контролери КП ЧЕТС"></head><body>
+<div class="site-logos"><img class="logo-left" src="/assets/header-left.jpg" alt="Черкаси"><img class="logo-center" src="/assets/trolleybus-center.jpg" alt="Тролейбус"><img class="logo-right" src="/assets/header-right.jpg" alt="Черкаси — найкраще місто"></div>
+<div class="nav"><a href="/" data-nav="month">Графік на місяць</a><a href="/daily.html" data-nav="daily">Щоденний графік</a><a href="/timesheet.html" data-nav="timesheet">Квиток контролера</a><a href="/transport.html" data-nav="transport">Транспорт</a><a href="/stt.html" data-nav="stt">Звіт СТТ</a><a href="/vacations.html" data-nav="vacations" class="active">Відпустки</a><a href="/districts.html" data-nav="districts">Дільниця</a><a href="/problems.html" data-nav="problems">Проблеми</a><a href="/needs.html" data-nav="needs">Валідатори</a><a href="/archive.html" data-nav="archive">Архів</a><a href="/editor.html" data-nav="editor">Редактор</a></div>
+<h1 style="text-align:center;margin:18px 0 4px;font-size:24px;color:#0f172a">Відпустки 2026</h1>
+<p style="text-align:center;color:#64748b;margin:0 0 14px;font-size:13px">Контролери з відпустками, лікарняними, донорськими днями та БЗ по кожному місяцю</p>
+
+<div class="month-switch">
+<a href="#" onclick="showVacMonth(5); return false;">Травень</a>
+<a href="#" onclick="showVacMonth(6); return false;">Червень</a>
+<a href="#" onclick="showVacMonth(7); return false;">Липень</a>
+<a href="#" onclick="showVacMonth(8); return false;" class="active">Серпень</a>
+<a href="#" onclick="showVacMonth(9); return false;">Вересень</a>
+<a href="#" onclick="showVacMonth(10); return false;">Жовтень</a>
+<a href="#" onclick="showVacMonth(11); return false;">Листопад</a>
+<a href="#" onclick="showVacMonth(12); return false;">Грудень</a>
+</div>
+
+<div class="vac-months-container">
+<div class="vac-month-panel" data-month="05" hidden>
+<div class="vac-month-nav"><span class="vac-nav-btn disabled">‹ —</span><span class="vac-nav-spacer"></span><a class="vac-nav-btn" href="#" onclick="showVacMonth(06); return false;" title="Червень →">Червень ›</a></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Травень 2026</span>
+<span class="vac-month-count">15 контролерів зі статусами</span>
+</div>
+<table class="vac-mini-table">
+<thead>
+<tr><th style="width:36px">№</th><th style="text-align:left;padding-left:10px">Прізвище, ініціали</th><th>Статуси (кількість днів)</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="name-cell">Мельник А.І.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 3</span></td></tr>
+<tr><td class="num-cell">2</td><td class="name-cell">Касьяненко О.А.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span> <span class="badge badge-tn">ТН 19</span></td></tr>
+<tr><td class="num-cell">3</td><td class="name-cell">Добшина Л.В.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span> <span class="badge badge-tn">ТН 5</span></td></tr>
+<tr><td class="num-cell">4</td><td class="name-cell">Перетятько М.О.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">5</td><td class="name-cell">Савченко С.П.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">6</td><td class="name-cell">Тарарєєва М.М.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">7</td><td class="name-cell">Бобух Л.І.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 1</span> <span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">8</td><td class="name-cell">Мотайленко Л.П.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">9</td><td class="name-cell">Юрченко Т.С.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">10</td><td class="name-cell">Хорошковська О.М.</td><td class="badges-cell"><span class="badge badge-don">Дон 1</span></td></tr>
+<tr><td class="num-cell">11</td><td class="name-cell">Саковець О.В.</td><td class="badges-cell"><span class="badge badge-tn">ТН 29</span></td></tr>
+<tr><td class="num-cell">12</td><td class="name-cell">Дибля Н.А.</td><td class="badges-cell"><span class="badge badge-tn">ТН 19</span></td></tr>
+<tr><td class="num-cell">13</td><td class="name-cell">Гордійчук І.О.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 20</span></td></tr>
+<tr><td class="num-cell">14</td><td class="name-cell">Карапузова Н.К.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 20</span></td></tr>
+<tr><td class="num-cell">15</td><td class="name-cell">Романенко Л.А.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 14</span> <span class="badge badge-tn">ТН 8</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="vac-month-panel" data-month="06" hidden>
+<div class="vac-month-nav"><a class="vac-nav-btn" href="#" onclick="showVacMonth(05); return false;" title="← Травень">‹ Травень</a><span class="vac-nav-spacer"></span><a class="vac-nav-btn" href="#" onclick="showVacMonth(07); return false;" title="Липень →">Липень ›</a></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Червень 2026</span>
+<span class="vac-month-count">13 контролерів зі статусами</span>
+</div>
+<table class="vac-mini-table">
+<thead>
+<tr><th style="width:36px">№</th><th style="text-align:left;padding-left:10px">Прізвище, ініціали</th><th>Статуси (кількість днів)</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="name-cell">Добшина Л.В.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 6</span> <span class="badge badge-bz">БЗ 3</span></td></tr>
+<tr><td class="num-cell">2</td><td class="name-cell">Романенко Л.А.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 3</span></td></tr>
+<tr><td class="num-cell">3</td><td class="name-cell">Тарарєєва М.М.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 2</span></td></tr>
+<tr><td class="num-cell">4</td><td class="name-cell">Турчанович А.В.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">5</td><td class="name-cell">Яремака Р.В.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">6</td><td class="name-cell">Мельник А.І.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 6</span> <span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">7</td><td class="name-cell">Ковтун Т.П.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 14</span> <span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">8</td><td class="name-cell">Касьяненко О.А.</td><td class="badges-cell"><span class="badge badge-tn">ТН 30</span></td></tr>
+<tr><td class="num-cell">9</td><td class="name-cell">Гавриленко Л.І.</td><td class="badges-cell"><span class="badge badge-tn">ТН 5</span></td></tr>
+<tr><td class="num-cell">10</td><td class="name-cell">Савченко С.П.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 14</span></td></tr>
+<tr><td class="num-cell">11</td><td class="name-cell">Юрченко Т.С.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 11</span></td></tr>
+<tr><td class="num-cell">12</td><td class="name-cell">Саковець О.В.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 9</span> <span class="badge badge-tn">ТН 19</span></td></tr>
+<tr><td class="num-cell">13</td><td class="name-cell">Перетятько М.О.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 10</span> <span class="badge badge-tn">ТН 7</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="vac-month-panel" data-month="07" hidden>
+<div class="vac-month-nav"><a class="vac-nav-btn" href="#" onclick="showVacMonth(06); return false;" title="← Червень">‹ Червень</a><span class="vac-nav-spacer"></span><a class="vac-nav-btn" href="#" onclick="showVacMonth(08); return false;" title="Серпень →">Серпень ›</a></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Липень 2026</span>
+<span class="vac-month-count">15 контролерів зі статусами</span>
+</div>
+<table class="vac-mini-table">
+<thead>
+<tr><th style="width:36px">№</th><th style="text-align:left;padding-left:10px">Прізвище, ініціали</th><th>Статуси (кількість днів)</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="name-cell">Мотайленко Л.П.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 2</span></td></tr>
+<tr><td class="num-cell">2</td><td class="name-cell">Мельник А.І.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">3</td><td class="name-cell">Добшина Л.В.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">4</td><td class="name-cell">Ковтун Т.П.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">5</td><td class="name-cell">Юрченко Т.С.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 17</span> <span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">6</td><td class="name-cell">Хорошковська О.М.</td><td class="badges-cell"><span class="badge badge-don">Дон 3</span></td></tr>
+<tr><td class="num-cell">7</td><td class="name-cell">Гавриленко Л.Є.</td><td class="badges-cell"><span class="badge badge-tn">ТН 8</span></td></tr>
+<tr><td class="num-cell">8</td><td class="name-cell">Перетятько М.О.</td><td class="badges-cell"><span class="badge badge-tn">ТН 3</span></td></tr>
+<tr><td class="num-cell">9</td><td class="name-cell">Затокова Л.М.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 14</span></td></tr>
+<tr><td class="num-cell">10</td><td class="name-cell">Ніколіч А.О.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 12</span></td></tr>
+<tr><td class="num-cell">11</td><td class="name-cell">Пісоцька В.П.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 19</span></td></tr>
+<tr><td class="num-cell">12</td><td class="name-cell">Яремака Р.В.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 26</span></td></tr>
+<tr><td class="num-cell">13</td><td class="name-cell">Іващенко А.А.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 5</span></td></tr>
+<tr><td class="num-cell">14</td><td class="name-cell">Касьяненко О.А.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 14</span> <span class="badge badge-tn">ТН 14</span></td></tr>
+<tr><td class="num-cell">15</td><td class="name-cell">Андрющенко І.В.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 17</span> <span class="badge badge-tn">ТН 8</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="vac-month-panel" data-month="08">
+<div class="vac-month-nav"><a class="vac-nav-btn" href="#" onclick="showVacMonth(07); return false;" title="← Липень">‹ Липень</a><span class="vac-nav-spacer"></span><a class="vac-nav-btn" href="#" onclick="showVacMonth(09); return false;" title="Вересень →">Вересень ›</a></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Серпень 2026</span>
+<span class="vac-month-count">18 контролерів зі статусами</span>
+</div>
+<table class="vac-mini-table">
+<thead>
+<tr><th style="width:36px">№</th><th style="text-align:left;padding-left:10px">Прізвище, ініціали</th><th>Статуси (кількість днів)</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="name-cell">Дибля Н.А.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">2</td><td class="name-cell">Ковтун Т.П.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">3</td><td class="name-cell">Романенко Л.А.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 1</span></td></tr>
+<tr><td class="num-cell">4</td><td class="name-cell">Савченко С.П.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 2</span></td></tr>
+<tr><td class="num-cell">5</td><td class="name-cell">Юрченко Т.С.</td><td class="badges-cell"><span class="badge badge-bz">БЗ 2</span></td></tr>
+<tr><td class="num-cell">6</td><td class="name-cell">Андрющенко І.В.</td><td class="badges-cell"><span class="badge badge-tn">ТН 28</span></td></tr>
+<tr><td class="num-cell">7</td><td class="name-cell">Добшина Л.В.</td><td class="badges-cell"><span class="badge badge-tn">ТН 10</span></td></tr>
+<tr><td class="num-cell">8</td><td class="name-cell">Мельник А.І.</td><td class="badges-cell"><span class="badge badge-tn">ТН 10</span></td></tr>
+<tr><td class="num-cell">9</td><td class="name-cell">Яремака Р.В.</td><td class="badges-cell"><span class="badge badge-tn">ТН 5</span></td></tr>
+<tr><td class="num-cell">10</td><td class="name-cell">Іващенко А.А.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 5</span></td></tr>
+<tr><td class="num-cell">11</td><td class="name-cell">Бобух Л.І.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 1</span></td></tr>
+<tr><td class="num-cell">12</td><td class="name-cell">Касьяненко О.А.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 1</span></td></tr>
+<tr><td class="num-cell">13</td><td class="name-cell">Пісоцька В.П.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 7</span></td></tr>
+<tr><td class="num-cell">14</td><td class="name-cell">Тарарєєва М.М.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 28</span></td></tr>
+<tr><td class="num-cell">15</td><td class="name-cell">Шендрик В.А.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 16</span></td></tr>
+<tr><td class="num-cell">16</td><td class="name-cell">Шраменко В.А.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 14</span></td></tr>
+<tr><td class="num-cell">17</td><td class="name-cell">Ярошенко Л.М.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 28</span></td></tr>
+<tr><td class="num-cell">18</td><td class="name-cell">Мотайленко Л.П.</td><td class="badges-cell"><span class="badge badge-ov">ОВ 14</span> <span class="badge badge-tn">ТН 8</span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="vac-month-panel" data-month="09">
+<div class="vac-month-nav"><a class="vac-nav-btn" href="#" onclick="showVacMonth(08); return false;" title="← Серпень">‹ Серпень</a><span class="vac-nav-spacer"></span><a class="vac-nav-btn" href="#" onclick="showVacMonth(10); return false;" title="Жовтень →">Жовтень ›</a></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Вересень 2026</span>
+<span class="vac-month-count">16 контролерів зі статусами</span>
+</div>
+<table class="vac-mini-table">
+<thead>
+<tr><th style="width:36px">№</th><th style="text-align:left;padding-left:10px">Прізвище, ініціали</th><th>ОВ</th><th>ТН</th><th>БЗ</th><th>дон</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="name-cell">Перетятько М.О.</td><td class="status-cell ov-cell"><span class="badge badge-ov">8</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">2</td><td class="name-cell">Юрченко Т.С.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"><span class="badge badge-bz">1</span></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">3</td><td class="name-cell">Андрющенко І.В.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">24</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">4</td><td class="name-cell">Пісоцька В.П.</td><td class="status-cell ov-cell"><span class="badge badge-ov">2</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">5</td><td class="name-cell">Романенко Л.А.</td><td class="status-cell ov-cell"><span class="badge badge-ov">13</span></td><td class="status-cell tn-cell"><span class="badge badge-tn">5</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">6</td><td class="name-cell">Мотайленко Л.П.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">1</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">7</td><td class="name-cell">Яремака Р.В.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"><span class="badge badge-bz">1</span></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">8</td><td class="name-cell">Гавриленко Л.І.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">7</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">9</td><td class="name-cell">Добшина Л.В.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">8</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">10</td><td class="name-cell">Ковтун Т.П.</td><td class="status-cell ov-cell"><span class="badge badge-ov">8</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"><span class="badge badge-bz">1</span></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">11</td><td class="name-cell">Савченко С.П.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"><span class="badge badge-bz">9</span></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">12</td><td class="name-cell">Битко І.В.</td><td class="status-cell ov-cell"><span class="badge badge-ov">15</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">13</td><td class="name-cell">Бобух Л.І.</td><td class="status-cell ov-cell"><span class="badge badge-ov">11</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">14</td><td class="name-cell">Дибля Н.А.</td><td class="status-cell ov-cell"><span class="badge badge-ov">10</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">15</td><td class="name-cell">Касьяненко О.А.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">3</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">16</td><td class="name-cell">Магльована О.М.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"><span class="badge badge-bz">2</span></td><td class="status-cell don-cell"></td></tr>
+</tbody>
+</table>
+</div><div class="vac-month-panel" data-month="10">
+<div class="vac-month-nav"><a class="vac-nav-btn" href="#" onclick="showVacMonth(09); return false;" title="← Вересень">‹ Вересень</a><span class="vac-nav-spacer"></span><a class="vac-nav-btn" href="#" onclick="showVacMonth(11); return false;" title="Листопад →">Листопад ›</a></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Жовтень 2026</span>
+<span class="vac-month-count">10 контролерів зі статусами</span>
+</div>
+<table class="vac-mini-table">
+<thead>
+<tr><th style="width:36px">№</th><th style="text-align:left;padding-left:10px">Прізвище, ініціали</th><th>ОВ</th><th>ТН</th><th>БЗ</th><th>дон</th></tr>
+</thead>
+<tbody>
+<tr><td class="num-cell">1</td><td class="name-cell">Гордійчук І.О.</td><td class="status-cell ov-cell"><span class="badge badge-ov">6</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">2</td><td class="name-cell">Карапузова Н.К.</td><td class="status-cell ov-cell"><span class="badge badge-ov">6</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">3</td><td class="name-cell">Добшина Л.В.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">2</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">4</td><td class="name-cell">Битко І.В.</td><td class="status-cell ov-cell"><span class="badge badge-ov">5</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">5</td><td class="name-cell">Касьяненко О.А.</td><td class="status-cell ov-cell"><span class="badge badge-ov">1</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">6</td><td class="name-cell">Юрченко Т.С.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"><span class="badge badge-bz">1</span></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">7</td><td class="name-cell">Романенко Л.А.</td><td class="status-cell ov-cell"><span class="badge badge-ov">1</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"><span class="badge badge-bz">1</span></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">8</td><td class="name-cell">Мотайленко Л.П.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">2</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">9</td><td class="name-cell">Андрющенко І.В.</td><td class="status-cell ov-cell"></td><td class="status-cell tn-cell"><span class="badge badge-tn">8</span></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr><tr><td class="num-cell">10</td><td class="name-cell">Турчанович А.В.</td><td class="status-cell ov-cell"><span class="badge badge-ov">10</span></td><td class="status-cell tn-cell"></td><td class="status-cell bz-cell"></td><td class="status-cell don-cell"></td></tr>
+</tbody>
+</table>
+</div><div class="vac-month-panel" data-month="11" hidden>
+<div class="vac-month-nav"><a class="vac-nav-btn" href="#" onclick="showVacMonth(10); return false;" title="← Жовтень">‹ Жовтень</a><span class="vac-nav-spacer"></span><a class="vac-nav-btn" href="#" onclick="showVacMonth(12); return false;" title="Грудень →">Грудень ›</a></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Листопад 2026</span>
+<span class="vac-month-count">0 контролерів</span>
+</div>
+<div class="vac-empty">Немає даних про статуси (відпустки, лікарняні, БЗ, донорські) для листопада 2026.</div>
+</div>
+<div class="vac-month-panel" data-month="12" hidden>
+<div class="vac-month-nav"><a class="vac-nav-btn" href="#" onclick="showVacMonth(11); return false;" title="← Листопад">‹ Листопад</a><span class="vac-nav-spacer"></span><span class="vac-nav-btn disabled">— ›</span></div>
+<div class="vac-month-header">
+<span class="vac-month-title">Грудень 2026</span>
+<span class="vac-month-count">0 контролерів</span>
+</div>
+<div class="vac-empty">Немає даних про статуси (відпустки, лікарняні, БЗ, донорські) для груденьа 2026.</div>
+</div>
+</div>
+<script>
+function showVacMonth(m){
+  const map={5:'Травень',6:'Червень',7:'Липень',8:'Серпень',9:'Вересень',10:'Жовтень',11:'Листопад',12:'Грудень'};
+  const target='0'+m;
+  document.querySelectorAll('.month-switch a').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('.month-switch a').forEach(l=>{
+    if(l.textContent.trim()===map[m])l.classList.add('active');
+  });
+  document.querySelectorAll('.vac-month-panel').forEach(p=>{
+    p.hidden = (p.getAttribute('data-month')!==target);
+  });
+}
+</script>
+
+<script src="/assets/month-redirect.js"></script>
+<script src="/assets/vacations-auto-month.js"></script>
+<script src="/assets/birthday-notify.js" defer></script>
+<script src="/assets/month-redirect.js" defer></script>
+</body></html>

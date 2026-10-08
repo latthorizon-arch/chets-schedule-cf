@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Контролери КП ЧЕТС">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#111827"><link rel="manifest" href="/manifest.json"><link rel="apple-touch-icon" href="/assets/trolleybus-center.jpg"><title>Редактор КП ЧЕТС</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef2f7;color:#1f2937;padding:8px}.container{max-width:1500px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 14px rgba(0,0,0,.12);padding:12px;min-height:96vh}.nav{display:flex;gap:14px;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;margin-bottom:10px;position:sticky;top:0;z-index:999;background:rgba(255,255,255,.98);padding:8px;border-bottom:1px solid #e5e7eb}.nav a{background:#4472C4;color:#fff;text-decoration:none;padding:8px 10px;border-radius:8px;font-size:12px;font-weight:900;white-space:nowrap}.nav a.active{background:#1f4e9e}h1{text-align:center;margin:8px 0 4px}.hint{text-align:center;color:#667085;margin:0 0 10px}.site-logos{display:grid;grid-template-columns:minmax(170px,1.3fr) auto minmax(170px,1.3fr);align-items:center;gap:10px;min-height:46px;pointer-events:none}.site-logos img{display:block;object-fit:contain;opacity:.94;filter:grayscale(100%);width:auto}.logo-left{justify-self:start;max-width:260px;max-height:40px}.logo-center{justify-self:center;max-width:130px;max-height:58px}.logo-right{justify-self:end;max-width:300px;max-height:40px}.tabs{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:8px 0 10px}button{border:0;border-radius:8px;background:#1f4e9e;color:white;font-weight:900;padding:9px 11px;cursor:pointer}button.secondary{background:#64748b}button.good{background:#15803d}button.warn{background:#d97706}button.red{background:#b42318}button.light{background:#eef3ff;color:#1f4e9e;border:1px solid #cbdcff}.tabs button.active{background:#111827;color:white}input,select,textarea{border:1px solid #cbd5e1;border-radius:8px;padding:9px;background:#fff;font:inherit}select,input{min-height:38px}textarea{width:100%;min-height:360px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px}.panel{border:1px solid #d8dee9;border-radius:12px;background:#fbfdff;padding:12px;margin:10px 0}.toolbar{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:8px 0}.toolbar label{font-weight:900;color:#344054}.toolbar input[type=color]{width:46px;height:38px;padding:2px}.row{display:grid;grid-template-columns:125px 1fr;gap:8px;align-items:center;margin:7px 0}.row label{font-weight:900}.status{white-space:pre-wrap;margin-top:8px;padding:9px;border-radius:8px;background:#eef3ff;color:#1f4e9e;font-weight:800}.status.ok{background:#ecfdf3;color:#027a48}.status.err{background:#fef3f2;color:#b42318}.hidden{display:none!important}.visual-frame{width:100%;height:70vh;border:2px solid #1f4e9e;border-radius:10px;background:white}.queue-item{display:flex;justify-content:space-between;gap:8px;align-items:center;border:1px solid #d8dee9;background:#fff;border-radius:10px;padding:9px;margin:7px 0}.small{font-size:13px;color:#667085;line-height:1.45}.notice{background:#fff7dc;border:1px solid #f6d365;border-radius:10px;padding:9px;line-height:1.45}.picked{outline:3px solid #ef4444!important;outline-offset:-3px!important}.save-main{font-size:16px;padding:12px 16px;background:#047857!important}.savebar{position:sticky;top:46px;z-index:998;background:#fff;border:2px solid #10b981;border-radius:10px;padding:8px;margin:8px 0;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.page-picker{display:grid;grid-template-columns:160px 1fr auto;gap:8px;align-items:end;margin:8px 0}.page-picker label{font-weight:900;color:#334155}.page-picker input{width:100%}.page-note{font-size:13px;color:#64748b;margin-top:4px}.creator-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.creator-card{border:1px solid #d8dee9;border-radius:12px;background:#fff;padding:12px;box-shadow:0 1px 5px rgba(0,0,0,.05)}.creator-card h3{margin:0 0 6px;color:#1f4e9e}.creator-pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:10px}.pair-editor{display:grid;grid-template-columns:42px 1fr 1fr 110px;gap:6px;align-items:center;margin:5px 0}.pair-editor b{color:#1f4e9e;text-align:center}.status-select-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}.status-select-block{border:1px solid #e2e8f0;border-radius:10px;background:#f8fbff;padding:8px}.status-select-block h4{margin:0 0 6px;color:#1f4e9e;font-size:13px}.status-select-block select{width:100%;margin:3px 0;padding:7px;min-height:34px}.creator-preview{width:100%;height:520px;border:1px solid #cbd5e1;border-radius:10px;background:white;display:block}.creator-output{min-height:180px}.creator-small{font-size:12px;color:#64748b;font-weight:700}.creator-actions{position:sticky;top:54px;background:#fbfdff;padding:8px;border:1px solid #e5e7eb;border-radius:10px;z-index:20}@media(max-width:700px){.pair-editor{grid-template-columns:36px 1fr}.pair-editor select{grid-column:2}.creator-preview{height:64vh}}@media(max-width:700px){.page-picker{grid-template-columns:1fr}.page-picker button{width:100%}}@media(max-width:700px){.row{grid-template-columns:1fr}.visual-frame{height:64vh}.toolbar{gap:5px}button{padding:8px 9px}}
+/* fixed top menu */
+/* fixed top menu: same position on every page */
+body{padding-top:58px!important}
+.nav{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:5000!important;margin:0!important;display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;align-items:center!important;gap:6px!important;overflow-x:auto!important;background:rgba(255,255,255,.98)!important;border-bottom:1px solid #d7deea!important;box-shadow:0 2px 8px rgba(15,23,42,.10)!important;padding:8px 10px!important;scrollbar-width:thin!important;border-radius:0!important}
+.nav a{flex:0 0 auto!important;white-space:nowrap!important}
+@media print{body{padding-top:0!important}.nav{display:none!important}}
+
+/* centered fixed top menu */
+/* centered fixed top menu */
+.nav{justify-content:center!important;text-align:center!important}
+.nav a{text-align:center!important}
+.install-floating{position:fixed!important;top:6px!important;right:6px!important;z-index:5000!important;display:inline-flex!important;align-items:center!important;gap:5px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:6px 10px!important;border:2px solid #111827!important;box-shadow:0 8px 20px rgba(17,24,39,.22)!important;font-size:12px!important;line-height:1!important;cursor:pointer!important}.install-floating img{width:28px!important;height:18px!important;object-fit:contain!important}.install-floating span{line-height:1!important}.install-popup{top:46px!important;right:6px!important;z-index:5001!important}
+
+/* compact install button: between menu and header logos */
+.install-floating{position:fixed!important;top:44px!important;right:10px!important;z-index:9000!important;display:inline-flex!important;align-items:center!important;gap:3px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:3px 6px!important;border:1px solid #111827!important;box-shadow:0 4px 10px rgba(17,24,39,.16)!important;font-size:9px!important;line-height:1!important;cursor:pointer!important}
+.install-floating img{width:18px!important;height:12px!important;object-fit:contain!important}.install-floating span{line-height:1!important}
+.install-popup{position:fixed!important;top:68px!important;right:6px!important;z-index:9001!important}
+@media(max-width:700px){.install-floating{top:44px!important;right:10px!important;padding:3px 5px!important;font-size:9px!important}.install-floating img{width:17px!important;height:11px!important}.install-popup{top:68px!important;right:6px!important}}
+.nav{padding-right:0!important;box-sizing:border-box!important}
+</style></head><body class="locked"><a href="/install.html" class="install-floating" title="Встановити КП ЧЕТС як кнопку"><img src="/assets/trolleybus-center.jpg" alt=""><span>Кнопка</span></a>
+
+<div class="container"><div class="nav"><a href="/">Графік на місяць</a><a href="/daily.html">Щоденний графік</a><a href="/timesheet.html">Квиток контролера</a><a href="/transport.html" data-nav="transport">Транспорт</a><a href="/stt.html">Звіт СТТ</a><a href="/vacations.html">Відпустки</a><a href="/districts.html">Дільниця</a><a href="/problems.html">Проблеми</a><a href="/needs.html">Валідатори</a><a href="/archive.html">Архів</a><a class="active" href="/editor.html">Редактор</a></div><div class="site-logos"><img class="logo-left" src="/assets/header-left.jpg"><img class="logo-center" src="/assets/trolleybus-center.jpg"><img class="logo-right" src="/assets/header-right.jpg"></div><h1>Редактор КП ЧЕТС</h1><p class="hint">Вибрав сторінку → клікнув клітинку/текст → змінив → зберіг локально або опублікував.</p>
+<div class="panel"><button id="cacheNow" class="warn" style="font-size:15px;padding:10px">📦 Підготувати весь сайт офлайн</button><div id="netStatus" class="status">Перевіряю...</div></div>
+<div class="tabs"><button data-tab="visual" class="active">Візуальне редагування</button><button data-tab="creator">Створення / Creator</button><button data-tab="queue">Папка чернеток</button><button data-tab="source">HTML / код</button><button data-tab="help">Інструкція</button></div>
+<section id="tab-visual" class="tab"><div class="panel"><h2>Сторінка</h2><div class="page-picker"><div><label>Розділ</label><select id="visualCategory"><option value="all">Всі сторінки</option></select></div><div><label>Швидкий пошук</label><input id="visualPageSearch" placeholder="Наприклад: табель, дільниця, 8 червня, квиток 15.06"></div><button type="button" id="visualClearPage" class="secondary">Очистити</button></div><div class="page-note">Вибирай сторінку за нормальною назвою — URL копіювати не треба.</div><div class="row"><label>Вибрати</label><select id="visualPath"><option value="index.html">index.html</option>
+<option value="months/2026-05.html">months/2026-05.html</option>
+<option value="months/2026-06.html">months/2026-06.html</option>
+<option value="daily.html">daily.html</option>
+<option value="districts.html">districts.html</option>
+<option value="timesheet.html">timesheet.html</option>
+<option value="stt.html">stt.html</option>
+<option value="vacations.html">vacations.html</option>
+<option value="problems.html">problems.html</option>
+<option value="needs.html">needs.html</option>
+<option value="archive.html">archive.html</option>
+<option value="emergency.html">emergency.html</option>
+<option value="RESTORE_README.txt">RESTORE_README.txt</option>
+<option value="assets/data/controller-tickets.json">assets/data/controller-tickets.json</option>
+<option value="assets/data/editor-test.json">assets/data/editor-test.json</option>
+<option value="assets/editor-config.json">assets/editor-config.json</option>
+<option value="assets/save-page.js">assets/save-page.js</option>
+<option value="assets/site-operations.json">assets/site-operations.json</option>
+<option value="daily/01.05.26.html">daily/01.05.26.html</option>
+<option value="daily/02.05.26.html">daily/02.05.26.html</option>
+<option value="daily/03.05.26.html">daily/03.05.26.html</option>
+<option value="daily/04.05.26.html">daily/04.05.26.html</option>
+<option value="daily/05.05.26.html">daily/05.05.26.html</option>
+<option value="daily/06.05.26.html">daily/06.05.26.html</option>
+<option value="daily/07.05.26.html">daily/07.05.26.html</option>
+<option value="daily/08.05.26.html">daily/08.05.26.html</option>
+<option value="daily/09.05.26.html">daily/09.05.26.html</option>
+<option value="daily/10.05.26.html">daily/10.05.26.html</option>
+<option value="daily/11.05.26.html">daily/11.05.26.html</option>
+<option value="daily/12.05.26.html">daily/12.05.26.html</option>
+<option value="daily/13.05.26.html">daily/13.05.26.html</option>
+<option value="daily/14.05.26.html">daily/14.05.26.html</option>
+<option value="daily/15.05.26.html">daily/15.05.26.html</option>
+<option value="daily/16.05.26.html">daily/16.05.26.html</option>
+<option value="daily/17.05.26.html">daily/17.05.26.html</option>
+<option value="daily/18.05.26.html">daily/18.05.26.html</option>
+<option value="daily/19.05.26.html">daily/19.05.26.html</option>
+<option value="daily/20.05.26.html">daily/20.05.26.html</option>
+<option value="daily/2026-06.html">daily/2026-06.html</option>
+<option value="daily/2026-07.html">daily/2026-07.html</option>
+<option value="daily/2026-08.html">daily/2026-08.html</option>
+<option value="daily/2026-09.html">daily/2026-09.html</option>
+<option value="daily/2026-10.html">daily/2026-10.html</option>
+<option value="daily/2026-11.html">daily/2026-11.html</option>
+<option value="daily/2026-12.html">daily/2026-12.html</option>
+<option value="daily/21.05.26.html">daily/21.05.26.html</option>
+<option value="daily/22.05.26.html">daily/22.05.26.html</option>
+<option value="daily/23.05.26.html">daily/23.05.26.html</option>
+<option value="daily/24.05.26.html">daily/24.05.26.html</option>
+<option value="daily/25.05.26.html">daily/25.05.26.html</option>
+<option value="daily/26.05.26.html">daily/26.05.26.html</option>
+<option value="daily/27.05.26.html">daily/27.05.26.html</option>
+<option value="daily/28.05.26.html">daily/28.05.26.html</option>
+<option value="daily/29.05.26.html">daily/29.05.26.html</option>
+<option value="daily/30.05.26.html">daily/30.05.26.html</option>
+<option value="daily/31.05.26.html">daily/31.05.26.html</option>
+<option value="install.html">install.html</option>
+<option value="manifest.json">manifest.json</option>
+<option value="months/2026-07.html">months/2026-07.html</option>
+<option value="months/2026-08.html">months/2026-08.html</option>
+<option value="months/2026-09.html">months/2026-09.html</option>
+<option value="months/2026-10.html">months/2026-10.html</option>
+<option value="months/2026-11.html">months/2026-11.html</option>
+<option value="months/2026-12.html">months/2026-12.html</option>
+<option value="service-worker.js">service-worker.js</option>
+<option value="stt/01.05.26.html">stt/01.05.26.html</option>
+<option value="stt/02.05.26.html">stt/02.05.26.html</option>
+<option value="stt/03.05.26.html">stt/03.05.26.html</option>
+<option value="stt/04.05.26.html">stt/04.05.26.html</option>
+<option value="stt/05.05.26.html">stt/05.05.26.html</option>
+<option value="stt/06.05.26.html">stt/06.05.26.html</option>
+<option value="stt/07.05.26.html">stt/07.05.26.html</option>
+<option value="stt/08.05.26.html">stt/08.05.26.html</option>
+<option value="stt/09.05.26.html">stt/09.05.26.html</option>
+<option value="stt/10.05.26.html">stt/10.05.26.html</option>
+<option value="stt/11.05.26.html">stt/11.05.26.html</option>
+<option value="stt/12.05.26.html">stt/12.05.26.html</option>
+<option value="stt/13.05.26.html">stt/13.05.26.html</option>
+<option value="stt/14.05.26.html">stt/14.05.26.html</option>
+<option value="stt/15.05.26.html">stt/15.05.26.html</option>
+<option value="stt/16.05.26.html">stt/16.05.26.html</option>
+<option value="stt/17.05.26.html">stt/17.05.26.html</option>
+<option value="stt/18.05.26.html">stt/18.05.26.html</option>
+<option value="stt/19.05.26.html">stt/19.05.26.html</option>
+<option value="stt/20.05.26.html">stt/20.05.26.html</option>
+<option value="stt/21.05.26.html">stt/21.05.26.html</option>
+<option value="stt/22.05.26.html">stt/22.05.26.html</option>
+<option value="stt/23.05.26.html">stt/23.05.26.html</option>
+<option value="stt/24.05.26.html">stt/24.05.26.html</option>
+<option value="stt/25.05.26.html">stt/25.05.26.html</option>
+<option value="stt/26.05.26.html">stt/26.05.26.html</option>
+<option value="stt/27.05.26.html">stt/27.05.26.html</option>
+<option value="stt/28.05.26.html">stt/28.05.26.html</option>
+<option value="stt/29.05.26.html">stt/29.05.26.html</option>
+<option value="stt/30.05.26.html">stt/30.05.26.html</option>
+<option value="stt/31.05.26.html">stt/31.05.26.html</option>
+<option value="tickets/01.05.26.html">tickets/01.05.26.html</option>
+<option value="tickets/01.06.26.html">tickets/01.06.26.html</option>
+<option value="tickets/01.07.26.html">tickets/01.07.26.html</option>
+<option value="tickets/01.08.26.html">tickets/01.08.26.html</option>
+<option value="tickets/01.09.26.html">tickets/01.09.26.html</option>
+<option value="tickets/01.10.26.html">tickets/01.10.26.html</option>
+<option value="tickets/01.11.26.html">tickets/01.11.26.html</option>
+<option value="tickets/01.12.26.html">tickets/01.12.26.html</option>
+<option value="tickets/02.05.26.html">tickets/02.05.26.html</option>
+<option value="tickets/02.06.26.html">tickets/02.06.26.html</option>
+<option value="tickets/02.07.26.html">tickets/02.07.26.html</option>
+<option value="tickets/02.08.26.html">tickets/02.08.26.html</option>
+<option value="tickets/02.09.26.html">tickets/02.09.26.html</option>
+<option value="tickets/02.10.26.html">tickets/02.10.26.html</option>
+<option value="tickets/02.11.26.html">tickets/02.11.26.html</option>
+<option value="tickets/02.12.26.html">tickets/02.12.26.html</option>
+<option value="tickets/03.05.26.html">tickets/03.05.26.html</option>
+<option value="tickets/03.06.26.html">tickets/03.06.26.html</option>
+<option value="tickets/03.07.26.html">tickets/03.07.26.html</option>
+<option value="tickets/03.08.26.html">tickets/03.08.26.html</option>
+<option value="tickets/03.09.26.html">tickets/03.09.26.html</option>
+<option value="tickets/03.10.26.html">tickets/03.10.26.html</option>
+<option value="tickets/03.11.26.html">tickets/03.11.26.html</option>
+<option value="tickets/03.12.26.html">tickets/03.12.26.html</option>
+<option value="tickets/04.05.26.html">tickets/04.05.26.html</option>
+<option value="tickets/04.06.26.html">tickets/04.06.26.html</option>
+<option value="tickets/04.07.26.html">tickets/04.07.26.html</option>
+<option value="tickets/04.08.26.html">tickets/04.08.26.html</option>
+<option value="tickets/04.09.26.html">tickets/04.09.26.html</option>
+<option value="tickets/04.10.26.html">tickets/04.10.26.html</option>
+<option value="tickets/04.11.26.html">tickets/04.11.26.html</option>
+<option value="tickets/04.12.26.html">tickets/04.12.26.html</option>
+<option value="tickets/05.05.26.html">tickets/05.05.26.html</option>
+<option value="tickets/05.06.26.html">tickets/05.06.26.html</option>
+<option value="tickets/05.07.26.html">tickets/05.07.26.html</option>
+<option value="tickets/05.08.26.html">tickets/05.08.26.html</option>
+<option value="tickets/05.09.26.html">tickets/05.09.26.html</option>
+<option value="tickets/05.10.26.html">tickets/05.10.26.html</option>
+<option value="tickets/05.11.26.html">tickets/05.11.26.html</option>
+<option value="tickets/05.12.26.html">tickets/05.12.26.html</option>
+<option value="tickets/06.05.26.html">tickets/06.05.26.html</option>
+<option value="tickets/06.06.26.html">tickets/06.06.26.html</option>
+<option value="tickets/06.07.26.html">tickets/06.07.26.html</option>
+<option value="tickets/06.08.26.html">tickets/06.08.26.html</option>
+<option value="tickets/06.09.26.html">tickets/06.09.26.html</option>
+<option value="tickets/06.10.26.html">tickets/06.10.26.html</option>
+<option value="tickets/06.11.26.html">tickets/06.11.26.html</option>
+<option value="tickets/06.12.26.html">tickets/06.12.26.html</option>
+<option value="tickets/07.05.26.html">tickets/07.05.26.html</option>
+<option value="tickets/07.06.26.html">tickets/07.06.26.html</option>
+<option value="tickets/07.07.26.html">tickets/07.07.26.html</option>
+<option value="tickets/07.08.26.html">tickets/07.08.26.html</option>
+<option value="tickets/07.09.26.html">tickets/07.09.26.html</option>
+<option value="tickets/07.10.26.html">tickets/07.10.26.html</option>
+<option value="tickets/07.11.26.html">tickets/07.11.26.html</option>
+<option value="tickets/07.12.26.html">tickets/07.12.26.html</option>
+<option value="tickets/08.05.26.html">tickets/08.05.26.html</option>
+<option value="tickets/08.06.26.html">tickets/08.06.26.html</option>
+<option value="tickets/08.07.26.html">tickets/08.07.26.html</option>
+<option value="tickets/08.08.26.html">tickets/08.08.26.html</option>
+<option value="tickets/08.09.26.html">tickets/08.09.26.html</option>
+<option value="tickets/08.10.26.html">tickets/08.10.26.html</option>
+<option value="tickets/08.11.26.html">tickets/08.11.26.html</option>
+<option value="tickets/08.12.26.html">tickets/08.12.26.html</option>
+<option value="tickets/09.05.26.html">tickets/09.05.26.html</option>
+<option value="tickets/09.06.26.html">tickets/09.06.26.html</option>
+<option value="tickets/09.07.26.html">tickets/09.07.26.html</option>
+<option value="tickets/09.08.26.html">tickets/09.08.26.html</option>
+<option value="tickets/09.09.26.html">tickets/09.09.26.html</option>
+<option value="tickets/09.10.26.html">tickets/09.10.26.html</option>
+<option value="tickets/09.11.26.html">tickets/09.11.26.html</option>
+<option value="tickets/09.12.26.html">tickets/09.12.26.html</option>
+<option value="tickets/10.05.26.html">tickets/10.05.26.html</option>
+<option value="tickets/10.06.26.html">tickets/10.06.26.html</option>
+<option value="tickets/10.07.26.html">tickets/10.07.26.html</option>
+<option value="tickets/10.08.26.html">tickets/10.08.26.html</option>
+<option value="tickets/10.09.26.html">tickets/10.09.26.html</option>
+<option value="tickets/10.10.26.html">tickets/10.10.26.html</option>
+<option value="tickets/10.11.26.html">tickets/10.11.26.html</option>
+<option value="tickets/10.12.26.html">tickets/10.12.26.html</option>
+<option value="tickets/11.05.26.html">tickets/11.05.26.html</option>
+<option value="tickets/11.06.26.html">tickets/11.06.26.html</option>
+<option value="tickets/11.07.26.html">tickets/11.07.26.html</option>
+<option value="tickets/11.08.26.html">tickets/11.08.26.html</option>
+<option value="tickets/11.09.26.html">tickets/11.09.26.html</option>
+<option value="tickets/11.10.26.html">tickets/11.10.26.html</option>
+<option value="tickets/11.11.26.html">tickets/11.11.26.html</option>
+<option value="tickets/11.12.26.html">tickets/11.12.26.html</option>
+<option value="tickets/12.05.26.html">tickets/12.05.26.html</option>
+<option value="tickets/12.06.26.html">tickets/12.06.26.html</option>
+<option value="tickets/12.07.26.html">tickets/12.07.26.html</option>
+<option value="tickets/12.08.26.html">tickets/12.08.26.html</option>
+<option value="tickets/12.09.26.html">tickets/12.09.26.html</option>
+<option value="tickets/12.10.26.html">tickets/12.10.26.html</option>
+<option value="tickets/12.11.26.html">tickets/12.11.26.html</option>
+<option value="tickets/12.12.26.html">tickets/12.12.26.html</option>
+<option value="tickets/13.05.26.html">tickets/13.05.26.html</option>
+<option value="tickets/13.06.26.html">tickets/13.06.26.html</option>
+<option value="tickets/13.07.26.html">tickets/13.07.26.html</option>
+<option value="tickets/13.08.26.html">tickets/13.08.26.html</option>
+<option value="tickets/13.09.26.html">tickets/13.09.26.html</option>
+<option value="tickets/13.10.26.html">tickets/13.10.26.html</option>
+<option value="tickets/13.11.26.html">tickets/13.11.26.html</option>
+<option value="tickets/13.12.26.html">tickets/13.12.26.html</option>
+<option value="tickets/14.05.26.html">tickets/14.05.26.html</option>
+<option value="tickets/14.06.26.html">tickets/14.06.26.html</option>
+<option value="tickets/14.07.26.html">tickets/14.07.26.html</option>
+<option value="tickets/14.08.26.html">tickets/14.08.26.html</option>
+<option value="tickets/14.09.26.html">tickets/14.09.26.html</option>
+<option value="tickets/14.10.26.html">tickets/14.10.26.html</option>
+<option value="tickets/14.11.26.html">tickets/14.11.26.html</option>
+<option value="tickets/14.12.26.html">tickets/14.12.26.html</option>
+<option value="tickets/15.05.26.html">tickets/15.05.26.html</option>
+<option value="tickets/15.06.26.html">tickets/15.06.26.html</option>
+<option value="tickets/15.07.26.html">tickets/15.07.26.html</option>
+<option value="tickets/15.08.26.html">tickets/15.08.26.html</option>
+<option value="tickets/15.09.26.html">tickets/15.09.26.html</option>
+<option value="tickets/15.10.26.html">tickets/15.10.26.html</option>
+<option value="tickets/15.11.26.html">tickets/15.11.26.html</option>
+<option value="tickets/15.12.26.html">tickets/15.12.26.html</option>
+<option value="tickets/16.05.26.html">tickets/16.05.26.html</option>
+<option value="tickets/16.06.26.html">tickets/16.06.26.html</option>
+<option value="tickets/16.07.26.html">tickets/16.07.26.html</option>
+<option value="tickets/16.08.26.html">tickets/16.08.26.html</option>
+<option value="tickets/16.09.26.html">tickets/16.09.26.html</option>
+<option value="tickets/16.10.26.html">tickets/16.10.26.html</option>
+<option value="tickets/16.11.26.html">tickets/16.11.26.html</option>
+<option value="tickets/16.12.26.html">tickets/16.12.26.html</option>
+<option value="tickets/17.05.26.html">tickets/17.05.26.html</option>
+<option value="tickets/17.06.26.html">tickets/17.06.26.html</option>
+<option value="tickets/17.07.26.html">tickets/17.07.26.html</option>
+<option value="tickets/17.08.26.html">tickets/17.08.26.html</option>
+<option value="tickets/17.09.26.html">tickets/17.09.26.html</option>
+<option value="tickets/17.10.26.html">tickets/17.10.26.html</option>
+<option value="tickets/17.11.26.html">tickets/17.11.26.html</option>
+<option value="tickets/17.12.26.html">tickets/17.12.26.html</option>
+<option value="tickets/18.05.26.html">tickets/18.05.26.html</option>
+<option value="tickets/18.06.26.html">tickets/18.06.26.html</option>
+<option value="tickets/18.07.26.html">tickets/18.07.26.html</option>
+<option value="tickets/18.08.26.html">tickets/18.08.26.html</option>
+<option value="tickets/18.09.26.html">tickets/18.09.26.html</option>
+<option value="tickets/18.10.26.html">tickets/18.10.26.html</option>
+<option value="tickets/18.11.26.html">tickets/18.11.26.html</option>
+<option value="tickets/18.12.26.html">tickets/18.12.26.html</option>
+<option value="tickets/19.05.26.html">tickets/19.05.26.html</option>
+<option value="tickets/19.06.26.html">tickets/19.06.26.html</option>
+<option value="tickets/19.07.26.html">tickets/19.07.26.html</option>
+<option value="tickets/19.08.26.html">tickets/19.08.26.html</option>
+<option value="tickets/19.09.26.html">tickets/19.09.26.html</option>
+<option value="tickets/19.10.26.html">tickets/19.10.26.html</option>
+<option value="tickets/19.11.26.html">tickets/19.11.26.html</option>
+<option value="tickets/19.12.26.html">tickets/19.12.26.html</option>
+<option value="tickets/20.05.26.html">tickets/20.05.26.html</option>
+<option value="tickets/20.06.26.html">tickets/20.06.26.html</option>
+<option value="tickets/20.07.26.html">tickets/20.07.26.html</option>
+<option value="tickets/20.08.26.html">tickets/20.08.26.html</option>
+<option value="tickets/20.09.26.html">tickets/20.09.26.html</option>
+<option value="tickets/20.10.26.html">tickets/20.10.26.html</option>
+<option value="tickets/20.11.26.html">tickets/20.11.26.html</option>
+<option value="tickets/20.12.26.html">tickets/20.12.26.html</option>
+<option value="tickets/2026-05-summary.html">tickets/2026-05-summary.html</option>
+<option value="tickets/2026-05.html">tickets/2026-05.html</option>
+<option value="tickets/2026-06-summary.html">tickets/2026-06-summary.html</option>
+<option value="tickets/2026-06.html">tickets/2026-06.html</option>
+<option value="tickets/2026-07-summary.html">tickets/2026-07-summary.html</option>
+<option value="tickets/2026-07.html">tickets/2026-07.html</option>
+<option value="tickets/2026-08-summary.html">tickets/2026-08-summary.html</option>
+<option value="tickets/2026-08.html">tickets/2026-08.html</option>
+<option value="tickets/2026-09-summary.html">tickets/2026-09-summary.html</option>
+<option value="tickets/2026-09.html">tickets/2026-09.html</option>
+<option value="tickets/2026-10-summary.html">tickets/2026-10-summary.html</option>
+<option value="tickets/2026-10.html">tickets/2026-10.html</option>
+<option value="tickets/2026-11-summary.html">tickets/2026-11-summary.html</option>
+<option value="tickets/2026-11.html">tickets/2026-11.html</option>
+<option value="tickets/2026-12-summary.html">tickets/2026-12-summary.html</option>
+<option value="tickets/2026-12.html">tickets/2026-12.html</option>
+<option value="tickets/21.05.26.html">tickets/21.05.26.html</option>
+<option value="tickets/21.06.26.html">tickets/21.06.26.html</option>
+<option value="tickets/21.07.26.html">tickets/21.07.26.html</option>
+<option value="tickets/21.08.26.html">tickets/21.08.26.html</option>
+<option value="tickets/21.09.26.html">tickets/21.09.26.html</option>
+<option value="tickets/21.10.26.html">tickets/21.10.26.html</option>
+<option value="tickets/21.11.26.html">tickets/21.11.26.html</option>
+<option value="tickets/21.12.26.html">tickets/21.12.26.html</option>
+<option value="tickets/22.05.26.html">tickets/22.05.26.html</option>
+<option value="tickets/22.06.26.html">tickets/22.06.26.html</option>
+<option value="tickets/22.07.26.html">tickets/22.07.26.html</option>
+<option value="tickets/22.08.26.html">tickets/22.08.26.html</option>
+<option value="tickets/22.09.26.html">tickets/22.09.26.html</option>
+<option value="tickets/22.10.26.html">tickets/22.10.26.html</option>
+<option value="tickets/22.11.26.html">tickets/22.11.26.html</option>
+<option value="tickets/22.12.26.html">tickets/22.12.26.html</option>
+<option value="tickets/23.05.26.html">tickets/23.05.26.html</option>
+<option value="tickets/23.06.26.html">tickets/23.06.26.html</option>
+<option value="tickets/23.07.26.html">tickets/23.07.26.html</option>
+<option value="tickets/23.08.26.html">tickets/23.08.26.html</option>
+<option value="tickets/23.09.26.html">tickets/23.09.26.html</option>
+<option value="tickets/23.10.26.html">tickets/23.10.26.html</option>
+<option value="tickets/23.11.26.html">tickets/23.11.26.html</option>
+<option value="tickets/23.12.26.html">tickets/23.12.26.html</option>
+<option value="tickets/24.05.26.html">tickets/24.05.26.html</option>
+<option value="tickets/24.06.26.html">tickets/24.06.26.html</option>
+<option value="tickets/24.07.26.html">tickets/24.07.26.html</option>
+<option value="tickets/24.08.26.html">tickets/24.08.26.html</option>
+<option value="tickets/24.09.26.html">tickets/24.09.26.html</option>
+<option value="tickets/24.10.26.html">tickets/24.10.26.html</option>
+<option value="tickets/24.11.26.html">tickets/24.11.26.html</option>
+<option value="tickets/24.12.26.html">tickets/24.12.26.html</option>
+<option value="tickets/25.05.26.html">tickets/25.05.26.html</option>
+<option value="tickets/25.06.26.html">tickets/25.06.26.html</option>
+<option value="tickets/25.07.26.html">tickets/25.07.26.html</option>
+<option value="tickets/25.08.26.html">tickets/25.08.26.html</option>
+<option value="tickets/25.09.26.html">tickets/25.09.26.html</option>
+<option value="tickets/25.10.26.html">tickets/25.10.26.html</option>
+<option value="tickets/25.11.26.html">tickets/25.11.26.html</option>
+<option value="tickets/25.12.26.html">tickets/25.12.26.html</option>
+<option value="tickets/26.05.26.html">tickets/26.05.26.html</option>
+<option value="tickets/26.06.26.html">tickets/26.06.26.html</option>
+<option value="tickets/26.07.26.html">tickets/26.07.26.html</option>
+<option value="tickets/26.08.26.html">tickets/26.08.26.html</option>
+<option value="tickets/26.09.26.html">tickets/26.09.26.html</option>
+<option value="tickets/26.10.26.html">tickets/26.10.26.html</option>
+<option value="tickets/26.11.26.html">tickets/26.11.26.html</option>
+<option value="tickets/26.12.26.html">tickets/26.12.26.html</option>
+<option value="tickets/27.05.26.html">tickets/27.05.26.html</option>
+<option value="tickets/27.06.26.html">tickets/27.06.26.html</option>
+<option value="tickets/27.07.26.html">tickets/27.07.26.html</option>
+<option value="tickets/27.08.26.html">tickets/27.08.26.html</option>
+<option value="tickets/27.09.26.html">tickets/27.09.26.html</option>
+<option value="tickets/27.10.26.html">tickets/27.10.26.html</option>
+<option value="tickets/27.11.26.html">tickets/27.11.26.html</option>
+<option value="tickets/27.12.26.html">tickets/27.12.26.html</option>
+<option value="tickets/28.05.26.html">tickets/28.05.26.html</option>
+<option value="tickets/28.06.26.html">tickets/28.06.26.html</option>
+<option value="tickets/28.07.26.html">tickets/28.07.26.html</option>
+<option value="tickets/28.08.26.html">tickets/28.08.26.html</option>
+<option value="tickets/28.09.26.html">tickets/28.09.26.html</option>
+<option value="tickets/28.10.26.html">tickets/28.10.26.html</option>
+<option value="tickets/28.11.26.html">tickets/28.11.26.html</option>
+<option value="tickets/28.12.26.html">tickets/28.12.26.html</option>
+<option value="tickets/29.05.26.html">tickets/29.05.26.html</option>
+<option value="tickets/29.06.26.html">tickets/29.06.26.html</option>
+<option value="tickets/29.07.26.html">tickets/29.07.26.html</option>
+<option value="tickets/29.08.26.html">tickets/29.08.26.html</option>
+<option value="tickets/29.09.26.html">tickets/29.09.26.html</option>
+<option value="tickets/29.10.26.html">tickets/29.10.26.html</option>
+<option value="tickets/29.11.26.html">tickets/29.11.26.html</option>
+<option value="tickets/29.12.26.html">tickets/29.12.26.html</option>
+<option value="tickets/30.05.26.html">tickets/30.05.26.html</option>
+<option value="tickets/30.06.26.html">tickets/30.06.26.html</option>
+<option value="tickets/30.07.26.html">tickets/30.07.26.html</option>
+<option value="tickets/30.08.26.html">tickets/30.08.26.html</option>
+<option value="tickets/30.09.26.html">tickets/30.09.26.html</option>
+<option value="tickets/30.10.26.html">tickets/30.10.26.html</option>
+<option value="tickets/30.11.26.html">tickets/30.11.26.html</option>
+<option value="tickets/30.12.26.html">tickets/30.12.26.html</option>
+<option value="tickets/31.05.26.html">tickets/31.05.26.html</option>
+<option value="tickets/31.07.26.html">tickets/31.07.26.html</option>
+<option value="tickets/31.08.26.html">tickets/31.08.26.html</option>
+<option value="tickets/31.10.26.html">tickets/31.10.26.html</option>
+<option value="tickets/31.12.26.html">tickets/31.12.26.html</option>
+<option value="tickets/zozulya-01-19.05.26.html">tickets/zozulya-01-19.05.26.html</option>
+<option value="vercel.json">vercel.json</option>
+<option value="voice.html">voice.html</option></select></div><div class="row"><label>Або шлях</label><input id="visualCustomPath" placeholder="daily/21.05.26.html, months/2026-06.html, tickets/2026-05.html"></div><div class="toolbar"><button type="button" id="openVisual">Відкрити</button><button type="button" id="openCreatorDraftVisual" class="secondary">Поточна заготовка з Creator</button><button type="button" id="saveVisualLocal" class="good">Зберегти в папку чернеток</button><button type="button" id="publishVisual" class="warn" disabled title="Публікує тільки Hermes після команди">Публікує тільки Hermes</button><button type="button" id="reloadVisual" class="secondary">Перезавантажити</button></div><div class="toolbar savebar"><button type="button" id="downloadVisualPage" class="save-main">💾 Зберегти PNG MAX якість</button><button type="button" id="downloadVisualHtml" class="secondary">Скачати HTML</button><button type="button" id="printVisual" class="secondary">PDF/Друк</button><span class="small">Ці кнопки зберігають відкриту сторінку на компʼютер, не редагують клітинку.</span></div></div>
+<div class="panel"><h2>Інструменти клітинки / тексту</h2><div class="notice">Клікни в таблиці на потрібну клітинку. “Копіювати всю клітинку” або Ctrl+C копіює текст, фон, колір букв, жирність і клас. Потім клікни іншу клітинку і натисни “Вставити всю клітинку” або Ctrl+V.</div><div class="toolbar"><label>Текст</label><input id="cellText" style="min-width:220px;flex:1" placeholder="текст клітинки"><button id="applyText" class="good">Вписати</button><button id="copyCell" class="secondary">Копіювати всю клітинку</button><button id="pasteCell" class="secondary">Вставити всю клітинку</button><button id="clearCell" class="red">Очистити</button></div><div class="toolbar"><label>Фон</label><input id="bgColor" type="color" value="#ffffff"><button data-bg="#DCEAF5" class="light quickBg">В</button><button data-bg="#FFF68B" class="light quickBg">ТН</button><button data-bg="#00B0F0" class="light quickBg">БЗ</button><button data-bg="#333333" class="light quickBg">ОВ</button><button type="button" data-area="1" class="light areaBtn">І дільниця</button><button type="button" data-area="2" class="light areaBtn">ІІ дільниця</button><button type="button" data-area="3" class="light areaBtn">ІІІ дільниця</button><button id="applyBg">Фон</button><label>Текст</label><input id="fgColor" type="color" value="#000000"><button id="applyFg">Колір букв</button><button id="boldBtn" class="secondary">Жирний</button><button id="undoBtn" class="secondary">Назад</button></div><div class="toolbar"><label>Картинка</label><input id="imgUrl" style="min-width:260px;flex:1" placeholder="/assets/header-left.jpg або https://..."><button id="applyImgUrl">Поставити URL</button><input id="imgFile" type="file" accept="image/*"><button id="applyImgFile" class="secondary">Вставити файл</button></div><iframe id="visualFrame" class="visual-frame"></iframe><div id="visualStatus" class="status">Готово.</div></div></section>
+<section id="tab-creator" class="tab hidden"><div class="panel"><h2>Створення / Creator</h2><div class="creator-grid"><div class="creator-card"><h3>Щоденний графік</h3><div class="row"><label>Дата</label><input id="creatorDate" type="date" value="2026-06-22"></div><div class="row"><label>Назва файлу</label><input id="creatorPath" placeholder="daily/22.06.26.html"></div><div class="row"><label>Заголовок</label><input id="creatorTitle" placeholder="22 червня 2026 року"></div><div class="toolbar"><button id="creatorFillDate" class="secondary">Підставити з дати</button><button id="creatorClearDaily" class="red">Очистити поля</button></div></div><div class="creator-card"><h3>📋 Щоденний графік вихідного</h3><p class="creator-small">Шаблон для вихідного дня: всі у вихідних. Натисни кнопку — отримаєш готовий HTML такої ж структури як /daily/30.08.26.html.</p><div class="toolbar"><button id="creatorOffDay" class="good">📋 Зробити вихідний день</button></div></div></div></div><div class="panel"><h2>👁️ Візуальне зображення</h2><iframe id="creatorPreview" class="creator-preview" style="height:850px"></iframe></div><div class="panel"><h2>Пари і дільниці</h2><div class="creator-pairs"><div><h3>І зміна</h3><div id="creatorShift1"></div></div><div><h3>ІІ зміна</h3><div id="creatorShift2"></div></div></div></div><div class="panel"><h2>Статуси для щоденного</h2><p class="creator-small">Після вибору контролерів у зміни тут лишаються тільки невибрані прізвища з того ж місячного списку.</p><div class="status-select-grid"><div class="status-select-block"><h4>Вихідні / В</h4><div id="creatorOffSelects"></div></div><div class="status-select-block"><h4>Лікарняний / ТН</h4><div id="creatorTnSelects"></div></div><div class="status-select-block"><h4>Без збереження / БЗ</h4><div id="creatorBzSelects"></div></div><div class="status-select-block"><h4>Відпустка / ОВ</h4><div id="creatorOvSelects"></div></div></div><textarea id="creatorOff" class="hidden"></textarea><textarea id="creatorTn" class="hidden"></textarea><textarea id="creatorBz" class="hidden"></textarea><textarea id="creatorOv" class="hidden"></textarea></div><div class="panel"><div class="creator-actions toolbar"><button id="creatorBuildDaily" class="good">Створити щоденний графік</button><button id="creatorOpenVisual">Відкрити поточну заготовку візуально</button><button id="creatorSaveLocal" class="good">Зберегти в папку чернеток</button><button id="creatorPublish" class="warn" disabled title="Публікує тільки Hermes після команди">Публікує тільки Hermes</button><button id="creatorSaveToFolder" class="secondary">Зберегти HTML у вибрану папку</button><button id="creatorSaveAs" class="secondary">Зберегти як…</button><button id="creatorDownload" class="secondary">Скачати HTML на компʼютер</button></div><div id="creatorStatus" class="status">Готово.</div><textarea id="creatorOutput" class="hidden" placeholder="Тут зʼявиться HTML заготовки"></textarea></div></section>
+<section id="tab-queue" class="tab hidden"><div class="panel"><h2>Папка чернеток Creator / локальні збереження</h2><div class="notice">Це безпечна папка у браузері. Файли тут НЕ публікуються в інтернет. Чернетку можна відкрити для редагування, знову змінити і зберегти поверх неї. Можна видалити, скачати HTML/PNG або скачати весь пакет JSON на компʼютер/робочий стіл. Якщо треба опублікувати — напиши Hermes.</div><div class="toolbar"><button id="refreshQueue">Оновити</button><button id="chooseDraftFolder" class="secondary">Вибрати папку компʼютера</button><span id="draftFolderStatus" class="small">Папку не вибрано</span><button id="exportChanges" class="good">Скачати папку чернеток</button><button id="importChangesBtn" class="secondary">Імпорт пакету</button><button id="clearQueue" class="red">Очистити</button><input id="importChanges" type="file" accept="application/json" class="hidden"></div><div id="queueStatus" class="status">Готово.</div><div id="queueList"></div></div></section>
+<section id="tab-source" class="tab hidden"><div class="panel"><h2>HTML / JSON / CSS / JS напряму</h2><div class="page-picker"><div><label>Розділ</label><select id="sourceCategory"><option value="all">Всі файли</option></select></div><div><label>Швидкий пошук</label><input id="sourcePageSearch" placeholder="Наприклад: графік, дільниця, СТТ, 08.06"></div><button type="button" id="sourceClearPage" class="secondary">Очистити</button></div><div class="page-note">Тут також можна вибирати файл зі списку, без ручного URL.</div><div class="row"><label>Файл</label><select id="sourcePath"><option value="index.html">index.html</option>
+<option value="months/2026-05.html">months/2026-05.html</option>
+<option value="months/2026-06.html">months/2026-06.html</option>
+<option value="daily.html">daily.html</option>
+<option value="districts.html">districts.html</option>
+<option value="timesheet.html">timesheet.html</option>
+<option value="stt.html">stt.html</option>
+<option value="vacations.html">vacations.html</option>
+<option value="problems.html">problems.html</option>
+<option value="needs.html">needs.html</option>
+<option value="archive.html">archive.html</option>
+<option value="emergency.html">emergency.html</option>
+<option value="RESTORE_README.txt">RESTORE_README.txt</option>
+<option value="assets/data/controller-tickets.json">assets/data/controller-tickets.json</option>
+<option value="assets/data/editor-test.json">assets/data/editor-test.json</option>
+<option value="assets/editor-config.json">assets/editor-config.json</option>
+<option value="assets/save-page.js">assets/save-page.js</option>
+<option value="assets/site-operations.json">assets/site-operations.json</option>
+<option value="daily/01.05.26.html">daily/01.05.26.html</option>
+<option value="daily/02.05.26.html">daily/02.05.26.html</option>
+<option value="daily/03.05.26.html">daily/03.05.26.html</option>
+<option value="daily/04.05.26.html">daily/04.05.26.html</option>
+<option value="daily/05.05.26.html">daily/05.05.26.html</option>
+<option value="daily/06.05.26.html">daily/06.05.26.html</option>
+<option value="daily/07.05.26.html">daily/07.05.26.html</option>
+<option value="daily/08.05.26.html">daily/08.05.26.html</option>
+<option value="daily/09.05.26.html">daily/09.05.26.html</option>
+<option value="daily/10.05.26.html">daily/10.05.26.html</option>
+<option value="daily/11.05.26.html">daily/11.05.26.html</option>
+<option value="daily/12.05.26.html">daily/12.05.26.html</option>
+<option value="daily/13.05.26.html">daily/13.05.26.html</option>
+<option value="daily/14.05.26.html">daily/14.05.26.html</option>
+<option value="daily/15.05.26.html">daily/15.05.26.html</option>
+<option value="daily/16.05.26.html">daily/16.05.26.html</option>
+<option value="daily/17.05.26.html">daily/17.05.26.html</option>
+<option value="daily/18.05.26.html">daily/18.05.26.html</option>
+<option value="daily/19.05.26.html">daily/19.05.26.html</option>
+<option value="daily/20.05.26.html">daily/20.05.26.html</option>
+<option value="daily/2026-06.html">daily/2026-06.html</option>
+<option value="daily/2026-07.html">daily/2026-07.html</option>
+<option value="daily/2026-08.html">daily/2026-08.html</option>
+<option value="daily/2026-09.html">daily/2026-09.html</option>
+<option value="daily/2026-10.html">daily/2026-10.html</option>
+<option value="daily/2026-11.html">daily/2026-11.html</option>
+<option value="daily/2026-12.html">daily/2026-12.html</option>
+<option value="daily/21.05.26.html">daily/21.05.26.html</option>
+<option value="daily/22.05.26.html">daily/22.05.26.html</option>
+<option value="daily/23.05.26.html">daily/23.05.26.html</option>
+<option value="daily/24.05.26.html">daily/24.05.26.html</option>
+<option value="daily/25.05.26.html">daily/25.05.26.html</option>
+<option value="daily/26.05.26.html">daily/26.05.26.html</option>
+<option value="daily/27.05.26.html">daily/27.05.26.html</option>
+<option value="daily/28.05.26.html">daily/28.05.26.html</option>
+<option value="daily/29.05.26.html">daily/29.05.26.html</option>
+<option value="daily/30.05.26.html">daily/30.05.26.html</option>
+<option value="daily/31.05.26.html">daily/31.05.26.html</option>
+<option value="install.html">install.html</option>
+<option value="manifest.json">manifest.json</option>
+<option value="months/2026-07.html">months/2026-07.html</option>
+<option value="months/2026-08.html">months/2026-08.html</option>
+<option value="months/2026-09.html">months/2026-09.html</option>
+<option value="months/2026-10.html">months/2026-10.html</option>
+<option value="months/2026-11.html">months/2026-11.html</option>
+<option value="months/2026-12.html">months/2026-12.html</option>
+<option value="service-worker.js">service-worker.js</option>
+<option value="stt/01.05.26.html">stt/01.05.26.html</option>
+<option value="stt/02.05.26.html">stt/02.05.26.html</option>
+<option value="stt/03.05.26.html">stt/03.05.26.html</option>
+<option value="stt/04.05.26.html">stt/04.05.26.html</option>
+<option value="stt/05.05.26.html">stt/05.05.26.html</option>
+<option value="stt/06.05.26.html">stt/06.05.26.html</option>
+<option value="stt/07.05.26.html">stt/07.05.26.html</option>
+<option value="stt/08.05.26.html">stt/08.05.26.html</option>
+<option value="stt/09.05.26.html">stt/09.05.26.html</option>
+<option value="stt/10.05.26.html">stt/10.05.26.html</option>
+<option value="stt/11.05.26.html">stt/11.05.26.html</option>
+<option value="stt/12.05.26.html">stt/12.05.26.html</option>
+<option value="stt/13.05.26.html">stt/13.05.26.html</option>
+<option value="stt/14.05.26.html">stt/14.05.26.html</option>
+<option value="stt/15.05.26.html">stt/15.05.26.html</option>
+<option value="stt/16.05.26.html">stt/16.05.26.html</option>
+<option value="stt/17.05.26.html">stt/17.05.26.html</option>
+<option value="stt/18.05.26.html">stt/18.05.26.html</option>
+<option value="stt/19.05.26.html">stt/19.05.26.html</option>
+<option value="stt/20.05.26.html">stt/20.05.26.html</option>
+<option value="stt/21.05.26.html">stt/21.05.26.html</option>
+<option value="stt/22.05.26.html">stt/22.05.26.html</option>
+<option value="stt/23.05.26.html">stt/23.05.26.html</option>
+<option value="stt/24.05.26.html">stt/24.05.26.html</option>
+<option value="stt/25.05.26.html">stt/25.05.26.html</option>
+<option value="stt/26.05.26.html">stt/26.05.26.html</option>
+<option value="stt/27.05.26.html">stt/27.05.26.html</option>
+<option value="stt/28.05.26.html">stt/28.05.26.html</option>
+<option value="stt/29.05.26.html">stt/29.05.26.html</option>
+<option value="stt/30.05.26.html">stt/30.05.26.html</option>
+<option value="stt/31.05.26.html">stt/31.05.26.html</option>
+<option value="tickets/01.05.26.html">tickets/01.05.26.html</option>
+<option value="tickets/01.06.26.html">tickets/01.06.26.html</option>
+<option value="tickets/01.07.26.html">tickets/01.07.26.html</option>
+<option value="tickets/01.08.26.html">tickets/01.08.26.html</option>
+<option value="tickets/01.09.26.html">tickets/01.09.26.html</option>
+<option value="tickets/01.10.26.html">tickets/01.10.26.html</option>
+<option value="tickets/01.11.26.html">tickets/01.11.26.html</option>
+<option value="tickets/01.12.26.html">tickets/01.12.26.html</option>
+<option value="tickets/02.05.26.html">tickets/02.05.26.html</option>
+<option value="tickets/02.06.26.html">tickets/02.06.26.html</option>
+<option value="tickets/02.07.26.html">tickets/02.07.26.html</option>
+<option value="tickets/02.08.26.html">tickets/02.08.26.html</option>
+<option value="tickets/02.09.26.html">tickets/02.09.26.html</option>
+<option value="tickets/02.10.26.html">tickets/02.10.26.html</option>
+<option value="tickets/02.11.26.html">tickets/02.11.26.html</option>
+<option value="tickets/02.12.26.html">tickets/02.12.26.html</option>
+<option value="tickets/03.05.26.html">tickets/03.05.26.html</option>
+<option value="tickets/03.06.26.html">tickets/03.06.26.html</option>
+<option value="tickets/03.07.26.html">tickets/03.07.26.html</option>
+<option value="tickets/03.08.26.html">tickets/03.08.26.html</option>
+<option value="tickets/03.09.26.html">tickets/03.09.26.html</option>
+<option value="tickets/03.10.26.html">tickets/03.10.26.html</option>
+<option value="tickets/03.11.26.html">tickets/03.11.26.html</option>
+<option value="tickets/03.12.26.html">tickets/03.12.26.html</option>
+<option value="tickets/04.05.26.html">tickets/04.05.26.html</option>
+<option value="tickets/04.06.26.html">tickets/04.06.26.html</option>
+<option value="tickets/04.07.26.html">tickets/04.07.26.html</option>
+<option value="tickets/04.08.26.html">tickets/04.08.26.html</option>
+<option value="tickets/04.09.26.html">tickets/04.09.26.html</option>
+<option value="tickets/04.10.26.html">tickets/04.10.26.html</option>
+<option value="tickets/04.11.26.html">tickets/04.11.26.html</option>
+<option value="tickets/04.12.26.html">tickets/04.12.26.html</option>
+<option value="tickets/05.05.26.html">tickets/05.05.26.html</option>
+<option value="tickets/05.06.26.html">tickets/05.06.26.html</option>
+<option value="tickets/05.07.26.html">tickets/05.07.26.html</option>
+<option value="tickets/05.08.26.html">tickets/05.08.26.html</option>
+<option value="tickets/05.09.26.html">tickets/05.09.26.html</option>
+<option value="tickets/05.10.26.html">tickets/05.10.26.html</option>
+<option value="tickets/05.11.26.html">tickets/05.11.26.html</option>
+<option value="tickets/05.12.26.html">tickets/05.12.26.html</option>
+<option value="tickets/06.05.26.html">tickets/06.05.26.html</option>
+<option value="tickets/06.06.26.html">tickets/06.06.26.html</option>
+<option value="tickets/06.07.26.html">tickets/06.07.26.html</option>
+<option value="tickets/06.08.26.html">tickets/06.08.26.html</option>
+<option value="tickets/06.09.26.html">tickets/06.09.26.html</option>
+<option value="tickets/06.10.26.html">tickets/06.10.26.html</option>
+<option value="tickets/06.11.26.html">tickets/06.11.26.html</option>
+<option value="tickets/06.12.26.html">tickets/06.12.26.html</option>
+<option value="tickets/07.05.26.html">tickets/07.05.26.html</option>
+<option value="tickets/07.06.26.html">tickets/07.06.26.html</option>
+<option value="tickets/07.07.26.html">tickets/07.07.26.html</option>
+<option value="tickets/07.08.26.html">tickets/07.08.26.html</option>
+<option value="tickets/07.09.26.html">tickets/07.09.26.html</option>
+<option value="tickets/07.10.26.html">tickets/07.10.26.html</option>
+<option value="tickets/07.11.26.html">tickets/07.11.26.html</option>
+<option value="tickets/07.12.26.html">tickets/07.12.26.html</option>
+<option value="tickets/08.05.26.html">tickets/08.05.26.html</option>
+<option value="tickets/08.06.26.html">tickets/08.06.26.html</option>
+<option value="tickets/08.07.26.html">tickets/08.07.26.html</option>
+<option value="tickets/08.08.26.html">tickets/08.08.26.html</option>
+<option value="tickets/08.09.26.html">tickets/08.09.26.html</option>
+<option value="tickets/08.10.26.html">tickets/08.10.26.html</option>
+<option value="tickets/08.11.26.html">tickets/08.11.26.html</option>
+<option value="tickets/08.12.26.html">tickets/08.12.26.html</option>
+<option value="tickets/09.05.26.html">tickets/09.05.26.html</option>
+<option value="tickets/09.06.26.html">tickets/09.06.26.html</option>
+<option value="tickets/09.07.26.html">tickets/09.07.26.html</option>
+<option value="tickets/09.08.26.html">tickets/09.08.26.html</option>
+<option value="tickets/09.09.26.html">tickets/09.09.26.html</option>
+<option value="tickets/09.10.26.html">tickets/09.10.26.html</option>
+<option value="tickets/09.11.26.html">tickets/09.11.26.html</option>
+<option value="tickets/09.12.26.html">tickets/09.12.26.html</option>
+<option value="tickets/10.05.26.html">tickets/10.05.26.html</option>
+<option value="tickets/10.06.26.html">tickets/10.06.26.html</option>
+<option value="tickets/10.07.26.html">tickets/10.07.26.html</option>
+<option value="tickets/10.08.26.html">tickets/10.08.26.html</option>
+<option value="tickets/10.09.26.html">tickets/10.09.26.html</option>
+<option value="tickets/10.10.26.html">tickets/10.10.26.html</option>
+<option value="tickets/10.11.26.html">tickets/10.11.26.html</option>
+<option value="tickets/10.12.26.html">tickets/10.12.26.html</option>
+<option value="tickets/11.05.26.html">tickets/11.05.26.html</option>
+<option value="tickets/11.06.26.html">tickets/11.06.26.html</option>
+<option value="tickets/11.07.26.html">tickets/11.07.26.html</option>
+<option value="tickets/11.08.26.html">tickets/11.08.26.html</option>
+<option value="tickets/11.09.26.html">tickets/11.09.26.html</option>
+<option value="tickets/11.10.26.html">tickets/11.10.26.html</option>
+<option value="tickets/11.11.26.html">tickets/11.11.26.html</option>
+<option value="tickets/11.12.26.html">tickets/11.12.26.html</option>
+<option value="tickets/12.05.26.html">tickets/12.05.26.html</option>
+<option value="tickets/12.06.26.html">tickets/12.06.26.html</option>
+<option value="tickets/12.07.26.html">tickets/12.07.26.html</option>
+<option value="tickets/12.08.26.html">tickets/12.08.26.html</option>
+<option value="tickets/12.09.26.html">tickets/12.09.26.html</option>
+<option value="tickets/12.10.26.html">tickets/12.10.26.html</option>
+<option value="tickets/12.11.26.html">tickets/12.11.26.html</option>
+<option value="tickets/12.12.26.html">tickets/12.12.26.html</option>
+<option value="tickets/13.05.26.html">tickets/13.05.26.html</option>
+<option value="tickets/13.06.26.html">tickets/13.06.26.html</option>
+<option value="tickets/13.07.26.html">tickets/13.07.26.html</option>
+<option value="tickets/13.08.26.html">tickets/13.08.26.html</option>
+<option value="tickets/13.09.26.html">tickets/13.09.26.html</option>
+<option value="tickets/13.10.26.html">tickets/13.10.26.html</option>
+<option value="tickets/13.11.26.html">tickets/13.11.26.html</option>
+<option value="tickets/13.12.26.html">tickets/13.12.26.html</option>
+<option value="tickets/14.05.26.html">tickets/14.05.26.html</option>
+<option value="tickets/14.06.26.html">tickets/14.06.26.html</option>
+<option value="tickets/14.07.26.html">tickets/14.07.26.html</option>
+<option value="tickets/14.08.26.html">tickets/14.08.26.html</option>
+<option value="tickets/14.09.26.html">tickets/14.09.26.html</option>
+<option value="tickets/14.10.26.html">tickets/14.10.26.html</option>
+<option value="tickets/14.11.26.html">tickets/14.11.26.html</option>
+<option value="tickets/14.12.26.html">tickets/14.12.26.html</option>
+<option value="tickets/15.05.26.html">tickets/15.05.26.html</option>
+<option value="tickets/15.06.26.html">tickets/15.06.26.html</option>
+<option value="tickets/15.07.26.html">tickets/15.07.26.html</option>
+<option value="tickets/15.08.26.html">tickets/15.08.26.html</option>
+<option value="tickets/15.09.26.html">tickets/15.09.26.html</option>
+<option value="tickets/15.10.26.html">tickets/15.10.26.html</option>
+<option value="tickets/15.11.26.html">tickets/15.11.26.html</option>
+<option value="tickets/15.12.26.html">tickets/15.12.26.html</option>
+<option value="tickets/16.05.26.html">tickets/16.05.26.html</option>
+<option value="tickets/16.06.26.html">tickets/16.06.26.html</option>
+<option value="tickets/16.07.26.html">tickets/16.07.26.html</option>
+<option value="tickets/16.08.26.html">tickets/16.08.26.html</option>
+<option value="tickets/16.09.26.html">tickets/16.09.26.html</option>
+<option value="tickets/16.10.26.html">tickets/16.10.26.html</option>
+<option value="tickets/16.11.26.html">tickets/16.11.26.html</option>
+<option value="tickets/16.12.26.html">tickets/16.12.26.html</option>
+<option value="tickets/17.05.26.html">tickets/17.05.26.html</option>
+<option value="tickets/17.06.26.html">tickets/17.06.26.html</option>
+<option value="tickets/17.07.26.html">tickets/17.07.26.html</option>
+<option value="tickets/17.08.26.html">tickets/17.08.26.html</option>
+<option value="tickets/17.09.26.html">tickets/17.09.26.html</option>
+<option value="tickets/17.10.26.html">tickets/17.10.26.html</option>
+<option value="tickets/17.11.26.html">tickets/17.11.26.html</option>
+<option value="tickets/17.12.26.html">tickets/17.12.26.html</option>
+<option value="tickets/18.05.26.html">tickets/18.05.26.html</option>
+<option value="tickets/18.06.26.html">tickets/18.06.26.html</option>
+<option value="tickets/18.07.26.html">tickets/18.07.26.html</option>
+<option value="tickets/18.08.26.html">tickets/18.08.26.html</option>
+<option value="tickets/18.09.26.html">tickets/18.09.26.html</option>
+<option value="tickets/18.10.26.html">tickets/18.10.26.html</option>
+<option value="tickets/18.11.26.html">tickets/18.11.26.html</option>
+<option value="tickets/18.12.26.html">tickets/18.12.26.html</option>
+<option value="tickets/19.05.26.html">tickets/19.05.26.html</option>
+<option value="tickets/19.06.26.html">tickets/19.06.26.html</option>
+<option value="tickets/19.07.26.html">tickets/19.07.26.html</option>
+<option value="tickets/19.08.26.html">tickets/19.08.26.html</option>
+<option value="tickets/19.09.26.html">tickets/19.09.26.html</option>
+<option value="tickets/19.10.26.html">tickets/19.10.26.html</option>
+<option value="tickets/19.11.26.html">tickets/19.11.26.html</option>
+<option value="tickets/19.12.26.html">tickets/19.12.26.html</option>
+<option value="tickets/20.05.26.html">tickets/20.05.26.html</option>
+<option value="tickets/20.06.26.html">tickets/20.06.26.html</option>
+<option value="tickets/20.07.26.html">tickets/20.07.26.html</option>
+<option value="tickets/20.08.26.html">tickets/20.08.26.html</option>
+<option value="tickets/20.09.26.html">tickets/20.09.26.html</option>
+<option value="tickets/20.10.26.html">tickets/20.10.26.html</option>
+<option value="tickets/20.11.26.html">tickets/20.11.26.html</option>
+<option value="tickets/20.12.26.html">tickets/20.12.26.html</option>
+<option value="tickets/2026-05-summary.html">tickets/2026-05-summary.html</option>
+<option value="tickets/2026-05.html">tickets/2026-05.html</option>
+<option value="tickets/2026-06-summary.html">tickets/2026-06-summary.html</option>
+<option value="tickets/2026-06.html">tickets/2026-06.html</option>
+<option value="tickets/2026-07-summary.html">tickets/2026-07-summary.html</option>
+<option value="tickets/2026-07.html">tickets/2026-07.html</option>
+<option value="tickets/2026-08-summary.html">tickets/2026-08-summary.html</option>
+<option value="tickets/2026-08.html">tickets/2026-08.html</option>
+<option value="tickets/2026-09-summary.html">tickets/2026-09-summary.html</option>
+<option value="tickets/2026-09.html">tickets/2026-09.html</option>
+<option value="tickets/2026-10-summary.html">tickets/2026-10-summary.html</option>
+<option value="tickets/2026-10.html">tickets/2026-10.html</option>
+<option value="tickets/2026-11-summary.html">tickets/2026-11-summary.html</option>
+<option value="tickets/2026-11.html">tickets/2026-11.html</option>
+<option value="tickets/2026-12-summary.html">tickets/2026-12-summary.html</option>
+<option value="tickets/2026-12.html">tickets/2026-12.html</option>
+<option value="tickets/21.05.26.html">tickets/21.05.26.html</option>
+<option value="tickets/21.06.26.html">tickets/21.06.26.html</option>
+<option value="tickets/21.07.26.html">tickets/21.07.26.html</option>
+<option value="tickets/21.08.26.html">tickets/21.08.26.html</option>
+<option value="tickets/21.09.26.html">tickets/21.09.26.html</option>
+<option value="tickets/21.10.26.html">tickets/21.10.26.html</option>
+<option value="tickets/21.11.26.html">tickets/21.11.26.html</option>
+<option value="tickets/21.12.26.html">tickets/21.12.26.html</option>
+<option value="tickets/22.05.26.html">tickets/22.05.26.html</option>
+<option value="tickets/22.06.26.html">tickets/22.06.26.html</option>
+<option value="tickets/22.07.26.html">tickets/22.07.26.html</option>
+<option value="tickets/22.08.26.html">tickets/22.08.26.html</option>
+<option value="tickets/22.09.26.html">tickets/22.09.26.html</option>
+<option value="tickets/22.10.26.html">tickets/22.10.26.html</option>
+<option value="tickets/22.11.26.html">tickets/22.11.26.html</option>
+<option value="tickets/22.12.26.html">tickets/22.12.26.html</option>
+<option value="tickets/23.05.26.html">tickets/23.05.26.html</option>
+<option value="tickets/23.06.26.html">tickets/23.06.26.html</option>
+<option value="tickets/23.07.26.html">tickets/23.07.26.html</option>
+<option value="tickets/23.08.26.html">tickets/23.08.26.html</option>
+<option value="tickets/23.09.26.html">tickets/23.09.26.html</option>
+<option value="tickets/23.10.26.html">tickets/23.10.26.html</option>
+<option value="tickets/23.11.26.html">tickets/23.11.26.html</option>
+<option value="tickets/23.12.26.html">tickets/23.12.26.html</option>
+<option value="tickets/24.05.26.html">tickets/24.05.26.html</option>
+<option value="tickets/24.06.26.html">tickets/24.06.26.html</option>
+<option value="tickets/24.07.26.html">tickets/24.07.26.html</option>
+<option value="tickets/24.08.26.html">tickets/24.08.26.html</option>
+<option value="tickets/24.09.26.html">tickets/24.09.26.html</option>
+<option value="tickets/24.10.26.html">tickets/24.10.26.html</option>
+<option value="tickets/24.11.26.html">tickets/24.11.26.html</option>
+<option value="tickets/24.12.26.html">tickets/24.12.26.html</option>
+<option value="tickets/25.05.26.html">tickets/25.05.26.html</option>
+<option value="tickets/25.06.26.html">tickets/25.06.26.html</option>
+<option value="tickets/25.07.26.html">tickets/25.07.26.html</option>
+<option value="tickets/25.08.26.html">tickets/25.08.26.html</option>
+<option value="tickets/25.09.26.html">tickets/25.09.26.html</option>
+<option value="tickets/25.10.26.html">tickets/25.10.26.html</option>
+<option value="tickets/25.11.26.html">tickets/25.11.26.html</option>
+<option value="tickets/25.12.26.html">tickets/25.12.26.html</option>
+<option value="tickets/26.05.26.html">tickets/26.05.26.html</option>
+<option value="tickets/26.06.26.html">tickets/26.06.26.html</option>
+<option value="tickets/26.07.26.html">tickets/26.07.26.html</option>
+<option value="tickets/26.08.26.html">tickets/26.08.26.html</option>
+<option value="tickets/26.09.26.html">tickets/26.09.26.html</option>
+<option value="tickets/26.10.26.html">tickets/26.10.26.html</option>
+<option value="tickets/26.11.26.html">tickets/26.11.26.html</option>
+<option value="tickets/26.12.26.html">tickets/26.12.26.html</option>
+<option value="tickets/27.05.26.html">tickets/27.05.26.html</option>
+<option value="tickets/27.06.26.html">tickets/27.06.26.html</option>
+<option value="tickets/27.07.26.html">tickets/27.07.26.html</option>
+<option value="tickets/27.08.26.html">tickets/27.08.26.html</option>
+<option value="tickets/27.09.26.html">tickets/27.09.26.html</option>
+<option value="tickets/27.10.26.html">tickets/27.10.26.html</option>
+<option value="tickets/27.11.26.html">tickets/27.11.26.html</option>
+<option value="tickets/27.12.26.html">tickets/27.12.26.html</option>
+<option value="tickets/28.05.26.html">tickets/28.05.26.html</option>
+<option value="tickets/28.06.26.html">tickets/28.06.26.html</option>
+<option value="tickets/28.07.26.html">tickets/28.07.26.html</option>
+<option value="tickets/28.08.26.html">tickets/28.08.26.html</option>
+<option value="tickets/28.09.26.html">tickets/28.09.26.html</option>
+<option value="tickets/28.10.26.html">tickets/28.10.26.html</option>
+<option value="tickets/28.11.26.html">tickets/28.11.26.html</option>
+<option value="tickets/28.12.26.html">tickets/28.12.26.html</option>
+<option value="tickets/29.05.26.html">tickets/29.05.26.html</option>
+<option value="tickets/29.06.26.html">tickets/29.06.26.html</option>
+<option value="tickets/29.07.26.html">tickets/29.07.26.html</option>
+<option value="tickets/29.08.26.html">tickets/29.08.26.html</option>
+<option value="tickets/29.09.26.html">tickets/29.09.26.html</option>
+<option value="tickets/29.10.26.html">tickets/29.10.26.html</option>
+<option value="tickets/29.11.26.html">tickets/29.11.26.html</option>
+<option value="tickets/29.12.26.html">tickets/29.12.26.html</option>
+<option value="tickets/30.05.26.html">tickets/30.05.26.html</option>
+<option value="tickets/30.06.26.html">tickets/30.06.26.html</option>
+<option value="tickets/30.07.26.html">tickets/30.07.26.html</option>
+<option value="tickets/30.08.26.html">tickets/30.08.26.html</option>
+<option value="tickets/30.09.26.html">tickets/30.09.26.html</option>
+<option value="tickets/30.10.26.html">tickets/30.10.26.html</option>
+<option value="tickets/30.11.26.html">tickets/30.11.26.html</option>
+<option value="tickets/30.12.26.html">tickets/30.12.26.html</option>
+<option value="tickets/31.05.26.html">tickets/31.05.26.html</option>
+<option value="tickets/31.07.26.html">tickets/31.07.26.html</option>
+<option value="tickets/31.08.26.html">tickets/31.08.26.html</option>
+<option value="tickets/31.10.26.html">tickets/31.10.26.html</option>
+<option value="tickets/31.12.26.html">tickets/31.12.26.html</option>
+<option value="tickets/zozulya-01-19.05.26.html">tickets/zozulya-01-19.05.26.html</option>
+<option value="vercel.json">vercel.json</option>
+<option value="voice.html">voice.html</option></select></div><div class="row"><label>Або шлях</label><input id="sourceCustomPath" placeholder="assets/data/controller-tickets.json"></div><div class="toolbar"><button id="loadSource">Завантажити</button><button id="saveSourceLocal" class="good">Зберегти в папку чернеток</button><button id="publishSource" class="warn" disabled title="Публікує тільки Hermes після команди">Публікує тільки Hermes</button><button id="downloadSource" class="secondary">Скачати файл</button></div><textarea id="sourceText"></textarea><div id="sourceStatus" class="status">Готово.</div></div></section>
+<section id="tab-help" class="tab hidden"><div class="panel"><h2>Як редагувати</h2><ol class="small" style="font-size:15px;line-height:1.7"><li>У вкладці <b>Візуальне редагування</b> вибери будь-яку сторінку: місячний, щоденний, дільниці, квитки, СТТ.</li><li>Натисни <b>Відкрити</b>.</li><li>Клікни по клітинці або тексту. Вона стане з червоною рамкою.</li><li>Щоб скопіювати клітинку: <b>Копіювати клітинку</b>, потім клік на іншу клітинку і <b>Вставити</b>.</li><li>Колір: вибери фон/колір букв і натисни кнопку.</li><li>Картинки: клікни на картинку або клітинку, встав URL або вибери файл.</li><li><b>Скачати HTML</b> — зберігає відкриту сторінку на компʼютер як файл.</li><li><b>Зберегти PNG MAX якість</b> — зберігає відкриту сторінку як картинку у максимально високій якості.</li><li><b>PDF/Друк</b> — відкриває друк, там можна вибрати “Зберегти як PDF”.</li><li><b>Зберегти локально</b> — працює без інтернету на цьому пристрої.</li><li><b>Опублікувати</b> — відправляє на сайт, коли є інтернет.</li><li>Якщо інтернету немає — скачай <b>пакет змін</b>, потім імпортуй і опублікуй, коли звʼязок буде.</li></ol></div></section>
+</div>
+<script>
+const API='/api/editor-file', LS_CHANGES='chetsOfflineChanges';
+const SAFE_DRAFT_NOTE='Збережено у безпечну папку чернеток ✅ В інтернет не опубліковано. Для публікації напиши Hermes.';
+let draftDirHandle=null, draftFolderName='';
+
+const ALL_PAGES=["index.html","archive.html","daily.html","daily/01.05.26.html","daily/01.06.26.html","daily/01.07.26.html","daily/01.08.26.html","daily/01.09.26.html","daily/01.10.26.html","daily/01.11.26.html","daily/01.12.26.html","daily/02.05.26.html","daily/02.06.26.html","daily/02.07.26.html","daily/02.08.26.html","daily/02.09.26.html","daily/02.10.26.html","daily/02.11.26.html","daily/02.12.26.html","daily/03.05.26.html","daily/03.06.26.html","daily/03.07.26.html","daily/03.08.26.html","daily/03.09.26.html","daily/03.10.26.html","daily/03.11.26.html","daily/03.12.26.html","daily/04.05.26.html","daily/04.06.26.html","daily/04.07.26.html","daily/04.08.26.html","daily/04.09.26.html","daily/04.10.26.html","daily/04.11.26.html","daily/04.12.26.html","daily/05.05.26.html","daily/05.06.26.html","daily/05.07.26.html","daily/05.08.26.html","daily/05.09.26.html","daily/05.10.26.html","daily/05.11.26.html","daily/05.12.26.html","daily/06.05.26.html","daily/06.06.26.html","daily/06.07.26.html","daily/06.08.26.html","daily/06.09.26.html","daily/06.10.26.html","daily/06.11.26.html","daily/06.12.26.html","daily/07.05.26.html","daily/07.06.26.html","daily/07.07.26.html","daily/07.08.26.html","daily/07.09.26.html","daily/07.10.26.html","daily/07.11.26.html","daily/07.12.26.html","daily/08.05.26.html","daily/08.06.26.html","daily/08.07.26.html","daily/08.08.26.html","daily/08.09.26.html","daily/08.10.26.html","daily/08.11.26.html","daily/08.12.26.html","daily/09.05.26.html","daily/09.06.26.html","daily/09.07.26.html","daily/09.08.26.html","daily/09.09.26.html","daily/09.10.26.html","daily/09.11.26.html","daily/09.12.26.html","daily/10.05.26.html","daily/10.06.26.html","daily/10.07.26.html","daily/10.08.26.html","daily/10.09.26.html","daily/10.10.26.html","daily/10.11.26.html","daily/10.12.26.html","daily/11.05.26.html","daily/11.06.26.html","daily/11.07.26.html","daily/11.08.26.html","daily/11.09.26.html","daily/11.10.26.html","daily/11.11.26.html","daily/11.12.26.html","daily/12.05.26.html","daily/12.06.26.html","daily/12.07.26.html","daily/12.08.26.html","daily/12.09.26.html","daily/12.10.26.html","daily/12.11.26.html","daily/12.12.26.html","daily/13.05.26.html","daily/13.06.26.html","daily/13.07.26.html","daily/13.08.26.html","daily/13.09.26.html","daily/13.10.26.html","daily/13.11.26.html","daily/13.12.26.html","daily/14.05.26.html","daily/14.06.26.html","daily/14.07.26.html","daily/14.08.26.html","daily/14.09.26.html","daily/14.10.26.html","daily/14.11.26.html","daily/14.12.26.html","daily/15.05.26.html","daily/15.06.26.html","daily/15.07.26.html","daily/15.08.26.html","daily/15.09.26.html","daily/15.10.26.html","daily/15.11.26.html","daily/15.12.26.html","daily/16.05.26.html","daily/16.06.26.html","daily/16.07.26.html","daily/16.08.26.html","daily/16.09.26.html","daily/16.10.26.html","daily/16.11.26.html","daily/16.12.26.html","daily/17.05.26.html","daily/17.06.26.html","daily/17.07.26.html","daily/17.08.26.html","daily/17.09.26.html","daily/17.10.26.html","daily/17.11.26.html","daily/17.12.26.html","daily/18.05.26.html","daily/18.06.26.html","daily/18.07.26.html","daily/18.08.26.html","daily/18.09.26.html","daily/18.10.26.html","daily/18.11.26.html","daily/18.12.26.html","daily/19.05.26.html","daily/19.06.26.html","daily/19.07.26.html","daily/19.08.26.html","daily/19.09.26.html","daily/19.10.26.html","daily/19.11.26.html","daily/19.12.26.html","daily/20.05.26.html","daily/20.06.26.html","daily/20.07.26.html","daily/20.08.26.html","daily/20.09.26.html","daily/20.10.26.html","daily/20.11.26.html","daily/20.12.26.html","daily/2026-06.html","daily/2026-07.html","daily/2026-08.html","daily/2026-09.html","daily/2026-10.html","daily/2026-11.html","daily/2026-12.html","daily/21.05.26.html","daily/21.06.26.html","daily/21.07.26.html","daily/21.08.26.html","daily/21.09.26.html","daily/21.10.26.html","daily/21.11.26.html","daily/21.12.26.html","daily/22.05.26.html","daily/22.06.26.html","daily/22.07.26.html","daily/22.08.26.html","daily/22.09.26.html","daily/22.10.26.html","daily/22.11.26.html","daily/22.12.26.html","daily/23.05.26.html","daily/23.06.26.html","daily/23.07.26.html","daily/23.08.26.html","daily/23.09.26.html","daily/23.10.26.html","daily/23.11.26.html","daily/23.12.26.html","daily/24.05.26.html","daily/24.06.26.html","daily/24.07.26.html","daily/24.08.26.html","daily/24.09.26.html","daily/24.10.26.html","daily/24.11.26.html","daily/24.12.26.html","daily/25.05.26.html","daily/25.06.26.html","daily/25.07.26.html","daily/25.08.26.html","daily/25.09.26.html","daily/25.10.26.html","daily/25.11.26.html","daily/25.12.26.html","daily/26.05.26.html","daily/26.06.26.html","daily/26.07.26.html","daily/26.08.26.html","daily/26.09.26.html","daily/26.10.26.html","daily/26.11.26.html","daily/26.12.26.html","daily/27.05.26.html","daily/27.06.26.html","daily/27.07.26.html","daily/27.08.26.html","daily/27.09.26.html","daily/27.10.26.html","daily/27.11.26.html","daily/27.12.26.html","daily/28.05.26.html","daily/28.06.26.html","daily/28.07.26.html","daily/28.08.26.html","daily/28.09.26.html","daily/28.10.26.html","daily/28.11.26.html","daily/28.12.26.html","daily/29.05.26.html","daily/29.06.26.html","daily/29.07.26.html","daily/29.08.26.html","daily/29.09.26.html","daily/29.10.26.html","daily/29.11.26.html","daily/29.12.26.html","daily/30.05.26.html","daily/30.06.26.html","daily/30.07.26.html","daily/30.08.26.html","daily/30.09.26.html","daily/30.10.26.html","daily/30.11.26.html","daily/30.12.26.html","daily/31.05.26.html","daily/31.07.26.html","daily/31.08.26.html","daily/31.10.26.html","daily/31.12.26.html","districts.html","districts/2026-06.html","districts/2026-07.html","districts/2026-08.html","districts/2026-09.html","districts/2026-10.html","districts/2026-11.html","districts/2026-12.html","editor.html","emergency.html","install.html","months/2026-05.html","months/2026-06.html","months/2026-07.html","months/2026-08.html","months/2026-09.html","months/2026-10.html","months/2026-11.html","months/2026-12.html","needs.html","problems.html","stt.html","stt/01.05.26.html","stt/02.05.26.html","stt/03.05.26.html","stt/04.05.26.html","stt/05.05.26.html","stt/06.05.26.html","stt/07.05.26.html","stt/08.05.26.html","stt/09.05.26.html","stt/10.05.26.html","stt/11.05.26.html","stt/12.05.26.html","stt/13.05.26.html","stt/14.05.26.html","stt/15.05.26.html","stt/16.05.26.html","stt/17.05.26.html","stt/18.05.26.html","stt/19.05.26.html","stt/20.05.26.html","stt/21.05.26.html","stt/22.05.26.html","stt/23.05.26.html","stt/24.05.26.html","stt/25.05.26.html","stt/26.05.26.html","stt/27.05.26.html","stt/28.05.26.html","stt/29.05.26.html","stt/30.05.26.html","stt/31.05.26.html","tickets/01.05.26.html","tickets/01.06.26.html","tickets/01.07.26.html","tickets/01.08.26.html","tickets/01.09.26.html","tickets/01.10.26.html","tickets/01.11.26.html","tickets/01.12.26.html","tickets/02.05.26.html","tickets/02.06.26.html","tickets/02.07.26.html","tickets/02.08.26.html","tickets/02.09.26.html","tickets/02.10.26.html","tickets/02.11.26.html","tickets/02.12.26.html","tickets/03.05.26.html","tickets/03.06.26.html","tickets/03.07.26.html","tickets/03.08.26.html","tickets/03.09.26.html","tickets/03.10.26.html","tickets/03.11.26.html","tickets/03.12.26.html","tickets/04.05.26.html","tickets/04.06.26.html","tickets/04.07.26.html","tickets/04.08.26.html","tickets/04.09.26.html","tickets/04.10.26.html","tickets/04.11.26.html","tickets/04.12.26.html","tickets/05.05.26.html","tickets/05.06.26.html","tickets/05.07.26.html","tickets/05.08.26.html","tickets/05.09.26.html","tickets/05.10.26.html","tickets/05.11.26.html","tickets/05.12.26.html","tickets/06.05.26.html","tickets/06.06.26.html","tickets/06.07.26.html","tickets/06.08.26.html","tickets/06.09.26.html","tickets/06.10.26.html","tickets/06.11.26.html","tickets/06.12.26.html","tickets/07.05.26.html","tickets/07.06.26.html","tickets/07.07.26.html","tickets/07.08.26.html","tickets/07.09.26.html","tickets/07.10.26.html","tickets/07.11.26.html","tickets/07.12.26.html","tickets/08.05.26.html","tickets/08.06.26.html","tickets/08.07.26.html","tickets/08.08.26.html","tickets/08.09.26.html","tickets/08.10.26.html","tickets/08.11.26.html","tickets/08.12.26.html","tickets/09.05.26.html","tickets/09.06.26.html","tickets/09.07.26.html","tickets/09.08.26.html","tickets/09.09.26.html","tickets/09.10.26.html","tickets/09.11.26.html","tickets/09.12.26.html","tickets/10.05.26.html","tickets/10.06.26.html","tickets/10.07.26.html","tickets/10.08.26.html","tickets/10.09.26.html","tickets/10.10.26.html","tickets/10.11.26.html","tickets/10.12.26.html","tickets/11.05.26.html","tickets/11.06.26.html","tickets/11.07.26.html","tickets/11.08.26.html","tickets/11.09.26.html","tickets/11.10.26.html","tickets/11.11.26.html","tickets/11.12.26.html","tickets/12.05.26.html","tickets/12.06.26.html","tickets/12.07.26.html","tickets/12.08.26.html","tickets/12.09.26.html","tickets/12.10.26.html","tickets/12.11.26.html","tickets/12.12.26.html","tickets/13.05.26.html","tickets/13.06.26.html","tickets/13.07.26.html","tickets/13.08.26.html","tickets/13.09.26.html","tickets/13.10.26.html","tickets/13.11.26.html","tickets/13.12.26.html","tickets/14.05.26.html","tickets/14.06.26.html","tickets/14.07.26.html","tickets/14.08.26.html","tickets/14.09.26.html","tickets/14.10.26.html","tickets/14.11.26.html","tickets/14.12.26.html","tickets/15.05.26.html","tickets/15.06.26.html","tickets/15.07.26.html","tickets/15.08.26.html","tickets/15.09.26.html","tickets/15.10.26.html","tickets/15.11.26.html","tickets/15.12.26.html","tickets/16.05.26.html","tickets/16.06.26.html","tickets/16.07.26.html","tickets/16.08.26.html","tickets/16.09.26.html","tickets/16.10.26.html","tickets/16.11.26.html","tickets/16.12.26.html","tickets/17.05.26.html","tickets/17.06.26.html","tickets/17.07.26.html","tickets/17.08.26.html","tickets/17.09.26.html","tickets/17.10.26.html","tickets/17.11.26.html","tickets/17.12.26.html","tickets/18.05.26.html","tickets/18.06.26.html","tickets/18.07.26.html","tickets/18.08.26.html","tickets/18.09.26.html","tickets/18.10.26.html","tickets/18.11.26.html","tickets/18.12.26.html","tickets/19.05.26.html","tickets/19.06.26.html","tickets/19.07.26.html","tickets/19.08.26.html","tickets/19.09.26.html","tickets/19.10.26.html","tickets/19.11.26.html","tickets/19.12.26.html","tickets/20.05.26.html","tickets/20.06.26.html","tickets/20.07.26.html","tickets/20.08.26.html","tickets/20.09.26.html","tickets/20.10.26.html","tickets/20.11.26.html","tickets/20.12.26.html","tickets/2026-05-summary.html","tickets/2026-05.html","tickets/2026-06-summary.html","tickets/2026-06.html","tickets/2026-07-summary.html","tickets/2026-07.html","tickets/2026-08-summary.html","tickets/2026-08.html","tickets/2026-09-summary.html","tickets/2026-09.html","tickets/2026-10-summary.html","tickets/2026-10.html","tickets/2026-11-summary.html","tickets/2026-11.html","tickets/2026-12-summary.html","tickets/2026-12.html","tickets/21.05.26.html","tickets/21.06.26.html","tickets/21.07.26.html","tickets/21.08.26.html","tickets/21.09.26.html","tickets/21.10.26.html","tickets/21.11.26.html","tickets/21.12.26.html","tickets/22.05.26.html","tickets/22.06.26.html","tickets/22.07.26.html","tickets/22.08.26.html","tickets/22.09.26.html","tickets/22.10.26.html","tickets/22.11.26.html","tickets/22.12.26.html","tickets/23.05.26.html","tickets/23.06.26.html","tickets/23.07.26.html","tickets/23.08.26.html","tickets/23.09.26.html","tickets/23.10.26.html","tickets/23.11.26.html","tickets/23.12.26.html","tickets/24.05.26.html","tickets/24.06.26.html","tickets/24.07.26.html","tickets/24.08.26.html","tickets/24.09.26.html","tickets/24.10.26.html","tickets/24.11.26.html","tickets/24.12.26.html","tickets/25.05.26.html","tickets/25.06.26.html","tickets/25.07.26.html","tickets/25.08.26.html","tickets/25.09.26.html","tickets/25.10.26.html","tickets/25.11.26.html","tickets/25.12.26.html","tickets/26.05.26.html","tickets/26.06.26.html","tickets/26.07.26.html","tickets/26.08.26.html","tickets/26.09.26.html","tickets/26.10.26.html","tickets/26.11.26.html","tickets/26.12.26.html","tickets/27.05.26.html","tickets/27.06.26.html","tickets/27.07.26.html","tickets/27.08.26.html","tickets/27.09.26.html","tickets/27.10.26.html","tickets/27.11.26.html","tickets/27.12.26.html","tickets/28.05.26.html","tickets/28.06.26.html","tickets/28.07.26.html","tickets/28.08.26.html","tickets/28.09.26.html","tickets/28.10.26.html","tickets/28.11.26.html","tickets/28.12.26.html","tickets/29.05.26.html","tickets/29.06.26.html","tickets/29.07.26.html","tickets/29.08.26.html","tickets/29.09.26.html","tickets/29.10.26.html","tickets/29.11.26.html","tickets/29.12.26.html","tickets/30.05.26.html","tickets/30.06.26.html","tickets/30.07.26.html","tickets/30.08.26.html","tickets/30.09.26.html","tickets/30.10.26.html","tickets/30.11.26.html","tickets/30.12.26.html","tickets/31.05.26.html","tickets/31.07.26.html","tickets/31.08.26.html","tickets/31.10.26.html","tickets/31.12.26.html","tickets/zozulya-01-19.05.26.html","timesheet.html","vacations.html","voice.html"];
+let selectedEl=null, copiedCell=null, copiedCellData=null;
+const $=id=>document.getElementById(id); const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+
+ function setText(id,msg,cls=''){const el=$(id);el.className='status '+cls;el.textContent=msg}
+function normalizeEditorPath(path){path=String(path||'index.html').replace(/^\//,'');return path==='months/2026-05.html'?'index.html':path}
+function changes(){try{const o=JSON.parse(localStorage.getItem(LS_CHANGES)||'{}');if(o['months/2026-05.html']){delete o['months/2026-05.html'];localStorage.setItem(LS_CHANGES,JSON.stringify(o));}return o}catch{return {}}} function saveChanges(o){if(o&&o['months/2026-05.html'])delete o['months/2026-05.html'];localStorage.setItem(LS_CHANGES,JSON.stringify(o));renderQueue()} function putLocal(path,content){path=normalizeEditorPath(path||'draft.html');const o=changes();o[path]={path,content,updated:new Date().toISOString(),mode:'draft-only'};saveChanges(o)} function getLocal(path){path=normalizeEditorPath(path);return changes()[path]?.content}
+function getPass(){return ''}
+async function apiGet(path){const r=await fetch(API+'?path='+encodeURIComponent(path)+'&password='+encodeURIComponent(getPass()));const j=await r.json();if(!j.ok)throw new Error(j.error||'Помилка');return j.content}
+async function apiSave(path,content,msg){const r=await fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password:getPass(),path,content,message:msg||'Редактор: оновлено '+path})});const j=await r.json();if(!j.ok)throw new Error(j.error||'Помилка збереження');return j}
+async function fetchSiteFile(path){const r=await fetch('/'+path+'?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('Не можу завантажити актуальний файл з сайту: '+path);return r.text()}
+async function loadPath(path,allowLocal=false){path=normalizeEditorPath(path);const local=allowLocal?getLocal(path):null;if(local!=null)return {content:local,from:'папка чернеток'};return {content:await fetchSiteFile(path),from:'актуальний сайт (live, без GitHub/API)'}}
+function chosen(sel,custom){return normalizeEditorPath(($(custom).value.trim()||$(sel).value).replace(/^\//,''))}
+const MONTH_NAMES={'01':'січня','02':'лютого','03':'березня','04':'квітня','05':'травня','06':'червня','07':'липня','08':'серпня','09':'вересня','10':'жовтня','11':'листопада','12':'грудня'};
+const PAGE_CATEGORIES=[['all','Всі сторінки'],['main','Основні розділи'],['month','Графіки на місяць'],['daily','Щоденні графіки'],['districts','Дільниці'],['tickets','Квиток контролера'],['stt','Звіт СТТ'],['data','Службові файли']];
+function pageCategory(path){if(path==='index.html')return 'month';if(path.startsWith('months/'))return 'month';if(path.startsWith('daily/'))return 'daily';if(path.startsWith('districts/'))return 'districts';if(path.startsWith('tickets/'))return 'tickets';if(path.startsWith('stt/'))return 'stt';if(path.startsWith('assets/')||path.endsWith('.json')||path.endsWith('.js')||path.endsWith('.txt'))return 'data';return 'main'}
+function monthLabel(ym){const m=String(ym||'').match(/(20\d\d)-(\d\d)/);return m?(MONTH_NAMES[m[2]]||m[2])+' '+m[1]:ym}
+function dateLabel(s){const m=String(s||'').match(/(\d{2})\.(\d{2})\.(\d{2})/);return m?String(parseInt(m[1],10))+' '+(MONTH_NAMES[m[2]]||m[2])+' 20'+m[3]:s}
+function pageLabel(path){
+  const fixed={'index.html':'Графік на місяць — Травень (головний актуальний)','daily.html':'Щоденний графік — меню','districts.html':'Дільниця — меню','transport.html':'Транспорт','timesheet.html':'Квиток контролера — меню','stt.html':'Звіт СТТ — меню','vacations.html':'Відпустки','problems.html':'Проблеми','needs.html':'Валідатори','archive.html':'Архів','voice.html':'Голосовий ввід','install.html':'Встановлення додатку','emergency.html':'Аварійна сторінка','manifest.json':'Налаштування ярлика','service-worker.js':'Офлайн-кеш','vercel.json':'Налаштування сайту','RESTORE_README.txt':'Інструкція відновлення'};
+  if(fixed[path])return fixed[path];
+  let m=path.match(/^months\/(20\d\d-\d\d)\.html$/); if(m)return m[1]==='2026-05'?'Графік на місяць — Травень (відкривається головний актуальний)':('Графік на місяць — '+monthLabel(m[1]));
+  m=path.match(/^daily\/(\d{2}\.\d{2}\.\d{2})\.html$/); if(m)return 'Щоденний графік — '+dateLabel(m[1]);
+  m=path.match(/^daily\/(20\d\d-\d\d)\.html$/); if(m)return 'Щоденні графіки — '+monthLabel(m[1]);
+  m=path.match(/^districts\/(20\d\d-\d\d)\.html$/); if(m)return 'Дільниця — '+monthLabel(m[1]);
+  m=path.match(/^tickets\/(\d{2}\.\d{2}\.\d{2})\.html$/); if(m)return 'Квиток контролера — '+dateLabel(m[1]);
+  m=path.match(/^tickets\/(20\d\d-\d\d)-summary\.html$/); if(m)return 'Квитки — підсумок '+monthLabel(m[1]);
+  m=path.match(/^tickets\/(20\d\d-\d\d)\.html$/); if(m)return 'Квитки — '+monthLabel(m[1]);
+  m=path.match(/^stt\/(\d{2}\.\d{2}\.\d{2})\.html$/); if(m)return 'Звіт СТТ — '+dateLabel(m[1]);
+  if(path==='assets/data/controller-tickets.json')return 'Дані квитків контролера';
+  if(path==='assets/site-operations.json')return 'Журнал операцій сайту';
+  if(path==='assets/editor-config.json')return 'Налаштування редактора';
+  return path;
+}
+function pageSearchText(path){return (pageLabel(path)+' '+path+' '+path.replace(/[/._-]/g,' ')).toLowerCase()}
+function fillCategorySelect(id){const sel=$(id);if(!sel)return;const cur=sel.value||'all';sel.innerHTML=PAGE_CATEGORIES.map(([v,t])=>'<option value="'+v+'">'+t+'</option>').join('');sel.value=cur}
+function fillPageSelect(selId,catId,searchId){const sel=$(selId);if(!sel)return;const old=sel.value;const cat=$(catId)?.value||'all';const q=($(searchId)?.value||'').trim().toLowerCase();const terms=q.split(/\s+/).filter(Boolean);let pages=ALL_PAGES.filter(p=>p!=='months/2026-05.html'&&(cat==='all'||pageCategory(p)===cat)&&terms.every(t=>pageSearchText(p).includes(t)));if(!pages.length)pages=ALL_PAGES.filter(p=>p!=='months/2026-05.html'&&(cat==='all'||pageCategory(p)===cat));let curGroup='';sel.innerHTML='';for(const p of pages){const g=PAGE_CATEGORIES.find(x=>x[0]===pageCategory(p))?.[1]||'Інше';if(g!==curGroup){curGroup=g;const og=document.createElement('optgroup');og.label=g;sel.appendChild(og)}const opt=document.createElement('option');opt.value=p;opt.textContent=pageLabel(p)+'  —  '+p;sel.lastElementChild.appendChild(opt)}if(pages.includes(old))sel.value=old;}
+function setupPicker(prefix){fillCategorySelect(prefix+'Category');fillPageSelect(prefix+'Path',prefix+'Category',prefix+'PageSearch');$(prefix+'Category').onchange=()=>{fillPageSelect(prefix+'Path',prefix+'Category',prefix+'PageSearch');$(prefix+'CustomPath').value=''};$(prefix+'PageSearch').oninput=()=>{fillPageSelect(prefix+'Path',prefix+'Category',prefix+'PageSearch');$(prefix+'CustomPath').value=''};$(prefix+'Path').onchange=()=>{$(prefix+'CustomPath').value=''};$(prefix+'ClearPage').onclick=()=>{$(prefix+'Category').value='all';$(prefix+'PageSearch').value='';$(prefix+'CustomPath').value='';fillPageSelect(prefix+'Path',prefix+'Category',prefix+'PageSearch')}}
+function setupPagePickers(){setupPicker('visual');setupPicker('source')}
+
+
+function uaDateFromInput(v){const d=new Date(v+'T12:00:00');const months=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];const w=['неділя','понеділок','вівторок','середа','четвер','пʼятниця','субота'];return {d, title:d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear()+' року', weekday:w[d.getDay()], path:'daily/'+String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getFullYear()).slice(2)+'.html', sttPath:'stt/'+String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getFullYear()).slice(2)+'.html'}}
+const CREATOR_CONTROLLERS=["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.І.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."];
+const CREATOR_MONTH_CONTROLLERS={"2026-05": ["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.І.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."], "2026-06": ["Гордійчук І.О.", "Карапузова Н.К.", "Андрющенко І.В.", "Турчанович А.В.", "Хорошковська О.М.", "Шендрик В.А.", "Зозуля О.М.", "Шраменко В.А.", "Яремака Р.В.", "Ярошенко Л.М.", "Перетятько М.О.", "Магльована О.М.", "Добшина Л.В.", "Мельник А.І.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Гавриленко Л.І.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Пісоцька В.П.", "Романенко Л.А.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."], "2026-07": ["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.Є.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."], "2026-08": ["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.Є.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."], "2026-09": ["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.Є.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."], "2026-10": ["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.Є.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."], "2026-11": ["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.Є.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."], "2026-12": ["Перетятько М.О.", "Магльована О.М.", "Ковтун Т.П.", "Савченко С.П.", "Затокова Л.М.", "Тарарєєва М.М.", "Зозуля О.М.", "Шраменко В.А.", "Гавриленко Л.Є.", "Пилипенко Л.І.", "Битко І.В.", "Ніколіч А.О.", "Бобух Л.І.", "Дибля Н.А.", "Добшина Л.В.", "Мельник А.І.", "Хорошковська О.М.", "Шендрик В.А.", "Андрющенко І.В.", "Турчанович А.В.", "Яремака Р.В.", "Ярошенко Л.М.", "Пісоцька В.П.", "Романенко Л.А.", "Гордійчук І.О.", "Карапузова Н.К.", "Касьяненко О.А.", "Мотайленко Л.П.", "Юрченко Т.С."]};
+function creatorMonthKey(){const v=$('creatorDate')?.value||'2026-05-01';const m=String(v).match(/^(20\d\d)-(\d\d)-/);return m?m[1]+'-'+m[2]:'2026-05'}
+function creatorControllersForDate(){return CREATOR_MONTH_CONTROLLERS[creatorMonthKey()]||CREATOR_CONTROLLERS}
+function creatorSelectIds(){let ids=[];for(let s=1;s<=2;s++)for(let p=1;p<=7;p++)ids.push('c_s'+s+'_p'+p+'_a','c_s'+s+'_p'+p+'_b');return ids}
+const CREATOR_STATUS_TYPES=[['off','creatorOff','creatorOffSelects','Вихідні / В'],['tn','creatorTn','creatorTnSelects','Лікарняний / ТН'],['bz','creatorBz','creatorBzSelects','Без збереження / БЗ'],['ov','creatorOv','creatorOvSelects','Відпустка / ОВ']];
+const CREATOR_STATUS_SLOT_COUNT=20;
+function creatorStatusSelectIds(){let ids=[];CREATOR_STATUS_TYPES.forEach(t=>{for(let i=1;i<=CREATOR_STATUS_SLOT_COUNT;i++)ids.push('c_status_'+t[0]+'_'+i)});return ids}
+function creatorAllNameSelectIds(){return creatorSelectIds().concat(creatorStatusSelectIds())}
+function creatorSelectedNames(exceptId){const out=new Set();creatorAllNameSelectIds().forEach(id=>{if(id===exceptId)return;const el=$(id);const v=(el?.value||'').trim();if(v)out.add(v)});return out}
+function creatorControllerOptions(selected='',selectId=''){const used=creatorSelectedNames(selectId);return '<option value="">— вибрати контролера —</option>'+creatorControllersForDate().map(n=>'<option value="'+esc(n)+'" '+(n===selected?'selected':'')+' '+(used.has(n)&&n!==selected?'disabled hidden':'')+'>'+esc(n)+'</option>').join('')}
+function refreshCreatorControllerOptions(){creatorAllNameSelectIds().forEach(id=>{const el=$(id);if(!el)return;const v=el.value;el.innerHTML=creatorControllerOptions(v,id);el.value=v;});syncCreatorStatusTextareas()}
+function bindCreatorSelects(){creatorAllNameSelectIds().forEach(id=>{const el=$(id);if(!el)return;el.onchange=()=>{refreshCreatorControllerOptions();creatorAutoBuildDaily('Вибір оновлено. Контролер схований в інших полях.')};})}
+function creatorStatusRow(type,n){return '<select id="c_status_'+type+'_'+n+'" title="Статус '+n+'">'+creatorControllerOptions()+'</select>'}
+function creatorOffDayTemplate(){
+const x=uaDateFromInput($('creatorDate').value||'2026-06-22');
+const path='daily/'+String(x.d.getDate()).padStart(2,'0')+'.'+String(x.d.getMonth()+1).padStart(2,'0')+'.'+String(x.d.getFullYear()).slice(2)+'.html';
+const css='*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px;color:#222}.container{max-width:1120px;margin:0 auto;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.12);padding:14px}.nav{display:flex;flex-wrap:nowrap;overflow-x:auto;justify-content:center;gap:6px;position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);padding:8px;border-bottom:1px solid #e8e8e8}.nav a{background:#4472C4;color:#fff;text-decoration:none;padding:8px 10px;border-radius:8px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.12)}.nav a.active{background:#1f4e9e}.site-logos{display:grid;grid-template-columns:minmax(170px,1.3fr) auto minmax(170px,1.3fr);align-items:center;gap:6px;margin:0 0 6px;padding:2px 4px;min-height:58px;pointer-events:none}.site-logos img{display:block;object-fit:contain;opacity:.94;filter:grayscale(100%);width:auto}.logo-left{justify-self:start;max-width:390px;max-height:54px}.logo-center{justify-self:center;max-width:180px;max-height:72px}.logo-right{justify-self:end;max-width:442px;max-height:54px}.day-title-main{text-align:center;font-size:24px;margin:7px 0 2px;color:#111}.day-line{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:4px 0 8px}.day-prev{justify-self:start}.day-next{justify-self:end}.day-line a{background:#eef3ff;color:#1f4e9e;text-decoration:none;padding:7px 11px;border-radius:999px;font-weight:800;border:1px solid #c8d6f4;white-space:nowrap;font-size:13px}.day-number-box{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:210px;border-radius:999px;background:#eef3ff;color:#1f4e9e;text-align:center;padding:7px 18px;border:1px solid #c8d6f4}.date-line{font-size:18px;line-height:1.15;font-weight:900}.weekday-line{margin-top:2px;font-size:11px;font-weight:700;opacity:.78;text-transform:lowercase}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}.grid.single{grid-template-columns:1fr}.card{background:#fff;border:1px solid #d8dee9;border-radius:10px;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.06)}h2{background:#1f4e9e;color:#fff;text-align:center;font-size:17px;padding:8px;margin:0}.people-table{width:100%;border-collapse:collapse}.people-table th{background:#4472C4;color:white;font-weight:900;padding:7px;border:1px solid #d6deef}.people-table td{padding:7px;border:1px solid #d6deef;font-size:13px}.pair-cell{width:54px;text-align:center;font-weight:900}.name-cell{font-weight:900!important}.area-cell{width:30%;min-width:110px;text-align:center;font-weight:900!important}.area-1{background:#e8f5e9;color:#166534}.area-2{background:#fff7dc;color:#854d0e}.area-3{background:#eef2ff;color:#3730a3}.pair-separator td{border-top:3px solid #1f2937!important}.footer{text-align:center;color:#667085;margin-top:14px;font-weight:800;font-size:11px}@media(max-width:800px){.grid{grid-template-columns:1fr}.site-logos{grid-template-columns:1fr auto 1fr;min-height:36px}.logo-left{max-width:150px}.logo-center{max-width:98px}.logo-right{max-width:162px}}';
+const html='<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Щоденний графік контролера — '+esc(x.title)+'</title><style>'+css+'</style></head><body><div class="container"><nav class="nav"><a href="/">Графік на місяць</a><a href="/daily.html" class="active">Щоденний графік</a><a href="/stt.html">Звіт СТТ</a><a href="/editor.html">Редактор</a></nav><div class="site-logos"><img class="logo-left" src="/assets/header-left.jpg" alt="Черкаси"><img class="logo-center" src="/assets/trolleybus-center.jpg" alt="Тролейбус"><img class="logo-right" src="/assets/header-right.jpg" alt="Черкаси"></div><h1 class="day-title-main">Щоденний графік контролера</h1><div class="day-line"><div class="day-prev"><a href="/daily.html">← Назад</a></div><div class="day-number-box"><span class="date-line">'+esc(x.title)+'</span><span class="weekday-line">'+esc(x.weekday)+'</span></div><div class="day-next"><a href="/editor.html">Редактор →</a></div></div><main><div class="grid single"><section class="card"><h2>9-30 — 18-00 — 0</h2><table class="people-table"><thead><tr><th>Пара</th><th>Прізвище</th><th>Дільниця</th></tr></thead><tbody><tr><td colspan="3" style="text-align:center;padding:20px;color:#666;font-weight:700">Вихідний день</td></tr></tbody></table></section></div></main><p class="footer">КП ЧЕТС | '+esc(x.title)+' — вихідний день</p></div></body></html>';
+creatorSetOutput(html,path,'Вихідний день створено ✅')}
+function initCreatorStatusSelects(){CREATOR_STATUS_TYPES.forEach(t=>{const box=$(t[2]);if(box)box.innerHTML=Array.from({length:CREATOR_STATUS_SLOT_COUNT},(_,i)=>creatorStatusRow(t[0],i+1)).join('')})}
+function syncCreatorStatusTextareas(){CREATOR_STATUS_TYPES.forEach(t=>{const ta=$(t[1]);if(!ta)return;let names=[];for(let i=1;i<=CREATOR_STATUS_SLOT_COUNT;i++){const v=($('c_status_'+t[0]+'_'+i)?.value||'').trim();if(v)names.push(v)}ta.value=names.join('\n')})}
+function creatorPairRow(shift,n){return '<div class="pair-editor"><b>'+n+'</b><select id="c_s'+shift+'_p'+n+'_a" title="Контролер 1">'+creatorControllerOptions()+'</select><select id="c_s'+shift+'_p'+n+'_b" title="Контролер 2">'+creatorControllerOptions()+'</select><select id="c_s'+shift+'_p'+n+'_d" title="Дільниця"><option value="">—</option><option value="1">І</option><option value="2">ІІ</option><option value="3">ІІІ</option></select></div>'}
+function initCreator(){if(!$('creatorShift1'))return;$('creatorShift1').innerHTML=Array.from({length:7},(_,i)=>creatorPairRow(1,i+1)).join('');$('creatorShift2').innerHTML=Array.from({length:7},(_,i)=>creatorPairRow(2,i+1)).join('');initCreatorStatusSelects();bindCreatorSelects();document.querySelectorAll('#creatorShift1 select[id$="_d"],#creatorShift2 select[id$="_d"],#creatorTitle,#creatorPath').forEach(el=>{el.addEventListener('change',()=>creatorAutoBuildDaily());el.addEventListener('input',()=>creatorAutoBuildDaily());});$('creatorFillDate').onclick=creatorFillDate;$('creatorClearDaily').onclick=creatorClearDaily;$('creatorBuildDaily').onclick=creatorBuildDaily;if($('creatorOffDay'))$('creatorOffDay').onclick=creatorOffDayTemplate;if($('creatorMakeStt'))$('creatorMakeStt').onclick=creatorMakeStt;if($('creatorLoadSttFile'))$('creatorLoadSttFile').onclick=creatorLoadSttFile;if($('creatorMakeTickets'))$('creatorMakeTickets').onclick=creatorMakeTickets;if($('creatorMakeMonth'))$('creatorMakeMonth').onclick=creatorMakeMonth;if($('creatorMakeDistricts'))$('creatorMakeDistricts').onclick=creatorMakeDistricts;if($('creatorMakeTab'))$('creatorMakeTab').onclick=creatorMakeTab;if($('creatorMakeProblems'))$('creatorMakeProblems').onclick=creatorMakeProblems;$('creatorOpenVisual').onclick=creatorOpenVisual;$('creatorSaveLocal').onclick=creatorSaveLocal;$('creatorPublish').onclick=creatorPublish;if($('creatorSaveToFolder'))$('creatorSaveToFolder').onclick=creatorSaveToFolder;if($('creatorSaveAs'))$('creatorSaveAs').onclick=creatorSaveAs;$('creatorDownload').onclick=creatorDownload;$('creatorDate').onchange=()=>{creatorFillDate();refreshCreatorControllerOptions();creatorBuildDaily();setText('creatorStatus','Дата змінена. Список контролерів — у порядку графіка '+creatorMonthKey()+'.','ok')};creatorFillDate();refreshCreatorControllerOptions()}
+function creatorFillDate(){const x=uaDateFromInput($('creatorDate').value||'2026-06-22');$('creatorPath').value=x.path;$('creatorTitle').value=x.title;}
+function creatorClearDaily(){for(let s=1;s<=2;s++)for(let p=1;p<=6;p++){ $('c_s'+s+'_p'+p+'_a').value='';$('c_s'+s+'_p'+p+'_b').value='';$('c_s'+s+'_p'+p+'_d').value='';}creatorStatusSelectIds().forEach(id=>{const el=$(id);if(el)el.value=''});refreshCreatorControllerOptions();creatorBuildDaily();setText('creatorStatus','Поля очищено.','ok')}
+function creatorRows(shift){let groups=[];for(let p=1;p<=7;p++){const a=$('c_s'+shift+'_p'+p+'_a').value.trim(),b=$('c_s'+shift+'_p'+p+'_b').value.trim(),d=$('c_s'+shift+'_p'+p+'_d').value;if(a||b)groups.push({a,b,d})}return groups}
+function areaCell(d,rowspan){const map={1:['area-1','І дільниця'],2:['area-2','ІІ дільниця'],3:['area-3','ІІІ дільниця']};if(!map[d])return '<td class="area-cell" rowspan="'+rowspan+'">—</td>';return '<td class="area-cell '+map[d][0]+'" rowspan="'+rowspan+'">'+map[d][1]+'</td>'}
+function normalizeDailyGroups(groups){
+  const out=[];
+  let runD=null, runNames=[];
+  function flush(){
+    if(!runNames.length)return;
+    let i=0, n=runNames.length;
+    while(i<n){
+      let size;
+      if(n-i===1)size=1;
+      else if(n-i===2)size=2;
+      else if(n-i===3)size=3;
+      else if(n-i===4)size=2;
+      else size=3;
+      out.push({names:runNames.slice(i,i+size),d:runD});
+      i+=size;
+    }
+    runD=null; runNames=[];
+  }
+  groups.forEach(g=>{
+    const names=[g.a,g.b].filter(Boolean);
+    if(!names.length)return;
+    const d=g.d||'';
+    if(runD===null || d!==runD){flush(); runD=d; runNames=names.slice();}
+    else runNames.push(...names);
+  });
+  flush();
+  return out;
+}
+function renderShift(groups,title){let count=groups.reduce((n,g)=>n+(g.a?1:0)+(g.b?1:0),0);let normalized=normalizeDailyGroups(groups);let rows='';normalized.forEach((g,i)=>{let names=g.names||[];let rs=names.length||1;rows+='<tr class="'+(i?'pair-separator':'')+'"><td class="pair-cell">'+(i+1)+'</td><td class="name-cell">'+esc(names[0]||'')+'</td>'+areaCell(g.d,rs)+'</tr>';for(let j=1;j<names.length;j++)rows+='<tr><td class="pair-cell"></td><td class="name-cell">'+esc(names[j])+'</td></tr>'});if(!rows)rows='<tr><td class="pair-cell">1</td><td class="name-cell"></td><td class="area-cell">—</td></tr>';return '<section class="card"><h2>'+title+' — '+count+'</h2><table class="people-table"><thead><tr><th>Пара</th><th>Прізвище</th><th>Дільниця</th></tr></thead><tbody>'+rows+'</tbody></table></section>'}
+function dailyTemplateHtml(){const x=uaDateFromInput($('creatorDate').value||'2026-06-22');const title=$('creatorTitle').value.trim()||x.title;const s1=creatorRows(1),s2=creatorRows(2);return '<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Щоденний графік контролера — '+esc(title)+'</title><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px;color:#222}.container{max-width:1120px;margin:0 auto;background:#fff;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.12);padding:14px}.nav{display:flex;flex-wrap:nowrap;overflow-x:auto;justify-content:center;gap:6px;position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);padding:8px;border-bottom:1px solid #e8e8e8}.nav a{background:#4472C4;color:#fff;text-decoration:none;padding:8px 10px;border-radius:8px;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.12)}.nav a.active{background:#1f4e9e}.site-logos{display:grid;grid-template-columns:minmax(170px,1.3fr) auto minmax(170px,1.3fr);align-items:center;gap:6px;margin:0 0 6px;padding:2px 4px;min-height:58px;pointer-events:none}.site-logos img{display:block;object-fit:contain;opacity:.94;filter:grayscale(100%);width:auto}.logo-left{justify-self:start;max-width:390px;max-height:54px}.logo-center{justify-self:center;max-width:180px;max-height:72px}.logo-right{justify-self:end;max-width:442px;max-height:54px}.day-title-main{text-align:center;font-size:24px;margin:7px 0 2px;color:#111}.day-line{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:4px 0 8px}.day-prev{justify-self:start}.day-next{justify-self:end}.day-line a{background:#eef3ff;color:#1f4e9e;text-decoration:none;padding:7px 11px;border-radius:999px;font-weight:800;border:1px solid #c8d6f4;white-space:nowrap;font-size:13px}.day-number-box{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:210px;border-radius:999px;background:#eef3ff;color:#1f4e9e;text-align:center;padding:7px 18px;border:1px solid #c8d6f4}.date-line{font-size:18px;line-height:1.15;font-weight:900}.weekday-line{margin-top:2px;font-size:11px;font-weight:700;opacity:.78;text-transform:lowercase}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}.card{background:#fff;border:1px solid #d8dee9;border-radius:10px;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.06)}h2{background:#1f4e9e;color:#fff;text-align:center;font-size:17px;padding:8px;margin:0}.people-table{width:100%;border-collapse:collapse}.people-table th{background:#4472C4;color:white;font-weight:900;padding:7px;border:1px solid #d6deef}.people-table td{padding:7px;border:1px solid #d6deef;font-size:13px}.pair-cell{width:54px;text-align:center;font-weight:900}.name-cell{font-weight:900!important}.area-cell{width:30%;min-width:110px;text-align:center;font-weight:900!important}.area-1{background:#e8f5e9;color:#166534}.area-2{background:#fff7dc;color:#854d0e}.area-3{background:#eef2ff;color:#3730a3}.pair-separator td{border-top:3px solid #1f2937!important}.status-grid{display:grid;grid-template-columns:1.4fr repeat(3,.72fr);gap:6px;margin-top:10px}.status-card{background:#fff!important;color:#111!important;overflow:hidden!important;border-radius:8px!important}.status-card h3{font-size:12px!important;text-align:center!important;padding:6px!important;line-height:1.05!important;font-weight:900!important;border-bottom:1px solid rgba(0,0,0,.12)!important}.status-list{background:#fff!important;color:#111!important;list-style:none!important;padding:6px!important;display:flex!important;flex-wrap:wrap!important;gap:3px 8px!important}.status-list li{color:#111!important;background:#fff!important;border-bottom:0!important;padding:0!important;font-weight:800!important;font-size:10.5px!important;line-height:1.1!important;white-space:nowrap!important}.status-card.gray{border:1px solid #d1d5db!important}.status-card.gray h3{background:#e5e7eb!important;color:#111827!important}.status-card.yellow{border:1px solid #e8d767!important}.status-card.yellow h3{background:#FFF68B!important;color:#000!important}.status-card.cyan{border:1px solid #b7cfe6!important}.status-card.cyan h3{background:#DCEAF5!important;color:#1f4e79!important}.status-card.black{border:1px solid #333!important}.status-card.black h3{background:#333!important;color:#fff!important}.footer{text-align:center;color:#667085;margin-top:14px;font-weight:800;font-size:11px}@media(max-width:800px){.grid{grid-template-columns:1fr}.status-grid{grid-template-columns:1fr}.site-logos{grid-template-columns:1fr auto 1fr;min-height:36px}.logo-left{max-width:150px}.logo-center{max-width:98px}.logo-right{max-width:162px}}</style></head><body><div class="container"><nav class="nav"><a href="/">Графік на місяць</a><a class="active" href="/daily.html">Щоденний графік</a><a href="/stt.html">Звіт СТТ</a><a href="/editor.html">Редактор</a></nav><div class="site-logos"><img class="logo-left" src="/assets/header-left.jpg" alt="Черкаси"><img class="logo-center" src="/assets/trolleybus-center.jpg" alt="Тролейбус"><img class="logo-right" src="/assets/header-right.jpg" alt="Черкаси"></div><h1 class="day-title-main">Щоденний графік контролера</h1><div class="day-line"><div class="day-prev"><a href="/daily.html">← Назад</a></div><div class="day-hero"><div class="day-number-box"><span class="date-line">'+esc(title)+'</span><span class="weekday-line">'+esc(x.weekday)+'</span></div></div><div class="day-next"><a href="/editor.html">Редактор →</a></div></div><main><div class="grid">'+renderShift(s1,'І зміна')+renderShift(s2,'ІІ зміна')+'</div>'+creatorStatusGrid()+'</main><p class="footer">КП ЧЕТС | Чернетка щоденного графіка</p></div></body></html>'}
+function sttTemplateHtml(){const x=uaDateFromInput($('creatorDate').value||'2026-06-22');return '<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Звіт СТТ — '+esc(x.title)+'</title><style>body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px;color:#111827}.container{max-width:980px;margin:0 auto;background:white;border-radius:12px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,.12)}h1{text-align:center}.meta{text-align:center;color:#64748b;font-weight:800}.stt-table{width:100%;border-collapse:collapse;margin-top:12px}th{background:#1f4e9e;color:white}td,th{border:1px solid #d6deef;padding:8px;text-align:center}.name{text-align:left;font-weight:900}</style></head><body><div class="container"><h1>Звіт СТТ</h1><div class="meta">'+esc(x.title)+' • '+x.weekday+'</div><table class="stt-table"><thead><tr><th>Контролер</th><th>Перший чек</th><th>Останній чек</th><th>Тривалість</th><th>Успішних</th><th>Не успішних</th></tr></thead><tbody><tr><td class="name"></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="name"></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="name"></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div></body></html>'}
+
+function creatorLines(id){return ($(id)?.value||'').split(/\n+/).map(x=>x.trim()).filter(Boolean)}
+function statusCard(title,cls,items){if(!items.length)return '';return '<div class="status-card '+cls+'"><h3>'+esc(title)+' — '+items.length+'</h3><ul class="status-list">'+items.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>'}
+function creatorStatusGrid(){return '<div class="status-grid">'+statusCard('Вихідний','gray',creatorLines('creatorOff'))+statusCard('Лікарняний / ТН','yellow',creatorLines('creatorTn'))+statusCard('Без збереження','cyan',creatorLines('creatorBz'))+statusCard('ОВ','black',creatorLines('creatorOv'))+'</div>'}
+function creatorTicketHtml(){const x=uaDateFromInput($('creatorDate').value||'2026-06-22');const rows=creatorLines('creatorTicketRows').map(line=>{const m=line.match(/^(.*?)[\s;:,]+(\d+)$/);return {name:m?m[1].trim():line,count:m?m[2]:''}});const total=rows.reduce((n,r)=>n+(parseInt(r.count)||0),0);return '<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Квиток контролера — '+esc(x.title)+'</title><style>body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px}.container{max-width:900px;margin:auto;background:white;border-radius:12px;padding:14px;box-shadow:0 2px 12px #0002}h1{text-align:center}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.card{border:1px solid #d8dee9;border-radius:12px;padding:12px;background:#fff}.name{font-weight:900}.count{font-size:32px;color:#d92d20;font-weight:950;text-align:right}.total{text-align:center;font-size:22px;font-weight:900;color:#1f4e9e;margin:10px}</style></head><body><div class="container"><h1>Квиток контролера</h1><div class="total">'+esc(x.title)+' • разом: '+total+'</div><div class="cards">'+rows.map(r=>'<div class="card"><div class="name">'+esc(r.name)+'</div><div class="count">'+esc(r.count)+'</div></div>').join('')+'</div></div></body></html>'}
+function creatorMakeTickets(){const x=uaDateFromInput($('creatorDate').value||'2026-06-22');creatorSetOutput(creatorTicketHtml(),'tickets/'+x.path.split('/')[1],'Квитки контролера створено ✅')}
+function parseSttRows(){return creatorLines('creatorSttRows').map(line=>{const p=line.split(/[;\t,]/).map(x=>x.trim());return {name:p[0]||'',first:p[1]||'',last:p[2]||'',ok:p[3]||'',bad:p[4]||''}})}
+function creatorLoadSttFile(){const f=$('creatorSttFile').files[0];if(!f){setText('creatorStatus','Вибери CSV/TXT файл.','err');return}const r=new FileReader();r.onload=()=>{$('creatorSttRows').value=r.result;setText('creatorStatus','Текст таблиці завантажено. Натисни “Зробити СТТ”.','ok')};r.readAsText(f)}
+function sttTemplateHtml(){const x=uaDateFromInput($('creatorDate').value||'2026-06-22');const rows=parseSttRows();let body=rows.length?rows.map(r=>'<tr><td class="name">'+esc(r.name)+'</td><td>'+esc(r.first)+'</td><td>'+esc(r.last)+'</td><td></td><td>'+esc(r.ok)+'</td><td>'+esc(r.bad)+'</td></tr>').join(''):'<tr><td class="name"></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="name"></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td class="name"></td><td></td><td></td><td></td><td></td><td></td></tr>';return '<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Звіт СТТ — '+esc(x.title)+'</title><style>body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px;color:#111827}.container{max-width:980px;margin:0 auto;background:white;border-radius:12px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,.12)}h1{text-align:center}.meta{text-align:center;color:#64748b;font-weight:800}.stt-table{width:100%;border-collapse:collapse;margin-top:12px}th{background:#1f4e9e;color:white}td,th{border:1px solid #d6deef;padding:8px;text-align:center}.name{text-align:left;font-weight:900}</style></head><body><div class="container"><h1>Звіт СТТ</h1><div class="meta">'+esc(x.title)+' • '+x.weekday+'</div><table class="stt-table"><thead><tr><th>Контролер</th><th>Перший чек</th><th>Останній чек</th><th>Тривалість</th><th>Успішних</th><th>Не успішних</th></tr></thead><tbody>'+body+'</tbody></table></div></body></html>'}
+function monthInfo(){const v=$('creatorMonth').value||'2026-07';const [y,m]=v.split('-').map(Number);const names=['','СІЧЕНЬ','ЛЮТИЙ','БЕРЕЗЕНЬ','КВІТЕНЬ','ТРАВЕНЬ','ЧЕРВЕНЬ','ЛИПЕНЬ','СЕРПЕНЬ','ВЕРЕСЕНЬ','ЖОВТЕНЬ','ЛИСТОПАД','ГРУДЕНЬ'];return {y,m,ym:v,name:names[m],days:new Date(y,m,0).getDate()}}
+function blankMonthTable(kind){const mi=monthInfo();let heads='',rows='';for(let d=1;d<=mi.days;d++)heads+='<th>'+d+'</th>';for(let i=1;i<=30;i++){let cells='';for(let d=1;d<=mi.days;d++)cells+='<td></td>';rows+='<tr><td>'+i+'</td><td class="name"></td>'+cells+'</tr>'}return '<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+kind+' — '+mi.name+' '+mi.y+'</title><style>body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px}.container{max-width:1600px;margin:auto;background:white;border-radius:12px;padding:14px;overflow:auto}h1{text-align:center}table{border-collapse:collapse;width:100%;min-width:1100px}th{background:#4472C4;color:white;position:sticky;top:0}td,th{border:1px solid #d6deef;padding:6px;text-align:center}.name{min-width:160px;text-align:left;font-weight:900}.eight1{background:#FCE4D6;color:#990000}.eight2{background:#D9EAF7;color:#1F4E79}.area-1{background:#e8f5e9;color:#166534}.area-2{background:#fff7dc;color:#854d0e}.area-3{background:#eef2ff;color:#3730a3}</style></head><body><div class="container"><h1>'+kind+' — '+mi.name+' '+mi.y+'</h1><table><thead><tr><th>№</th><th>Працівник</th>'+heads+'</tr></thead><tbody>'+rows+'</tbody></table></div></body></html>'}
+function creatorMakeMonth(){const mi=monthInfo();creatorSetOutput(blankMonthTable('Місячний графік'),'months/'+mi.ym+'.html','Місячний графік створено ✅')}
+function creatorMakeDistricts(){const mi=monthInfo();creatorSetOutput(blankMonthTable('Дільниця'),'districts/'+mi.ym+'.html','Дільницю створено ✅')}
+function creatorMakeTransport(){const mi=monthInfo();creatorSetOutput(blankMonthTable('Транспорт'),'transport/'+mi.ym+'.html','Транспорт створено ✅')}
+function creatorMakeProblems(){const mi=monthInfo();let tiles='';for(let d=1;d<=mi.days;d++)tiles+='<article class="day-tile" data-day="'+d+'"><div class="day-date">'+d+'</div><div class="problem-lines"><div class="problem-row"><span>№</span><span>машина</span></div><div class="problem-row"><span>№</span><span>машина</span></div><div class="problem-row"><span>№</span><span>машина</span></div></div></article>';creatorSetOutput('<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Проблеми — '+mi.name+' '+mi.y+'</title><style>body{font-family:Arial;background:#f0f2f5;padding:10px}.container{max-width:1260px;margin:auto;background:#fff;padding:14px;border-radius:12px}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day-tile{min-height:120px;border:1px solid #cbd5e1;border-radius:12px;padding:8px}.day-date{font-weight:900;color:#1f4e9e}.problem-row{display:grid;grid-template-columns:40px 1fr;gap:6px;margin:4px 0}.problem-row span{border:1px dashed #cbd5e1;border-radius:7px;padding:4px;text-align:center}</style></head><body><div class="container"><h1>Проблеми — '+mi.name+' '+mi.y+'</h1><div class="calendar-grid">'+tiles+'</div></div></body></html>','problems-'+mi.ym+'.html','Проблеми створено ✅')}
+
+function creatorDuplicateNames(){const seen=new Set(),dups=new Set();creatorAllNameSelectIds().forEach(id=>{const v=($(id)?.value||'').trim();if(!v)return;if(seen.has(v))dups.add(v);seen.add(v)});return [...dups]}
+function creatorAutoBuildDaily(msg){if(!$('creatorOutput'))return;try{const p=($('creatorPath')?.value||'');if(!p || p.startsWith('daily/')){creatorSetOutput(dailyTemplateHtml(),p||uaDateFromInput($('creatorDate').value||'2026-06-22').path,msg||'Щоденну заготовку оновлено ✅')}}catch(e){console.warn(e)}}
+function creatorSetOutput(html,path,msg){$('creatorOutput').value=html;$('creatorPreview').srcdoc=html;if(path)$('creatorPath').value=path;setText('creatorStatus',msg||'Заготовку створено.','ok')}
+function creatorBuildDaily(){const dups=creatorDuplicateNames();if(dups.length){setText('creatorStatus','Дубль контролера: '+dups.join(', ')+'. Прибери повтор.','err');return false}creatorSetOutput(dailyTemplateHtml(),$('creatorPath').value,'Щоденний графік створено ✅');return true}
+function creatorMakeStt(){const x=uaDateFromInput($('creatorDate').value||'2026-06-22');creatorSetOutput(sttTemplateHtml(),x.sttPath,'СТТ заготовку створено ✅')}
+function creatorOpenVisual(){try{const p=($('creatorPath').value.trim()||uaDateFromInput($('creatorDate').value).path).replace(/^\//,'');if(p.startsWith('daily/')&&!creatorBuildDaily())return;if(!$('creatorOutput').value.trim())creatorBuildDaily();putLocal(p,$('creatorOutput').value);$('visualCustomPath').value=p;showTab('visual');openVisualDraft(p);setTimeout(()=>setText('visualStatus','Відкрито поточну заготовку з Creator ✅ Поточні зміни збережені в папку чернеток. Можна редагувати і зберігати поверх.','ok'),250)}catch(e){setText('creatorStatus',e.message,'err')}}
+async function creatorSaveLocal(){try{const p=($('creatorPath').value||'daily/new.html').replace(/^\//,'');if(p.startsWith('daily/')&&!creatorBuildDaily())return;if(!$('creatorOutput').value.trim())creatorBuildDaily();let html=$('creatorOutput').value;
+try{const imgs=['/assets/header-left.jpg','/assets/trolleybus-center.jpg','/assets/header-right.jpg'];
+for(const src of imgs){try{const r=await fetch(src,{cache:'force-cache'});if(!r.ok)continue;const b=await r.blob();const dataUrl=await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(b)});html=html.split(src).join(dataUrl)}catch(e){console.warn('img',src,e)}}
+}catch(e){console.warn('img block',e)}
+putLocal(p,html);setText('creatorStatus','Збережено в папку чернеток з картинками ✅','ok')}catch(e){setText('creatorStatus',e.message,'err')}}
+async function creatorPublish(){setText('creatorStatus','Захист увімкнено: редактор не публікує в інтернет. Збережи в папку чернеток; для публікації напиши Hermes.','err')}
+async function chooseDraftFolder(){try{if(!window.showDirectoryPicker)throw new Error('Цей браузер не дає вибрати папку. Користуйся “Скачати HTML”, “Зберегти як…” або “Скачати папку чернеток”.');draftDirHandle=await window.showDirectoryPicker({id:'chets-creator-drafts',mode:'readwrite'});draftFolderName=draftDirHandle.name||'вибрана папка';if($('draftFolderStatus'))$('draftFolderStatus').textContent='Вибрано: '+draftFolderName;setText('queueStatus','Папку компʼютера вибрано ✅ '+draftFolderName,'ok');setText('creatorStatus','Папку компʼютера вибрано ✅ '+draftFolderName,'ok')}catch(e){setText('queueStatus',e.message,'err');if($('creatorStatus'))setText('creatorStatus',e.message,'err')}}
+async function writeDraftFileToFolder(path,content,statusId){if(!draftDirHandle)throw new Error('Спочатку натисни “Вибрати папку компʼютера” у вкладці “Папка чернеток”.');let dir=draftDirHandle;const parts=String(path||'creator.html').replace(/^\//,'').split('/').filter(Boolean);const file=parts.pop()||'creator.html';for(const part of parts){dir=await dir.getDirectoryHandle(part,{create:true})}const fh=await dir.getFileHandle(file,{create:true});const w=await fh.createWritable();await w.write(content);await w.close();if(statusId)setText(statusId,'HTML збережено у вибрану папку компʼютера ✅ '+path,'ok')}
+async function creatorSaveToFolder(){try{if(!$('creatorOutput').value.trim())creatorBuildDaily();const p=($('creatorPath').value||'daily/new.html').replace(/^\//,'');putLocal(p,$('creatorOutput').value);await writeDraftFileToFolder(p,$('creatorOutput').value,'creatorStatus')}catch(e){setText('creatorStatus',e.message,'err')}}
+async function creatorSaveAs(){try{if(!$('creatorOutput').value.trim())creatorBuildDaily();const p=($('creatorPath').value||'creator.html').replace(/^\//,'');if(!window.showSaveFilePicker){creatorDownload();setText('creatorStatus','Браузер не дає “Зберегти як…”, тому файл скачано у Завантаження.','ok');return}const fh=await window.showSaveFilePicker({suggestedName:safeFileName(p,'html'),types:[{description:'HTML сторінка',accept:{'text/html':['.html']}}]});const w=await fh.createWritable();await w.write($('creatorOutput').value);await w.close();putLocal(p,$('creatorOutput').value);setText('creatorStatus','HTML збережено через “Зберегти як…” ✅','ok')}catch(e){setText('creatorStatus',e.message,'err')}}
+function creatorDownload(){try{if(!$('creatorOutput').value.trim())creatorBuildDaily();downloadBlob(new Blob([$('creatorOutput').value],{type:'text/html;charset=utf-8'}),safeFileName(($('creatorPath').value||'creator.html'),'html'));setText('creatorStatus','HTML заготовку скачано ✅','ok')}catch(e){setText('creatorStatus',e.message,'err')}}
+
+function openCreatorDraftVisual(){try{const p=($('creatorPath')?.value?.trim()||'').replace(/^\//,'');if(!p)throw new Error('Спочатку у вкладці Creator створи заготовку.');if(p.startsWith('daily/')&&!creatorBuildDaily())return;const html=$('creatorOutput')?.value||'';if(!html.trim())throw new Error('Спочатку у вкладці Creator створи заготовку.');putLocal(p,html);$('visualCustomPath').value=p;openVisualDraft(p);setTimeout(()=>setText('visualStatus','Відкрито поточну заготовку з Creator ✅ Поточні зміни збережені.','ok'),250)}catch(e){setText('visualStatus',e.message,'err')}}
+
+
+function init(){setupPagePickers();initCreator();document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));$('cacheNow').onclick=cacheNow;$('openVisual').onclick=openVisual;$('openCreatorDraftVisual').onclick=openCreatorDraftVisual;$('reloadVisual').onclick=openVisual;$('saveVisualLocal').onclick=saveVisualLocal;$('publishVisual').onclick=publishVisual;$('downloadVisualHtml').onclick=downloadVisualHtml;$('downloadVisualPage').onclick=downloadVisualPng;$('printVisual').onclick=printVisual;$('applyText').onclick=applyText;$('copyCell').onclick=copyCell;$('pasteCell').onclick=pasteCell;$('clearCell').onclick=clearCell;if(!window.__visualCopyPasteKeysBound){document.addEventListener('keydown',visualCopyPasteKeys);window.__visualCopyPasteKeysBound=true;}$('applyBg').onclick=()=>applyStyle('backgroundColor',$('bgColor').value);$('applyFg').onclick=()=>applyStyle('color',$('fgColor').value);$('boldBtn').onclick=()=>execVisual('bold');$('undoBtn').onclick=()=>execVisual('undo');document.querySelectorAll('.quickBg').forEach(b=>b.onclick=()=>{$('bgColor').value=rgbToHex(b.dataset.bg);applyStyle('backgroundColor',b.dataset.bg)});document.querySelectorAll('.areaBtn').forEach(b=>b.onclick=()=>applyDistrict(b.dataset.area));$('applyImgUrl').onclick=applyImgUrl;$('applyImgFile').onclick=applyImgFile;$('refreshQueue').onclick=renderQueue;if($('chooseDraftFolder'))$('chooseDraftFolder').onclick=chooseDraftFolder;if($('publishAll'))$('publishAll').onclick=publishAll;$('exportChanges').onclick=exportChanges;$('importChangesBtn').onclick=()=>$('importChanges').click();$('importChanges').onchange=importChanges;$('clearQueue').onclick=()=>{if(confirm('Очистити локальні зміни?')){localStorage.removeItem(LS_CHANGES);renderQueue()}};$('loadSource').onclick=loadSource;$('saveSourceLocal').onclick=saveSourceLocal;$('publishSource').onclick=publishSource;$('downloadSource').onclick=downloadSource;updateNet();setInterval(updateNet,4000);registerSW();renderQueue()}
+function showTab(t){document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));document.querySelectorAll('.tab').forEach(s=>s.classList.add('hidden'));$('tab-'+t).classList.remove('hidden')}
+function updateNet(){setText('netStatus',navigator.onLine?'Онлайн. Безпечний режим: редактор зберігає тільки чернетки, не публікує.':'Офлайн: можна редагувати і зберігати у папку чернеток.',navigator.onLine?'ok':'err')} async function registerSW(){if('serviceWorker'in navigator)try{await navigator.serviceWorker.register('/service-worker.js')}catch(e){console.warn(e)}}
+async function cacheNow(){try{setText('netStatus','Кешую всі сторінки...');await registerSW();const reg=await navigator.serviceWorker.ready;const ch=new MessageChannel();ch.port1.onmessage=e=>setText('netStatus',e.data.type==='CACHE_DONE'?'Офлайн готовий ✅ Закешовано: '+e.data.count:'Помилка кешу: '+e.data.error,e.data.type==='CACHE_DONE'?'ok':'err');reg.active.postMessage({type:'CACHE_NOW',urls:ALL_PAGES.map(p=>'/'+p).concat(['/','/editor.html','/assets/header-left.jpg','/assets/header-right.jpg','/assets/trolleybus-center.jpg'])},[ch.port2])}catch(e){setText('netStatus',e.message,'err')}}
+function showVisualContent(path,content,from){const fr=$('visualFrame');selectedEl=null;fr.srcdoc=content;fr.onload=()=>{const d=fr.contentDocument;d.designMode='off';d.querySelectorAll('a').forEach(a=>a.onclick=ev=>ev.preventDefault());d.addEventListener('click',ev=>{ev.preventDefault();ev.stopPropagation();selectEl(ev.target)},true);setText('visualStatus','Відкрито з: '+from+' ✅ '+path+' — клікни клітинку/текст для редагування.','ok')}}
+async function openVisual(){try{const path=chosen('visualPath','visualCustomPath');setText('visualStatus','Відкриваю АКТУАЛЬНУ сторінку з сайту: '+path+' ...');const r=await loadPath(path,false);showVisualContent(path,r.content,r.from)}catch(e){setText('visualStatus',e.message,'err')}}
+function openVisualDraft(p){try{p=normalizeEditorPath(p);const local=getLocal(p);if(local==null)throw new Error('Цієї чернетки вже немає в папці чернеток');$('visualCustomPath').value=p;showTab('visual');showVisualContent(p,local,'папка чернеток')}catch(e){setText('queueStatus',e.message,'err');setText('visualStatus',e.message,'err')}}
+function selectEl(el){const d=$('visualFrame').contentDocument;if(selectedEl){selectedEl.classList.remove('picked');selectedEl.removeAttribute('contenteditable')}const cell=el.closest('td,th');selectedEl=cell||el.closest('img,p,h1,h2,h3,li,span,div')||el;selectedEl.classList.add('picked');if(selectedEl.tagName!=='IMG'){selectedEl.setAttribute('contenteditable','true');selectedEl.focus&&selectedEl.focus()}$('cellText').value=selectedEl.tagName==='IMG'?(selectedEl.getAttribute('alt')||selectedEl.getAttribute('src')||''):selectedEl.textContent.trim();if(selectedEl.tagName==='IMG')$('imgUrl').value=selectedEl.getAttribute('src')||'';}
+function needSel(){if(!selectedEl)throw new Error('Спочатку клікни клітинку/текст/картинку')} function applyText(){try{needSel(); if(selectedEl.tagName==='IMG')selectedEl.alt=$('cellText').value; else selectedEl.textContent=$('cellText').value;setText('visualStatus','Текст змінено.','ok')}catch(e){setText('visualStatus',e.message,'err')}}
+function visualCopyTarget(){needSel();return selectedEl.closest&&selectedEl.closest('td,th')?selectedEl.closest('td,th'):selectedEl}
+function importantStyle(el){const w=el.ownerDocument.defaultView||window,cs=w.getComputedStyle(el);const props=['backgroundColor','color','fontWeight','fontStyle','textAlign','verticalAlign','fontSize','fontFamily','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth','borderTopStyle','borderRightStyle','borderBottomStyle','borderLeftStyle'];let out=el.getAttribute('style')||'';for(const prop of props){const css=prop.replace(/[A-Z]/g,m=>'-'+m.toLowerCase());if(cs[prop])out+=';'+css+':'+cs[prop]+' !important'}return out}
+function attrsForCopy(el){const keep=['class','colspan','rowspan','data-day','data-status','title'];const attrs={};for(const a of el.attributes){if(keep.includes(a.name)||a.name.startsWith('data-'))attrs[a.name]=a.value}attrs.style=importantStyle(el);return attrs}
+function applyCopiedAttrs(target,attrs){[...target.attributes].forEach(a=>{if(a.name!=='id'&&a.name!=='contenteditable')target.removeAttribute(a.name)});for(const [k,v] of Object.entries(attrs||{})){if(k!=='id'&&k!=='contenteditable')target.setAttribute(k,v)}}
+function copyCell(){try{const el=visualCopyTarget();copiedCell=el.cloneNode(true);copiedCellData={html:el.innerHTML,text:el.textContent,attrs:attrsForCopy(el),tag:el.tagName};setText('visualStatus','Скопійовано ВСЮ клітинку ✅ текст + фон + колір + жирність. Клікни іншу і натисни “Вставити всю клітинку” або Ctrl+V.','ok')}catch(e){setText('visualStatus',e.message,'err')}}
+function pasteCell(){try{const el=visualCopyTarget();if(!copiedCellData&&!copiedCell)throw new Error('Немає скопійованої клітинки');const data=copiedCellData||{html:copiedCell.innerHTML,attrs:attrsForCopy(copiedCell)};el.innerHTML=data.html;applyCopiedAttrs(el,data.attrs);$('cellText').value=el.textContent.trim();setText('visualStatus','Вставлено ВСЮ клітинку ✅','ok')}catch(e){setText('visualStatus',e.message,'err')}}
+function visualCopyPasteKeys(e){const tag=(document.activeElement&&document.activeElement.tagName)||'';if(['INPUT','TEXTAREA','SELECT'].includes(tag))return;if(!$('tab-visual')||$('tab-visual').classList.contains('hidden'))return;if(!(e.ctrlKey||e.metaKey))return;const k=e.key.toLowerCase();if(k==='c'){e.preventDefault();copyCell()} if(k==='v'){e.preventDefault();pasteCell()}}
+function clearCell(){try{needSel();selectedEl.innerHTML='';setText('visualStatus','Очищено.','ok')}catch(e){setText('visualStatus',e.message,'err')}}
+function applyStyle(prop,val){try{needSel();const target=selectedEl.closest&&selectedEl.closest('td,th')?selectedEl.closest('td,th'):selectedEl;target.style[prop]=val;setText('visualStatus','Стиль застосовано.','ok')}catch(e){setText('visualStatus',e.message,'err')}} function applyDistrict(n){try{needSel();const td=selectedEl.closest&&selectedEl.closest('td,th')?selectedEl.closest('td,th'):selectedEl;const map={1:{t:'І',bg:'#e8f5e9',fg:'#166534',cls:'area-1'},2:{t:'ІІ',bg:'#fff7dc',fg:'#854d0e',cls:'area-2'},3:{t:'ІІІ',bg:'#eef2ff',fg:'#3730a3',cls:'area-3'}}[n];td.textContent=map.t;td.classList.remove('area-1','area-2','area-3','area-off','area-tn','area-sick','area-bz','area-duty','area-vac');td.classList.add(map.cls);td.style.backgroundColor=map.bg;td.style.color=map.fg;td.style.fontWeight='950';td.style.fontSize='15px';$('cellText').value=map.t;setText('visualStatus',map.t+' дільницю поставлено ✅','ok')}catch(e){setText('visualStatus',e.message,'err')}} function execVisual(cmd){try{$('visualFrame').contentDocument.execCommand(cmd,false,null)}catch(e){setText('visualStatus',e.message,'err')}}
+function applyImgUrl(){try{needSel();let img=selectedEl.tagName==='IMG'?selectedEl:selectedEl.querySelector('img');if(!img){img=selectedEl.ownerDocument.createElement('img');img.style.maxWidth='100%';selectedEl.innerHTML='';selectedEl.appendChild(img)}img.src=$('imgUrl').value.trim();setText('visualStatus','Картинку змінено.','ok')}catch(e){setText('visualStatus',e.message,'err')}} function applyImgFile(){try{needSel();const f=$('imgFile').files[0];if(!f)throw new Error('Вибери файл картинки');const r=new FileReader();r.onload=()=>{$('imgUrl').value=r.result;applyImgUrl()};r.readAsDataURL(f)}catch(e){setText('visualStatus',e.message,'err')}}
+
+function cleanVisualDoc(){const d=$('visualFrame').contentDocument;if(!d||!d.documentElement)throw new Error('Спочатку відкрий сторінку');try{d.getSelection&&d.getSelection().removeAllRanges();d.activeElement&&d.activeElement.blur&&d.activeElement.blur();$('visualFrame').contentWindow&&$('visualFrame').contentWindow.blur()}catch(e){}d.querySelectorAll('.picked').forEach(el=>el.classList.remove('picked'));d.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));d.designMode='off';d.body&&d.body.removeAttribute('contenteditable');return d}
+function safeFileName(path,ext){return (path||'chets-page').replace(/^\/+|\/+$/g,'').replace(/[^a-zA-Z0-9А-Яа-яІіЇїЄєҐґ._-]+/g,'_').replace(/\.html?$/i,'')+'.'+ext}
+function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)}
+function downloadVisualHtml(){try{const p=chosen('visualPath','visualCustomPath');downloadBlob(new Blob([visualHtml()],{type:'text/html;charset=utf-8'}),safeFileName(p,'html'));setText('visualStatus','HTML сторінку скачано на компʼютер ✅','ok')}catch(e){setText('visualStatus',e.message,'err')}}
+function printVisual(){try{const w=$('visualFrame').contentWindow;if(!w)throw new Error('Спочатку відкрий сторінку');w.focus();w.print();setText('visualStatus','Відкрито друк. Вибери “Зберегти як PDF”.','ok')}catch(e){setText('visualStatus',e.message,'err')}}
+
+function loadHtml2Canvas(){return new Promise((resolve,reject)=>{if(window.html2canvas){resolve(window.html2canvas);return}const sc=document.createElement('script');sc.src='/assets/vendor/html2canvas.min.js';sc.onload=()=>resolve(window.html2canvas);sc.onerror=()=>reject(new Error('Не завантажився модуль PNG'));document.head.appendChild(sc)})}
+async function imgToDataUrl(src){try{const r=await fetch(src,{cache:'force-cache',mode:'cors'});if(!r.ok)throw new Error('image fetch failed');const b=await r.blob();return await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=rej;fr.readAsDataURL(b)})}catch(e){return src}}
+async function downloadVisualPng(){try{setText('visualStatus','Зберігаю сторінку PNG...');const d=cleanVisualDoc();const body=d.body,de=d.documentElement;const w=Math.ceil(Math.max(body.scrollWidth,de.scrollWidth,body.offsetWidth,de.offsetWidth,900));const h=Math.ceil(Math.max(body.scrollHeight,de.scrollHeight,body.offsetHeight,de.offsetHeight,600));
+try{const h2c=await loadHtml2Canvas();const canvas=await h2c(body,{backgroundColor:'#ffffff',scale:Math.min(5,Math.max(4,window.devicePixelRatio||1)),useCORS:true,allowTaint:false,logging:false,scrollX:0,scrollY:0,windowWidth:w,windowHeight:h,width:w,height:h});canvas.toBlob(blob=>{if(!blob){setText('visualStatus','Не вийшло створити PNG. Натисни PDF/Друк.','err');return}downloadBlob(blob,safeFileName(chosen('visualPath','visualCustomPath'),'png'));setText('visualStatus','PNG MAX збережено ✅ Розмір: '+canvas.width+'×'+canvas.height+', файл: '+(blob.size/1024/1024).toFixed(1)+' МБ. Шукай у “Завантаження”.','ok')},'image/png');return}catch(firstErr){console.warn('html2canvas failed',firstErr)}
+const clone=d.documentElement.cloneNode(true);clone.querySelectorAll('script').forEach(x=>x.remove());const imgs=[...clone.querySelectorAll('img')];for(const img of imgs){const src=img.getAttribute('src')||'';if(src && !src.startsWith('data:')) img.setAttribute('src',await imgToDataUrl(new URL(src,d.baseURI).href));}
+let scale=Math.min(5,22000/Math.max(w,h),Math.sqrt(220000000/(w*h)));if(!isFinite(scale)||scale<=0)scale=1;scale=Math.max(1,scale);clone.setAttribute('xmlns','http://www.w3.org/1999/xhtml');clone.style.width=w+'px';clone.style.minHeight=h+'px';const serialized=new XMLSerializer().serializeToString(clone);const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'"><foreignObject width="100%" height="100%">'+serialized+'</foreignObject></svg>';const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml;charset=utf-8'}));const img=new Image();img.onload=()=>{try{const canvas=document.createElement('canvas');canvas.width=Math.round(w*scale);canvas.height=Math.round(h*scale);const ctx=canvas.getContext('2d');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.scale(scale,scale);ctx.drawImage(img,0,0);URL.revokeObjectURL(url);canvas.toBlob(blob=>{if(!blob){setText('visualStatus','Не вийшло створити PNG. Натисни PDF/Друк.','err');return}downloadBlob(blob,safeFileName(chosen('visualPath','visualCustomPath'),'png'));setText('visualStatus','PNG MAX збережено ✅ Розмір: '+canvas.width+'×'+canvas.height+', файл: '+(blob.size/1024/1024).toFixed(1)+' МБ.','ok')},'image/png')}catch(e){URL.revokeObjectURL(url);setText('visualStatus','PNG заблокував браузер через картинки. Натисни PDF/Друк.','err')}};img.onerror=()=>{URL.revokeObjectURL(url);setText('visualStatus','PNG не створився. Натисни PDF/Друк.','err')};img.src=url}catch(e){setText('visualStatus',e.message,'err')}}
+
+async function htmlToPngDownload(html,path,statusId){try{setText(statusId,'Створюю PNG з чернетки...');const fr=document.createElement('iframe');fr.style.position='fixed';fr.style.left='-10000px';fr.style.top='0';fr.style.width='1200px';fr.style.height='900px';fr.style.opacity='0';document.body.appendChild(fr);await new Promise((resolve,reject)=>{fr.onload=resolve;fr.onerror=()=>reject(new Error('Не відкрилась чернетка для PNG'));fr.srcdoc=html});const d=fr.contentDocument;try{d.querySelectorAll('.picked,[contenteditable]').forEach(el=>{el.classList.remove('picked');el.removeAttribute('contenteditable')})}catch(e){}const body=d.body,de=d.documentElement;const w=Math.ceil(Math.max(body.scrollWidth,de.scrollWidth,body.offsetWidth,de.offsetWidth,900));const h=Math.ceil(Math.max(body.scrollHeight,de.scrollHeight,body.offsetHeight,de.offsetHeight,600));const h2c=await loadHtml2Canvas();const canvas=await h2c(body,{backgroundColor:'#ffffff',scale:Math.min(5,Math.max(4,window.devicePixelRatio||1)),useCORS:true,allowTaint:false,logging:false,scrollX:0,scrollY:0,windowWidth:w,windowHeight:h,width:w,height:h});canvas.toBlob(blob=>{fr.remove();if(!blob){setText(statusId,'Не вийшло створити PNG.','err');return}downloadBlob(blob,safeFileName(path,'png'));setText(statusId,'PNG з чернетки скачано ✅ '+canvas.width+'×'+canvas.height+', '+(blob.size/1024/1024).toFixed(1)+' МБ','ok')},'image/png')}catch(e){setText(statusId,e.message,'err')}}
+function visualHtml(){const d=cleanVisualDoc();return '<!DOCTYPE html>\n'+d.documentElement.outerHTML}
+function saveVisualLocal(){try{const p=chosen('visualPath','visualCustomPath');putLocal(p,visualHtml());setText('visualStatus',SAFE_DRAFT_NOTE,'ok')}catch(e){setText('visualStatus',e.message,'err')}} async function publishVisual(){setText('visualStatus','Захист увімкнено: редактор не публікує в інтернет. Збережи в папку чернеток; для публікації напиши Hermes.','err')}
+function renderQueue(){const o=changes(),keys=Object.keys(o).sort();$('queueList').innerHTML=keys.length?keys.map(k=>'<div class="queue-item"><div><b>'+esc(k)+'</b><br><span class="small">'+esc(o[k].updated)+' • чернетка, не опубліковано</span></div><div><button data-act="open" data-path="'+esc(k)+'">Відкрити для редагування</button> <button class="secondary" data-act="download" data-path="'+esc(k)+'">Скачати HTML</button> <button class="good" data-act="png" data-path="'+esc(k)+'">Скачати PNG</button> <button class="red" data-act="delete" data-path="'+esc(k)+'">Видалити</button></div></div>').join(''):'<div class="notice">Папка чернеток порожня.</div>';$('queueList').querySelectorAll('button[data-act]').forEach(b=>b.onclick=()=>{const p=b.dataset.path;if(b.dataset.act==='open')openQueued(p);if(b.dataset.act==='download')downloadQueued(p);if(b.dataset.act==='png')downloadQueuedPng(p);if(b.dataset.act==='delete')deleteQueued(p)});setText('queueStatus','У папці чернеток файлів: '+keys.length,keys.length?'':'ok')} function openQueued(p){openVisualDraft(p)} async function downloadQueued(p){const o=changes();if(!o[p])return;let html=o[p].content;
+try{const imgs=['/assets/header-left.jpg','/assets/trolleybus-center.jpg','/assets/header-right.jpg'];
+for(const src of imgs){try{const r=await fetch(src,{cache:'force-cache'});if(!r.ok)continue;const b=await r.blob();const dataUrl=await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(b)});html=html.split(src).join(dataUrl)}catch(e){console.warn('img',src,e)}}
+}catch(e){console.warn('img block',e)}
+downloadBlob(new Blob([html],{type:'text/html;charset=utf-8'}),safeFileName(p,'html'));setText('queueStatus','HTML з картинками скачано ✅','ok')} function downloadQueuedPng(p){const o=changes();if(!o[p])return;htmlToPngDownload(o[p].content,p,'queueStatus')} function deleteQueued(p){const o=changes();delete o[p];saveChanges(o)} async function publishOne(p){setText('queueStatus','Захист увімкнено: публікує тільки Hermes після твоєї команди.','err')} async function publishAll(){setText('queueStatus','Захист увімкнено: публікує тільки Hermes після твоєї команди.','err')}
+function exportChanges(){const data={version:2,created:new Date().toISOString(),changes:changes()};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chets-creator-drafts-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(a.href)} function importChanges(){const f=$('importChanges').files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(data.changes)saveChanges({...changes(),...data.changes});setText('queueStatus','Пакет імпортовано ✅','ok')}catch(e){setText('queueStatus',e.message,'err')}};r.readAsText(f)}
+async function loadSource(){try{const p=chosen('sourcePath','sourceCustomPath'),r=await loadPath(p);$('sourceText').value=r.content;setText('sourceStatus','Завантажено з: '+r.from,'ok')}catch(e){setText('sourceStatus',e.message,'err')}} function saveSourceLocal(){try{putLocal(chosen('sourcePath','sourceCustomPath'),$('sourceText').value);setText('sourceStatus',SAFE_DRAFT_NOTE,'ok')}catch(e){setText('sourceStatus',e.message,'err')}} async function publishSource(){setText('sourceStatus','Захист увімкнено: редактор не публікує в інтернет. Збережи в папку чернеток; для публікації напиши Hermes.','err')} function downloadSource(){const blob=new Blob([$('sourceText').value],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(chosen('sourcePath','sourceCustomPath')||'file').replaceAll('/','_');a.click();URL.revokeObjectURL(a.href)} function rgbToHex(c){if(c[0]==='#')return c;return '#ffffff'}
+init();
+</script></body></html>

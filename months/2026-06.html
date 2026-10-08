@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Графік контролерів — ЧЕРВЕНЬ 2026</title><style>
+.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);padding:8px;border-bottom:1px solid #e8e8e8}.nav a{background:#4472C4;color:white;text-decoration:none;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:800;box-shadow:0 2px 6px rgba(0,0,0,.12)}.nav a.active{background:#1f4e9e;box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),0 2px 6px rgba(0,0,0,.12)}.nav a:hover{background:#2f62b3}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f0f2f5;padding:10px}
+.container{max-width:1800px;margin:0 auto;background:#fff;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.1);padding:15px;overflow:auto}.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative}
+h1{text-align:center;margin-bottom:6px;font-size:20px}
+.subtitle{text-align:center;color:#666;margin-bottom:10px;font-size:12px}
+.legend{display:flex;justify-content:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.legend span{padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500;border:1px solid #ddd}
+table{border-collapse:collapse;width:100%;font-size:13px;background:#fff}
+th{background:#4472C4;color:#fff;padding:6px 4px;font-weight:600;font-size:12px;position:sticky;top:0;z-index:10;border:1px solid #d0d0d0}th.row-num,th.name{position:sticky;left:0;z-index:30;background:#4472C4!important}
+td{border:1px solid #d0d0d0;padding:5px 4px;text-align:center;height:26px;min-width:30px}
+tbody td:not(.name):not(.group){font-weight:800}
+.name{text-align:left;font-weight:500;padding-left:6px;white-space:nowrap;min-width:190px;font-size:14px;position:sticky;left:0;z-index:20;background:#fff}
+.group{background:#F4FAFF;color:#315b78;font-weight:700;text-align:left;padding-left:6px;font-size:11px;border-top:1px solid #d9ecfa;border-bottom:1px solid #d9ecfa}
+.row-num{color:#444;font-size:11px;min-width:26px;position:sticky;left:0;z-index:20;background:#fff}
+.weekend{background:#EEF2F5;color:#4b5563;border-left:2px dashed #cbd5e1!important;border-right:2px dashed #cbd5e1!important}
+.weekend-th{background:#E2E8F0;color:#334155;border-left:2px dashed #cbd5e1!important;border-right:2px dashed #cbd5e1!important}
+.dayoff-muted{position:relative;color:#1f4e79!important;font-weight:800;background-color:#DCEAF5!important;background-image:none!important;overflow:hidden}
+.dayoff-muted::after{content:none!important;display:none!important}
+.dayoff-muted{z-index:0}
+.total{font-weight:bold;background:#f5f5f5;min-width:55px;font-size:14px}
+.yellow{background:#FFF68B!important;color:#000!important;font-weight:700}
+.blue{background:#00B0F0!important;color:#fff!important;font-weight:700}
+.orange{background:#FFA500!important;color:#000!important;font-weight:700}
+.soft-highlight{background:#eef8cf!important;color:#111!important;font-weight:700}
+.black-cell{background:#333!important;color:#fff!important;font-weight:700}
+.purple{background:#6a0dad!important;color:#fff!important;font-weight:700}
+.footer{text-align:center;margin-top:8px;color:#999;font-size:11px}
+.ds-summary td{background:#fffdf5!important;font-weight:900!important;height:30px;border-top:3px solid #1f2937!important;font-size:14px}
+.ds-summary .name{background:#fff7dc!important;color:#111!important;text-align:center;font-weight:900!important;line-height:1.15}
+.ds-summary .name small{display:block;margin-top:3px;font-size:9px;line-height:1.15}.ds-summary .name .ds-red{color:#d92d20}.ds-summary .name .ds-blue{color:#2563eb}
+.ds-summary .shift-1{color:#d92d20;font-weight:900;font-size:14px;line-height:1}
+.ds-summary .shift-2{color:#2563eb;font-weight:900;font-size:14px;line-height:1;margin-top:1px}
+.ds-summary .weekend{background:#EEF2F5!important;color:#94a3b8!important}
+
+
+.site-logos{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 8px 0;padding:2px 4px;min-height:42px;pointer-events:none}
+.site-logos img{display:block;object-fit:contain;opacity:.94;filter:grayscale(100%);max-height:54px;width:auto}
+.site-logos .logo-left{max-width:390px;max-height:54px}
+.site-logos .logo-right{max-width:442px;max-height:54px}
+@media (max-width:700px){.site-logos{min-height:34px;margin-bottom:6px;gap:10px}.site-logos img{max-height:32px}.site-logos .logo-left{max-width:195px}.site-logos .logo-right{max-width:221px}}
+
+/* Wider service navigation */
+.nav{gap:8px}.nav a{padding:9px 12px;font-size:13px}@media(max-width:700px){.nav a{font-size:11px;padding:7px 8px}}
+
+/* Monthly month switch and blank pages */
+
+.month-switch{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0 12px;padding:8px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px}.month-switch a{background:#eef3ff;color:#1f4e9e;text-decoration:none;border:1px solid #c8d6f4;border-radius:8px;padding:8px 11px;font-size:13px;font-weight:900}.month-switch a.active{background:#1f4e9e;color:#fff;border-color:#1f4e9e}.month-switch .arrow{background:#64748b;color:#fff;border-color:#64748b}.blank-note{max-width:900px;margin:8px auto 12px;padding:10px 12px;border:1px dashed #94a3b8;border-radius:10px;background:#f8fafc;color:#475467;text-align:center;font-size:13px;line-height:1.35}.empty-cell{color:#cbd5e1;background:#fff}.empty-cell.weekend{background:#DDEEFF;color:#9ab0c4}.month-current{font-size:13px;color:#475467;text-align:center;font-weight:800;margin:-2px 0 5px}
+@media(max-width:700px){.month-switch{gap:5px;padding:6px}.month-switch a{font-size:11px;padding:7px 8px}}
+.site-logos{display:grid;grid-template-columns:minmax(170px,1.3fr) auto minmax(170px,1.3fr);align-items:center;gap:14px;margin:0 0 8px 0;padding:2px 4px;min-height:58px;pointer-events:none}.site-logos img{display:block;object-fit:contain;opacity:.94;filter:grayscale(100%);width:auto}.site-logos .logo-left{justify-self:start;max-width:390px;max-height:54px}.site-logos .logo-center{justify-self:center;max-width:180px;max-height:72px}.site-logos .logo-right{justify-self:end;max-width:442px;max-height:54px}@media (max-width:700px){.site-logos{grid-template-columns:1fr auto 1fr;min-height:36px;margin-bottom:6px;gap:6px}.site-logos .logo-left{max-width:150px;max-height:34px}.site-logos .logo-center{max-width:98px;max-height:50px}.site-logos .logo-right{max-width:162px;max-height:34px}}.nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:6px;scrollbar-width:thin}.nav a{white-space:nowrap;padding:8px 9px;font-size:12px}@media(min-width:900px){.nav{justify-content:center}.nav a{font-size:12px;padding:8px 10px}}/* fixed top menu */
+/* fixed top menu: same position on every page */
+body{padding-top:58px!important}
+.nav{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:5000!important;margin:0!important;display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;align-items:center!important;gap:6px!important;overflow-x:auto!important;background:rgba(255,255,255,.98)!important;border-bottom:1px solid #d7deea!important;box-shadow:0 2px 8px rgba(15,23,42,.10)!important;padding:8px 10px!important;scrollbar-width:thin!important;border-radius:0!important}
+.nav a{flex:0 0 auto!important;white-space:nowrap!important}
+@media print{body{padding-top:0!important}.nav{display:none!important}}
+
+/* centered fixed top menu */
+/* centered fixed top menu */
+.nav{justify-content:center!important;text-align:center!important}
+.nav a{text-align:center!important}
+.install-floating{position:fixed!important;top:6px!important;right:6px!important;z-index:5000!important;display:inline-flex!important;align-items:center!important;gap:5px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:6px 10px!important;border:2px solid #111827!important;box-shadow:0 8px 20px rgba(17,24,39,.22)!important;font-size:12px!important;line-height:1!important;cursor:pointer!important}.install-floating img{width:28px!important;height:18px!important;object-fit:contain!important}.install-floating span{line-height:1!important}.install-popup{top:46px!important;right:6px!important;z-index:5001!important}
+
+/* compact install button: between menu and header logos */
+.install-floating{position:fixed!important;top:44px!important;right:10px!important;z-index:9000!important;display:inline-flex!important;align-items:center!important;gap:3px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:3px 6px!important;border:1px solid #111827!important;box-shadow:0 4px 10px rgba(17,24,39,.16)!important;font-size:9px!important;line-height:1!important;cursor:pointer!important}
+.install-floating img{width:18px!important;height:12px!important;object-fit:contain!important}.install-floating span{line-height:1!important}
+.install-popup{position:fixed!important;top:68px!important;right:6px!important;z-index:9001!important}
+@media(max-width:700px){.install-floating{top:44px!important;right:10px!important;padding:3px 5px!important;font-size:9px!important}.install-floating img{width:17px!important;height:11px!important}.install-popup{top:68px!important;right:6px!important}}
+.nav{padding-right:0!important;box-sizing:border-box!important}
+
+@media(max-width:900px){
+  table{font-size:12px}
+  td{padding:5px 4px;height:26px;min-width:30px}
+  .name{min-width:170px;font-size:13px;position:sticky;left:0;z-index:20;background:#fff}
+  .row-num{position:sticky;left:0;z-index:20;background:#fff}
+  th{font-size:11px;padding:5px 3px}
+  th.row-num,th.name{position:sticky;left:0;z-index:30;background:#4472C4!important}
+  .ds-summary td{height:28px;font-size:12px}
+  .ds-summary .shift-1,.ds-summary .shift-2{font-size:12px}
+}
+@media(max-width:600px){
+  table{font-size:11px}
+  td{padding:4px 3px;height:24px;min-width:28px}
+  .name{min-width:150px;font-size:12px;position:sticky;left:0;z-index:20;background:#fff}
+  .row-num{position:sticky;left:0;z-index:20;background:#fff}
+  th{font-size:10px;padding:4px 2px}
+  th.row-num,th.name{position:sticky;left:0;z-index:30;background:#4472C4!important}
+  .container{padding:8px}
+  .container{max-width:100%}
+  .ds-summary td{height:26px;font-size:11px}
+  .ds-summary .shift-1,.ds-summary .shift-2{font-size:11px}
+}
+@media(max-width:450px){
+  table{font-size:10px}
+  td{padding:3px 2px;height:20px;min-width:24px}
+  .name{min-width:130px;font-size:11px;position:sticky;left:0;z-index:20;background:#fff}
+  .row-num{position:sticky;left:0;z-index:20;background:#fff}
+  th{font-size:9px;padding:3px 2px}
+  th.row-num,th.name{position:sticky;left:0;z-index:30;background:#4472C4!important}
+  body{padding:5px}
+  .container{padding:5px}
+  .ds-summary td{height:24px;font-size:10px}
+  .ds-summary .shift-1,.ds-summary .shift-2{font-size:10px}
+}
+</style>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/trolleybus-center.jpg">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Контролери КП ЧЕТС">
+</head><body><a href="/install.html" class="install-floating" title="Встановити КП ЧЕТС як кнопку"><img src="/assets/trolleybus-center.jpg" alt=""><span>Кнопка</span></a><div class="container"><div class="nav"><a href="/" data-nav="month" class="active">Графік на місяць</a><a href="/daily.html" data-nav="daily">Щоденний графік</a><a href="/timesheet.html" data-nav="timesheet">Квиток контролера</a><a href="/transport.html" data-nav="transport">Транспорт</a><a href="/stt.html" data-nav="stt">Звіт СТТ</a><a href="/vacations.html" data-nav="vacations">Відпустки</a><a href="/districts.html" data-nav="districts">Дільниця</a><a href="/problems.html" data-nav="problems">Проблеми</a><a href="/needs.html" data-nav="needs">Валідатори</a><a href="/archive.html" data-nav="archive">Архів</a><a href="/editor.html" data-nav="editor">Редактор</a></div><div class="site-logos"><img class="logo-left" src="/assets/header-left.jpg" alt="Черкаси"><img class="logo-center" src="/assets/trolleybus-center.jpg" alt="Тролейбус"><img class="logo-right" src="/assets/header-right.jpg" alt="Черкаси — найкраще місто"></div><h1>📋 Графік контролерів — ЧЕРВЕНЬ 2026</h1><div class="month-current">Місячний графік: Червень 2026</div><div class="month-switch"><a class="arrow" href="/months/2026-05.html">← попередній</a><a href="/months/2026-05.html">Травень</a><a class="active" href="/months/2026-06.html">Червень</a><a href="/months/2026-07.html">Липень</a><a href="/months/2026-08.html">Серпень</a><a href="/months/2026-09.html">Вересень</a><a href="/months/2026-10.html">Жовтень</a><a href="/months/2026-11.html">Листопад</a><a href="/months/2026-12.html">Грудень</a><a class="arrow" href="/months/2026-07.html">наступний →</a></div><p class="subtitle">КП ЧЕТС | Оновлено: 12.06.2026, 13:47</p><div class="legend">
+<span style="background:#EEF2F5;color:#4b5563;border:1px dashed #cbd5e1">Сб, Нд — Вихідні</span>
+<span style="font-weight:800">1,2 — Зміни</span>
+<span style="color:#d92d20;font-weight:900">червоне — 1 зміна</span>
+<span style="color:#2563eb;font-weight:900">синє — 2 зміна</span>
+<span style="color:#1f4e79;font-weight:800;background-color:#DCEAF5;background-image:none;border:1px solid #b7cde0">В — Вихідний</span>
+<span class="yellow">ТН — Лікарняний</span>
+<span class="blue">БЗ — Без збереження</span>
+<span class="orange">дон — Донорський</span>
+<span class="black-cell">ОВ — Основна відпустка</span>
+<div class="table-scroll"><table class="people-table"><thead>
+<tr><th rowspan="3" class="row-num">№</th><th rowspan="3" style="min-width:170px">Прізвище, ім&#8217;я</th><th colspan="30">Червень 2026</th><th rowspan="3" style="min-width:60px">Робочі<br>дні</th><th rowspan="3" style="min-width:60px">Вихідні<br>дні</th><th rowspan="3" style="min-width:30px;background:#00B0F0;color:#fff">БЗ</th><th rowspan="3" style="min-width:30px;background:#FFF68B;color:#000!important;font-weight:700">ТН</th><th rowspan="3" style="min-width:30px;background:#333;color:#fff">ОВ</th></tr>
+<tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th class="weekend-th">6</th><th class="weekend-th">7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th class="weekend-th">13</th><th class="weekend-th">14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th class="weekend-th">20</th><th class="weekend-th">21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th class="weekend-th">27</th><th class="weekend-th">28</th><th>29</th><th>30</th></tr>
+<tr><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="weekend-th">Сб</th><th class="weekend-th">Нд</th><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="weekend-th">Сб</th><th class="weekend-th">Нд</th><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="weekend-th">Сб</th><th class="weekend-th">Нд</th><th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="weekend-th">Сб</th><th class="weekend-th">Нд</th><th>Пн</th><th>Вт</th></tr>
+</thead><tbody>
+<tr><td colspan="37" class="group">1 група</td></tr>
+<tr><td class="row-num">1</td><td class="name">Гордійчук І.О.</td><td>1</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">1</span>/<span style="color:#2563eb">1</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">2</td><td class="name">Карапузова Н.К.</td><td>1</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td class="dayoff-muted">В</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">15</span>/<span style="color:#2563eb">7</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">2 група</td></tr>
+<tr><td class="row-num">3</td><td class="name">Андрющенко І.В.</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td>1</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td class="dayoff-muted">В</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">14</span>/<span style="color:#2563eb">8</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">4</td><td class="name">Турчанович А.В.</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td>1</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td class="blue">БЗ</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td class="dayoff-muted">В</td><td class="total"><span style="font-size:13px;font-weight:900">21</span> <span style="font-size:9px">(<span style="color:#d92d20">14</span>/<span style="color:#2563eb">8</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">1</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">3 група</td></tr>
+<tr><td class="row-num">5</td><td class="name">Хорошковська О.М.</td><td>1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td class="dayoff-muted">В</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">15</span>/<span style="color:#2563eb">7</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">6</td><td class="name">Шендрик В.А.</td><td>1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>2</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td>1</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td class="dayoff-muted">В</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">15</span>/<span style="color:#2563eb">7</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">4 група</td></tr>
+<tr><td class="row-num">7</td><td class="name">Зозуля О.М.</td><td>1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">16</span>/<span style="color:#2563eb">6</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">8</td><td class="name">Шраменко В.А.</td><td>1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td>1</td><td>1</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>2</td><td>2</td><td>2</td><td class="dayoff-muted">В</td><td class="dayoff-muted">В</td><td class="weekend">1</td><td class="weekend">1</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">16</span>/<span style="color:#2563eb">6</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">5 група</td></tr>
+<tr><td class="row-num">9</td><td class="name">Яремака Р.В.</td><td class="blue">БЗ</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">21</span> <span style="font-size:9px">(<span style="color:#d92d20">1</span>/<span style="color:#2563eb">0</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">1</td><td class="total">0</td></tr>
+<tr><td class="row-num">10</td><td class="name">Ярошенко Л.М.</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="purple">P</td><td class="soft-highlight">1</td><td class="soft-highlight">1</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">12</span>/<span style="color:#2563eb">10</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">6 група</td></tr>
+<tr><td class="row-num">11</td><td class="name">Перетятько М.О.</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="weekend black-cell">ОВ</td><td class="weekend black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="total"><span style="font-size:13px;font-weight:900">7</span> <span style="font-size:9px">(<span style="color:#d92d20">0</span>/<span style="color:#2563eb">5</span>)</span></td><td class="total">0</td><td class="total">7</td><td class="total">10</td><td class="total">24</td></tr>
+<tr><td class="row-num">12</td><td class="name">Саковець О.В.</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="total"><span style="font-size:13px;font-weight:900">0</span> <span style="font-size:9px">(<span style="color:#d92d20">0</span>/<span style="color:#2563eb">0</span>)</span></td><td class="total">2</td><td class="total">0</td><td class="total">19</td><td class="total">9</td></tr>
+<tr><td colspan="37" class="group">7 група</td></tr>
+<tr><td class="row-num">13</td><td class="name">Добшина Л.В.</td><td>2</td><td>2</td><td class="blue">БЗ</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="blue">БЗ</td><td class="blue">БЗ</td><td class="total"><span style="font-size:13px;font-weight:900">16</span> <span style="font-size:9px">(<span style="color:#d92d20">1</span>/<span style="color:#2563eb">0</span>)</span></td><td class="total">7</td><td class="total">0</td><td class="total">1</td><td class="total">6</td></tr>
+<tr><td class="row-num">14</td><td class="name">Мельник А.І.</td><td>2</td><td>2</td><td class="blue">БЗ</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">16</span> <span style="font-size:9px">(<span style="color:#d92d20">1</span>/<span style="color:#2563eb">0</span>)</span></td><td class="total">7</td><td class="total">0</td><td class="total">1</td><td class="total">6</td></tr>
+<tr><td colspan="37" class="group">8 група</td></tr>
+<tr><td class="row-num">15</td><td class="name">Ковтун Т.П.</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="blue">БЗ</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">12</span> <span style="font-size:9px">(<span style="color:#d92d20">5</span>/<span style="color:#2563eb">7</span>)</span></td><td class="total">4</td><td class="total">0</td><td class="total">0</td><td class="total">14</td></tr>
+<tr><td class="row-num">16</td><td class="name">Савченко С.П.</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">12</span> <span style="font-size:9px">(<span style="color:#d92d20">5</span>/<span style="color:#2563eb">7</span>)</span></td><td class="total">4</td><td class="total">0</td><td class="total">0</td><td class="total">14</td></tr>
+<tr><td colspan="37" class="group">9 група</td></tr>
+<tr><td class="row-num">17</td><td class="name">Затокова Л.М.</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">10</span>/<span style="color:#2563eb">12</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">18</td><td class="name">Тарарєєва М.М.</td><td class="">2</td><td class="">2</td><td class="">2</td><td class="">2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td class="blue">БЗ</td><td class="blue">БЗ</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">20</span> <span style="font-size:9px">(<span style="color:#d92d20">8</span>/<span style="color:#2563eb">12</span>)</span></td><td class="total">8</td><td class="total">2</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">10 група</td></tr>
+<tr><td class="row-num">19</td><td class="name">Гавриленко Л.І.</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">17</span> <span style="font-size:9px">(<span style="color:#d92d20">0</span>/<span style="color:#2563eb">5</span>)</span></td><td class="total">8</td><td class="total">5</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">20</td><td class="name">Пилипенко Л.І.</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">10</span>/<span style="color:#2563eb">12</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">11 група</td></tr>
+<tr><td class="row-num">21</td><td class="name">Битко І.В.</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">10</span>/<span style="color:#2563eb">12</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">22</td><td class="name">Ніколіч А.О.</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">10</span>/<span style="color:#2563eb">12</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">12 група</td></tr>
+<tr><td class="row-num">23</td><td class="name">Бобух Л.І.</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">12</span>/<span style="color:#2563eb">10</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">24</td><td class="name">Дибля Н.А.</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">12</span>/<span style="color:#2563eb">10</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">13 група</td></tr>
+<tr><td class="row-num">25</td><td class="name">Пісоцька В.П.</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">12</span>/<span style="color:#2563eb">10</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">26</td><td class="name">Романенко Л.А.</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td class="blue">БЗ</td><td class="blue">БЗ</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td class="blue">БЗ</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td class="total"><span style="font-size:13px;font-weight:900">20</span> <span style="font-size:9px">(<span style="color:#d92d20">3</span>/<span style="color:#2563eb">0</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">2</td><td class="total">0</td></tr>
+<tr><td colspan="37" class="group">14 група</td></tr>
+<tr><td class="row-num">27</td><td class="name">Касьяненко О.А.</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="yellow">ТН</td><td class="total">0</td><td class="total">0</td><td class="total">31</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">28</td><td class="name">Мотайленко Л.П.</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td class="total"><span style="font-size:13px;font-weight:900">22</span> <span style="font-size:9px">(<span style="color:#d92d20">10</span>/<span style="color:#2563eb">12</span>)</span></td><td class="total">8</td><td class="total">0</td><td class="total">0</td><td class="total">0</td></tr>
+<tr><td class="row-num">29</td><td class="name">Юрченко Т.С.</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td class="weekend dayoff-muted">В</td><td class="weekend dayoff-muted">В</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="black-cell">ОВ</td><td class="total"><span style="font-size:13px;font-weight:900">15</span> <span style="font-size:9px">(<span style="color:#d92d20">5</span>/<span style="color:#2563eb">10</span>)</span></td><td class="total">4</td><td class="total">0</td><td class="total">0</td><td class="total">11</td></tr>
+<tr class="ds-summary"><td class="row-num"></td><td class="name"><small><span class="ds-red">1 зміна</span><br><span class="ds-blue">2 зміна</span></small></td><td><div class="shift-1">11</div><div class="shift-2">11</div></td><td><div class="shift-1">10</div><div class="shift-2">11</div></td><td><div class="shift-1">10</div><div class="shift-2">9</div></td><td><div class="shift-1">10</div><div class="shift-2">9</div></td><td><div class="shift-1">10</div><div class="shift-2">11</div></td><td class="weekend"></td><td class="weekend"></td><td><div class="shift-1">10</div><div class="shift-2">10</div></td><td><div class="shift-1">8</div><div class="shift-2">10</div></td><td><div class="shift-1">10</div><div class="shift-2">8</div></td><td><div class="shift-1">10</div><div class="shift-2">7</div></td><td><div class="shift-1">10</div><div class="shift-2">9</div></td><td class="weekend"></td><td class="weekend"></td><td><div class="shift-1">12</div><div class="shift-2">12</div></td><td><div class="shift-1">12</div><div class="shift-2">10</div></td><td><div class="shift-1">10</div><div class="shift-2">13</div></td><td><div class="shift-1">11</div><div class="shift-2">13</div></td><td><div class="shift-1">11</div><div class="shift-2">15</div></td><td class="weekend"></td><td class="weekend"></td><td><div class="shift-1">12</div><div class="shift-2">14</div></td><td><div class="shift-1">10</div><div class="shift-2">14</div></td><td><div class="shift-1">12</div><div class="shift-2">12</div></td><td><div class="shift-1">12</div><div class="shift-2">12</div></td><td><div class="shift-1">14</div><div class="shift-2">12</div></td><td class="weekend"></td><td class="weekend"></td><td><div class="shift-1">14</div><div class="shift-2">12</div></td><td><div class="shift-1">12</div><div class="shift-2">12</div></td><td class="total"></td><td class="total"></td></tr>
+</tbody></table><p class="footer">КП ЧЕТС | Червень 2026</p></div>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}</script>
+<script>
+(function() {
+  var STATUS_CYCLE = ['1', '2', 'В', 'БЗ', 'ТН', 'ОВ'];
+  var STATUS_CLASS = {
+    '1': '', '2': '',
+    'В': 'weekend dayoff-muted',
+    'БЗ': 'blue',
+    'ТН': 'yellow',
+    'ОВ': 'black-cell'
+  };
+
+  function getStatusIndex(txt, cls) {
+    if (txt === '1') return 0;
+    if (txt === '2') return 1;
+    if (txt === 'В' || cls.indexOf('dayoff') !== -1) return 2;
+    if (txt === 'БЗ' || cls.indexOf('blue') !== -1) return 3;
+    if (txt === 'ТН' || cls.indexOf('yellow') !== -1) return 4;
+    if (txt === 'ОВ' || cls.indexOf('black-cell') !== -1) return 5;
+    return -1;
+  }
+
+  function recalcRow(row) {
+    var tds = row.querySelectorAll('td');
+    var dayCells = [];
+    for (var i = 2; i < 32; i++) {
+      if (tds[i]) dayCells.push(tds[i]);
+    }
+    var workdays = 0, i1 = 0, i2 = 0, weekends = 0, bz = 0, tn = 0, ov = 0;
+    for (var j = 0; j < dayCells.length; j++) {
+      var td = dayCells[j];
+      var txt = td.textContent.trim();
+      var cls = td.className || '';
+      if (txt === '1') { workdays++; i1++; }
+      else if (txt === '2') { workdays++; i2++; }
+      else if (txt === 'В' || cls.indexOf('dayoff') !== -1) { weekends++; }
+      else if (txt === 'БЗ' || cls.indexOf('blue') !== -1) { bz++; }
+      else if (txt === 'ТН' || cls.indexOf('yellow') !== -1) { tn++; }
+      else if (txt === 'ОВ' || cls.indexOf('black-cell') !== -1) { ov++; }
+    }
+    var n = tds.length;
+    if (n >= 37) {
+      tds[n - 5].innerHTML = '<span style="font-size:13px;font-weight:900">' + workdays + '</span> <span style="font-size:9px">(<span style="color:#d92d20">' + i1 + '</span>/<span style="color:#2563eb">' + i2 + '</span>)</span>';
+      tds[n - 4].textContent = weekends;
+      tds[n - 3].textContent = bz;
+      tds[n - 2].textContent = tn;
+      tds[n - 1].textContent = ov;
+    }
+  }
+
+  function recalcDsSummary() {
+    var dsRow = document.querySelector('tr.ds-summary');
+    if (!dsRow) return;
+    var dsTds = dsRow.querySelectorAll('td');
+    var dataRows = [];
+    var allRows = document.querySelectorAll('table.people-table tbody tr');
+    for (var r = 0; r < allRows.length; r++) {
+      var row = allRows[r];
+      if (row.classList.contains('ds-summary')) continue;
+      if (row.querySelector('td[colspan]')) continue;
+      dataRows.push(row);
+    }
+    for (var dayIdx = 2; dayIdx <= 31; dayIdx++) {
+      var cnt1 = 0, cnt2 = 0;
+      for (var ri = 0; ri < dataRows.length; ri++) {
+        var rowTds = dataRows[ri].querySelectorAll('td');
+        if (!rowTds[dayIdx]) continue;
+        var txt = rowTds[dayIdx].textContent.trim();
+        var cls = rowTds[dayIdx].className || '';
+        if (txt === '1') cnt1++;
+        if (txt === '2') cnt2++;
+      }
+      var dsTd = dsTds[dayIdx]; // ds-summary td: td[0]=row-num, td[1]=name, days start at td[2] = dayIdx 2
+      if (dsTd) {
+        var s1 = dsTd.querySelector('.shift-1');
+        var s2 = dsTd.querySelector('.shift-2');
+        if (s1) s1.textContent = cnt1;
+        if (s2) s2.textContent = cnt2;
+      }
+    }
+  }
+
+  function initTable() {
+    var rows = document.querySelectorAll('table.people-table tbody tr');
+    rows.forEach(function(row) {
+      var tds = row.querySelectorAll('td');
+      for (var i = 2; i < 32; i++) {
+        if (!tds[i]) continue;
+        var td = tds[i];
+        td.style.cursor = 'pointer';
+        td.addEventListener('click', (function(td, row) {
+          return function() {
+            var txt = td.textContent.trim();
+            var cls = td.className || '';
+            var idx = getStatusIndex(txt, cls);
+            var newIdx = (idx + 1) % STATUS_CYCLE.length;
+            var newStatus = STATUS_CYCLE[newIdx];
+            td.textContent = newStatus;
+            td.className = STATUS_CLASS[newStatus];
+            recalcRow(row);
+            recalcDsSummary();
+          };
+        })(td, row));
+      }
+      recalcRow(row);
+    });
+    recalcDsSummary();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTable);
+  } else {
+    initTable();
+  }
+})();
+</script><script src="/assets/birthday-notify.js" defer></script>
+<script src="/assets/month-redirect.js" defer></script>
+</body></html>

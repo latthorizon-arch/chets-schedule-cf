@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Встановити кнопку КП ЧЕТС</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/trolleybus-center.jpg">
+<meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Контролери КП ЧЕТС">
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(145deg,#f8fafc,#eef2f7);color:#111827;display:flex;align-items:center;justify-content:center;padding:18px}.card{width:min(680px,100%);background:#fff;border-radius:24px;padding:22px;box-shadow:0 18px 60px rgba(17,24,39,.16);border:1px solid #e5e7eb}.hero{display:flex;gap:16px;align-items:center}.icon{width:104px;height:104px;border-radius:24px;object-fit:contain;background:#fff;border:1px solid #e5e7eb;box-shadow:0 10px 24px rgba(17,24,39,.12);padding:8px}h1{font-size:26px;margin:0 0 6px}.muted{color:#667085;margin:0;font-size:15px;line-height:1.45}.btn{display:block;text-align:center;margin:14px 0 0;padding:16px 18px;border-radius:16px;background:#111827;color:white;text-decoration:none;font-weight:900;font-size:18px;box-shadow:0 10px 20px rgba(17,24,39,.18);border:0;width:100%;cursor:pointer}.btn.secondary{background:#eef2f7;color:#111827;border:1px solid #d0d5dd;box-shadow:none}.install{display:none}.hint{display:none;margin:12px 0 0;padding:12px 14px;border-radius:14px;background:#fff8e6;border:1px solid #f4d06f;color:#594300;line-height:1.45;font-size:14px}.steps{display:grid;gap:10px;margin-top:14px}.step{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:13px 14px;line-height:1.45}.step b{color:#111827}.small{font-size:13px;color:#667085;margin-top:16px;text-align:center}.nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.nav a{flex:1;min-width:130px;text-align:center;text-decoration:none;background:#f8fafc;color:#111827;border:1px solid #d0d5dd;border-radius:12px;padding:11px;font-weight:800}@media(max-width:560px){.hero{align-items:flex-start}.icon{width:82px;height:82px;border-radius:18px}h1{font-size:22px}.card{padding:18px}.btn{font-size:16px}}
+.nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:6px;scrollbar-width:thin}.nav a{white-space:nowrap;padding:8px 9px;font-size:12px}@media(min-width:900px){.nav{justify-content:center}.nav a{font-size:12px;padding:8px 10px}}/* fixed top menu */
+/* fixed top menu: same position on every page */
+body{padding-top:58px!important}
+.nav{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:5000!important;margin:0!important;display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;align-items:center!important;gap:6px!important;overflow-x:auto!important;background:rgba(255,255,255,.98)!important;border-bottom:1px solid #d7deea!important;box-shadow:0 2px 8px rgba(15,23,42,.10)!important;padding:8px 10px!important;scrollbar-width:thin!important;border-radius:0!important}
+.nav a{flex:0 0 auto!important;white-space:nowrap!important}
+@media print{body{padding-top:0!important}.nav{display:none!important}}
+
+/* centered fixed top menu */
+/* centered fixed top menu */
+.nav{justify-content:center!important;text-align:center!important}
+.nav a{text-align:center!important}
+.install-floating{position:fixed!important;top:6px!important;right:6px!important;z-index:5000!important;display:inline-flex!important;align-items:center!important;gap:5px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:6px 10px!important;border:2px solid #111827!important;box-shadow:0 8px 20px rgba(17,24,39,.22)!important;font-size:12px!important;line-height:1!important;cursor:pointer!important}.install-floating img{width:28px!important;height:18px!important;object-fit:contain!important}.install-floating span{line-height:1!important}.install-popup{top:46px!important;right:6px!important;z-index:5001!important}
+
+/* compact install button: between menu and header logos */
+.install-floating{position:fixed!important;top:44px!important;right:10px!important;z-index:9000!important;display:inline-flex!important;align-items:center!important;gap:3px!important;background:#fff!important;color:#111827!important;text-decoration:none!important;font-weight:900!important;border-radius:999px!important;padding:3px 6px!important;border:1px solid #111827!important;box-shadow:0 4px 10px rgba(17,24,39,.16)!important;font-size:9px!important;line-height:1!important;cursor:pointer!important}
+.install-floating img{width:18px!important;height:12px!important;object-fit:contain!important}.install-floating span{line-height:1!important}
+.install-popup{position:fixed!important;top:68px!important;right:6px!important;z-index:9001!important}
+@media(max-width:700px){.install-floating{top:44px!important;right:10px!important;padding:3px 5px!important;font-size:9px!important}.install-floating img{width:17px!important;height:11px!important}.install-popup{top:68px!important;right:6px!important}}
+.nav{padding-right:0!important;box-sizing:border-box!important}
+</style>
+</head>
+<body><a href="/install.html" class="install-floating" title="Встановити КП ЧЕТС як кнопку"><img src="/assets/trolleybus-center.jpg" alt=""><span>Кнопка</span></a>
+<main class="card">
+  <div class="hero">
+    <img class="icon" src="/assets/trolleybus-center.jpg" alt="Тролейбус КП ЧЕТС">
+    <div>
+      <h1>Кнопка КП ЧЕТС</h1>
+      <p class="muted">Встанови сайт як кнопку/додаток на телефон або компʼютер, щоб відкривати графік одним натисканням.</p>
+    </div>
+  </div>
+  <button id="installBtn" class="btn">Встановити кнопку на компʼютер / телефон</button>
+  <div id="installHint" class="hint" style="display:none"></div>
+  <button id="shareBtn" class="btn secondary">Як додати на iPhone</button>
+  <div id="shareHint" class="hint">На iPhone треба натиснути <b>стандартну кнопку Safari внизу екрана</b> — квадрат зі стрілкою вгору. Потім прокрути список дій вниз і обери <b>На экран «Домой»</b> / <b>На Початковий екран</b>.</div>
+  <a class="btn secondary" href="/">Відкрити графік зараз</a>
+  <section class="steps">
+    <div class="step"><b>iPhone / Safari:</b> натисни <b>нижню кнопку Safari</b> — квадрат зі стрілкою вгору → <b>На экран «Домой»</b> / <b>На Початковий екран</b> → <b>Додати</b>.</div>
+    <div class="step"><b>Android / Chrome:</b> натисни верхню кнопку <b>Встановити кнопку на компʼютер / телефон</b>, або меню ⋮ справа зверху → <b>Додати на головний екран</b> / <b>Встановити додаток</b>.</div>
+    <div class="step"><b>Windows / компʼютер:</b> натисни верхню кнопку <b>Встановити кнопку на компʼютер / телефон</b>. Chrome або Edge відкриє стандартне вікно <b>Встановити додаток</b>. Якщо вікно не зʼявилось: меню ⋮ справа зверху → <b>Зберегти й поділитися</b> / <b>Програми</b> → <b>Встановити цей сайт як програму</b>.</div>
+    <div class="step"><b>Назва кнопки:</b> залиш <b>КП ЧЕТС</b>. Іконка буде біла з чорним тролейбусом.</div>
+  </section>
+  <div class="nav">
+    <a href="/daily.html">Щоденний графік</a>
+    <a href="/timesheet.html">Квиток контролера</a><a href="/transport.html" data-nav="transport">Транспорт</a>
+    <a href="/editor.html">Редактор</a>
+  </div>
+  <p class="small">Якщо кнопка вже додана — просто користуйся іконкою на головному екрані.</p>
+</main>
+<script>
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/service-worker.js').catch(()=>{});
+let deferredPrompt = null;
+const installBtn = document.getElementById('installBtn');
+const installHint = document.getElementById('installHint');
+function isiOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent); }
+function isStandalone(){ return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; }
+function showHint(html){ installHint.innerHTML = html; installHint.style.display = 'block'; }
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  deferredPrompt = event;
+  installBtn.textContent = 'Встановити кнопку на компʼютер / телефон';
+});
+window.addEventListener('appinstalled', () => {
+  deferredPrompt = null;
+  showHint('Готово: додаток <b>КП ЧЕТС</b> встановлено. Тепер його можна закріпити на робочому столі або панелі задач.');
+});
+installBtn.addEventListener('click', async () => {
+  if (isStandalone()) {
+    showHint('Кнопка вже встановлена: сайт відкрито як окремий додаток.');
+    return;
+  }
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice.catch(() => null);
+    deferredPrompt = null;
+    if (choice && choice.outcome === 'accepted') {
+      showHint('Встановлення запущено. Якщо Chrome/Edge попросить підтвердити — натисни <b>Встановити</b>.');
+    } else {
+      showHint('Якщо передумав — натисни кнопку ще раз або відкрий меню ⋮ → <b>Зберегти й поділитися</b> / <b>Програми</b> → <b>Встановити цей сайт як програму</b>.');
+    }
+    return;
+  }
+  if (isiOS()) {
+    document.getElementById('shareBtn').click();
+    return;
+  }
+  showHint('Якщо стандартне вікно не відкрилось, браузер ще не підготував установку або сайт уже встановлений. На компʼютері відкрий Chrome/Edge: меню ⋮ справа зверху → <b>Зберегти й поділитися</b> / <b>Програми</b> → <b>Встановити цей сайт як програму</b>.');
+});
+document.getElementById('shareBtn').addEventListener('click', async () => {
+  const hint = document.getElementById('shareHint');
+  hint.innerHTML = 'На iPhone треба натиснути <b>не цю сторінкову кнопку</b>, а <b>стандартну кнопку Safari внизу екрана</b>: квадрат зі стрілкою вгору. Потім у списку дій вибери <b>На экран «Домой»</b> / <b>На Початковий екран</b>. Якщо пункту не видно — прокрути список дій нижче або натисни <b>Редактировать действия</b>.';
+  hint.style.display = 'block';
+  try { await navigator.clipboard.writeText(location.origin + '/'); } catch (e) {}
+});
+</script>
+</body>
+</html>
